@@ -2,7 +2,7 @@
 ## Front-end:
 - **Node:** v18.17.1
 - **Npm:** 9.6.7
-- **Typescript:* Version 5.1.6
+- **Typescript:** Version 5.1.6
 - **Angular:** 16.2.0
 - **Icon:** font-awesome: `<script src="https://kit.fontawesome.com/70884cc727.js" crossorigin="anonymous"></script>`
 - **Bootstrap:** `npm i bootstrap@5.3.1`
