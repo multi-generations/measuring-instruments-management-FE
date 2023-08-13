@@ -1,0 +1,28 @@
+<div class="w-300px vh-100 position-fixed start-0 top-50px pt-4 rounded-top overflow-hidden bg-body-tertiary">
+  <div class="list-group list-group-flush">
+    <button type="button"
+            id="instrument-management-sidebar"
+            class="list-group-item list-group-item-action list-group-item-light active" aria-current="true"
+            [class.active]="activeButtonId === 'instrument-management-sidebar'"
+            routerLink="instruments"
+            (click)="sidebarClick($event)">Quản lý thiết bị</button>
+    <button type="button"
+            id="accreditation-management-sidebar"
+            class="list-group-item list-group-item-action list-group-item-light"
+            [class.active]="activeButtonId === 'accreditation-management-sidebar'"
+            routerLink="accreditations"
+            (click)="sidebarClick($event)">Quản lý kiểm định</button>
+    <button type="button"
+            id="repair-management-sidebar"
+            class="list-group-item list-group-item-action list-group-item-light"
+            [class.active]="activeButtonId === 'repair-management-sidebar'"
+            routerLink="repairs"
+            (click)="sidebarClick($event)">Quản lý sửa chữa</button>
+    <button type="button"
+            id="usage-management-sidebar"
+            class="list-group-item list-group-item-action list-group-item-light"
+            [class.active]="activeButtonId === 'usage-management-sidebar'"
+            routerLink="usages"
+            (click)="sidebarClick($event)">Quản lý sử dụng</button>
+  </div>
+</div>
