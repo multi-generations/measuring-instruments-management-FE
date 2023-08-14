@@ -1,0 +1,33 @@
+<div>
+  <form *ngIf="loginForm" [formGroup]="loginForm">
+    <div class="form-floating mb-3">
+      <input type="text"
+             id="username"
+             class="form-control"
+             [class.is-valid]="username?.touched && username?.valid"
+             [class.is-invalid]="username?.touched && username?.invalid"
+             formControlName="username"
+             placeholder="tài khoản">
+      <label for="username">Tài khoản
+        <small class="text-danger position-absolute bottom-0 start-0"
+               *ngIf="username?.touched && username?.errors?.['required']">
+          Tài khoản không được để trống!</small>
+      </label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password"
+             class="form-control"
+             [class.is-valid]="password?.touched && password?.valid"
+             [class.is-invalid]="password?.touched && password?.invalid"
+             id="password"
+             placeholder="mật khẩu">
+      <label for="password">Mật khẩu</label>
+      <small class="text-danger position-absolute"
+             *ngIf="password?.touched && password?.errors?.['required']">
+        Mật khẩu không được để trống!</small>
+    </div>
+    <div>
+      <input type="submit" class="btn btn-primary" value="Đăng nhập">
+    </div>
+  </form>
+</div>
