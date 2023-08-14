@@ -3,8 +3,6 @@ import {MeasuringInstrumentListDto} from "../../model/MeasuringInstrumentListDto
 import {InstrumentService} from "../../service/instrument.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Observer} from "rxjs";
-import {InstrumentGroup} from "../../model/InstrumentGroup";
-import {InstrumentType} from "../../model/InstrumentType";
 
 @Component({
     selector: 'app-instrument-list',
