@@ -1,6 +1,7 @@
 import {CanActivateFn, Router} from '@angular/router';
 import {AuthService} from "./module/feature/login/service/auth.service";
 import Swal from "sweetalert2";
+import {inject} from "@angular/core";
 
 export const roleGuard: CanActivateFn = (route, state) => {
   const requiredRoles: string[] = route.data['roles'];
@@ -18,7 +19,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
         showConfirmButton: false,
         timer: 2000
       });
-      return new Router().createUrlTree(['/login'], {queryParams: {returnUrl: state.url}});
+      return inject(Router).createUrlTree(['/login'], {queryParams: {returnUrl: state.url}});
     }
   }
   Swal.fire({
@@ -28,5 +29,5 @@ export const roleGuard: CanActivateFn = (route, state) => {
     showConfirmButton: false,
     timer: 2000
   })
-  return new Router().createUrlTree(['/login'], {queryParams: {returnUrl: state.url}});
+  return inject(Router).createUrlTree(['/login'], {queryParams: {returnUrl: state.url}});
 };

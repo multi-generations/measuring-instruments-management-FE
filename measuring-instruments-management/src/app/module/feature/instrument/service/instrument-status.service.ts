@@ -5,8 +5,8 @@ import {AuthService} from "../../login/service/auth.service";
 @Injectable({
   providedIn: 'root'
 })
-export class InstrumentGroupService {
-  private _API_URL = 'http://localhost:8080/api/v1/instrument-groups'
+export class InstrumentStatusService {
+  private _API_URL = 'http://localhost:8080/api/v1/instrument-statuses'
 
   constructor(private _http: HttpClient,
               private _authService: AuthService) { }

@@ -22,6 +22,10 @@ export class AuthService {
     localStorage.removeItem('jwt');
   }
 
+  public deleteRoles(): void {
+    localStorage.removeItem('roles');
+  }
+
   public setAuthInfo(username: string, roles: string[]): void {
     localStorage.setItem('username', username);
     localStorage.setItem('roles', JSON.stringify(roles));

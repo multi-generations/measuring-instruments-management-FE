@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
   activeButtonId: string = 'instrument-management-sidebar'
-
 
   sidebarClick($event: MouseEvent) {
     const btnClicked = $event.target as HTMLElement;
