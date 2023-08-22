@@ -1,15 +1,14 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {InstrumentGroup} from "../../model/InstrumentGroup";
-import {InstrumentType} from "../../model/InstrumentType";
-import {InstrumentStatus} from "../../model/InstrumentStatus";
-import {InstrumentService} from "../../service/instrument.service";
+import {InstrumentGroup} from "../../model/entity/InstrumentGroup";
+import {InstrumentType} from "../../model/entity/InstrumentType";
+import {InstrumentStatus} from "../../model/entity/InstrumentStatus";
 import {Observer} from "rxjs";
 import {InstrumentGroupService} from "../../service/instrument-group.service";
 import {InstrumentTypeService} from "../../service/instrument-type.service";
 import {InstrumentStatusService} from "../../service/instrument-status.service";
 import Swal from "sweetalert2";
-import {MeasuringInstrumentSearchForm} from "../../model/MeasuringInstrumentSearchForm";
+import {MeasuringInstrumentSearchForm} from "../../model/form/MeasuringInstrumentSearchForm";
 
 @Component({
   selector: 'app-instrument-search',
@@ -54,7 +53,8 @@ export class InstrumentSearchComponent {
           icon: 'error'
         })
       },
-      complete: () => {}
+      complete: () => {
+      }
     }
 
     this._instrumentGroupService.findAll().subscribe(observer);
@@ -73,7 +73,8 @@ export class InstrumentSearchComponent {
           icon: 'error'
         })
       },
-      complete: () => {}
+      complete: () => {
+      }
     }
 
     this._instrumentTypeService.findAll().subscribe(observer);
@@ -92,10 +93,22 @@ export class InstrumentSearchComponent {
           icon: 'error'
         })
       },
-      complete: () => {}
+      complete: () => {
+      }
     }
 
     this._instrumentStatusService.findAll().subscribe(observer);
+  }
+
+  public resetForm() {
+    this.searchForm.setValue({
+      multipleSearch: '',
+      instrumentGroupId: '',
+      instrumentTypeId: '',
+      instrumentStatusId: '',
+      startInServiceDate: '',
+      endInServiceDate: ''
+    })
   }
 
   public submit() {

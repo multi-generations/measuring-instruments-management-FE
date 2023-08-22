@@ -1,7 +1,8 @@
 <app-instrument-search (emitSearchValue)="search($event)"></app-instrument-search>
 
 <div class="overflow-x-auto">
-  <div *ngIf="measuringInstrumentListDtos.length === 0"  class="mt-2 fs-4">{{this.constantsService.INSTRUMENTS_NOT_FOUND}}</div>
+  <div *ngIf="measuringInstrumentListDtos.length === 0"
+       class="mt-2 fs-4">{{this.constantsService.INSTRUMENTS_NOT_FOUND}}</div>
   <table *ngIf="measuringInstrumentListDtos.length > 0"
          class="table table-hover text-center text-break" style="min-width: 1200px">
     <caption class="caption-top mb-4" style="font-size: 24px;">Danh sách thiết bị đo lường</caption>
@@ -41,7 +42,7 @@
         </div>
       </th>
       <td class="col-1 d-flex align-items-center justify-content-center">
-        <a routerLink="" class="link-info">{{ins.instrumentName}}</a></td>
+        <a [routerLink]="[ins.id]" class="link-info">{{ins.instrumentName}}</a></td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentPhoneticName}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentSerialNumber}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentSymbol}}</td>

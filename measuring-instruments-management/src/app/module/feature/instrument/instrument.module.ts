@@ -7,12 +7,14 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../shared/shared.module";
 import { InstrumentSearchComponent } from './component/instrument-search/instrument-search.component';
+import { InstrumentDetailComponent } from './component/instrument-detail/instrument-detail.component';
 
 
 @NgModule({
   declarations: [
     InstrumentListComponent,
-    InstrumentSearchComponent
+    InstrumentSearchComponent,
+    InstrumentDetailComponent
   ],
     imports: [
         CommonModule,

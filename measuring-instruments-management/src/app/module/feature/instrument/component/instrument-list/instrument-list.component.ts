@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {MeasuringInstrumentListDto} from "../../model/MeasuringInstrumentListDto";
+import {MeasuringInstrumentListDto} from "../../model/dto/MeasuringInstrumentListDto";
 import {InstrumentService} from "../../service/instrument.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Observer} from "rxjs";
 import {ConstantsService} from "../../../../shared/service/constants.service";
 import Swal from "sweetalert2";
-import {MeasuringInstrumentSearchForm} from "../../model/MeasuringInstrumentSearchForm";
+import {MeasuringInstrumentSearchForm} from "../../model/form/MeasuringInstrumentSearchForm";
 
 @Component({
   selector: 'app-instrument-list',
   templateUrl: './instrument-list.component.html',
   styleUrls: ['./instrument-list.component.css']
 })
-export class InstrumentListComponent implements OnInit{
+export class InstrumentListComponent implements OnInit {
   measuringInstrumentListDtos: MeasuringInstrumentListDto[] = [];
   isAnyItemIsEnable = false;
   isAllItemsEnabled = false;
@@ -22,6 +22,7 @@ export class InstrumentListComponent implements OnInit{
   totalPages = 0;
   currentPage = 1;
   size = 5;
+  measuringInstrumentSearchForm: MeasuringInstrumentSearchForm | undefined;
 
   constructor(private _instrumentService: InstrumentService,
               public constantsService: ConstantsService) {
@@ -32,46 +33,46 @@ export class InstrumentListComponent implements OnInit{
     this.deleteModalBody = this.constantsService.NOT_CHOOSE_FOR_DELETE;
   }
 
-  public findAll(measuringInstrumentSearchForm?: MeasuringInstrumentSearchForm): void {
-    let observer: Observer<any>;
-    if (measuringInstrumentSearchForm === undefined) {
-      observer = {
-        next: data => {
-          this.measuringInstrumentListDtos = data.content;
-          this.totalPages = data.totalPages;
-          if (this.deleteIds.length > 0) {
-            this.measuringInstrumentListDtos.forEach(value => {
-              if (this.deleteIds.includes(value.id)) {
-                value.enabled = true;
-              }
-            })
-            this.checkAnyItemIsEnabled();
-            this.checkAllItemsIsEnabled();
-          }
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error(err.status);
-          console.error(err.message);
-        },
-        complete: () => {
+  public findAll(): void {
+    let observer: Observer<any> = {
+      next: data => {
+        this.measuringInstrumentListDtos = data.content;
+        this.totalPages = data.totalPages;
+        if (this.deleteIds.length > 0) {
+          this.measuringInstrumentListDtos.forEach(value => {
+            if (this.deleteIds.includes(value.id)) {
+              value.enabled = true;
+            }
+          })
+          this.checkAnyItemIsEnabled();
+          this.checkAllItemsIsEnabled();
         }
-      }
-    } else {
-      this.resetComponent();
-      observer = {
-        next: data => {
-          this.measuringInstrumentListDtos = data.content;
-          this.totalPages = data.totalPages;
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error(err.status);
-          console.error(err.message);
-        },
-        complete: () => {
-        }
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err.status);
+        console.error(err.message);
+      },
+      complete: () => {
       }
     }
-    this._instrumentService.findAll(this.currentPage, this.size, measuringInstrumentSearchForm).subscribe(observer);
+    this._instrumentService.findAllDto(this.currentPage, this.size).subscribe(observer);
+  }
+
+  public findAllSearch() {
+    const observer: Observer<any> = {
+      next: data => {
+        this.measuringInstrumentListDtos = data.content;
+        this.totalPages = data.totalPages;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err.status);
+        console.error(err.message);
+      },
+      complete: () => {
+      }
+    }
+
+    this._instrumentService.findAllDto(this.currentPage, this.size, this.measuringInstrumentSearchForm).subscribe(observer);
   }
 
   public enableAllItems() {
@@ -171,6 +172,8 @@ export class InstrumentListComponent implements OnInit{
         });
         this.deleteIds = [];
         this.deleteInstruments = [];
+        this.checkAnyItemIsEnabled();
+        this.checkAllItemsIsEnabled();
       }
     })
   }
@@ -247,10 +250,26 @@ export class InstrumentListComponent implements OnInit{
 
   public changePage($event: number) {
     this.currentPage = $event;
-    this.findAll();
+    if (this.measuringInstrumentSearchForm) {
+      this.findAllSearch();
+    } else {
+      this.findAll();
+    }
   }
 
   public search($event: MeasuringInstrumentSearchForm) {
-    this.findAll($event);
+    this.resetComponent();
+
+    const isNotSearch = ($event.multipleSearch === "") && ($event.instrumentGroupId === "") &&
+      ($event.instrumentTypeId === "") && ($event.instrumentStatusId === "") &&
+      ($event.startInServiceDate === "") && ($event.endInServiceDate === "");
+
+    if (isNotSearch) {
+      this.measuringInstrumentSearchForm = undefined;
+      this.findAll();
+    } else {
+      this.measuringInstrumentSearchForm = $event;
+      this.findAllSearch();
+    }
   }
 }

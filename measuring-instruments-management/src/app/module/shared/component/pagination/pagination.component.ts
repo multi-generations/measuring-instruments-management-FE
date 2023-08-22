@@ -21,7 +21,6 @@ export class PaginationComponent implements OnChanges{
     if (changes['totalPages']) {
       this.setPageInfo();
       this.currentPage = 1;
-      this.emitCurrentPage.emit(this.currentPage);
     }
   }
 
