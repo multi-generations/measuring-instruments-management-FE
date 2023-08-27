@@ -1,6 +1,11 @@
 <app-header></app-header>
-<app-sidebar></app-sidebar>
-<main class="ms-200px mt-50x pt-4 ps-4">
+<app-sidebar [class.d-none]="!isLogged"></app-sidebar>
+<main
+      [class.ms-200px]="isLogged"
+      [class.mt-56px]="isLogged"
+      [class.mb-86px]="isLogged"
+      [class.pt-4]="isLogged"
+      [class.ps-4]="isLogged">
   <router-outlet></router-outlet>
 </main>
-<app-footer></app-footer>
+<app-footer class="position-fixed start-0 bottom-0 z-3"></app-footer>

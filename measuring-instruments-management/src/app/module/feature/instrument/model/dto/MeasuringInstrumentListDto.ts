@@ -1,8 +1,9 @@
-import {InstrumentGroup} from "./InstrumentGroup";
-import {InstrumentType} from "./InstrumentType";
+import {InstrumentGroup} from "../entity/InstrumentGroup";
+import {InstrumentType} from "../entity/InstrumentType";
+import {InstrumentStatus} from "../entity/InstrumentStatus";
 
 export interface MeasuringInstrumentListDto {
-  id?: number;
+  id: number;
   instrumentName?: string;
   instrumentPhoneticName?: string;
   instrumentGroup?: InstrumentGroup;
@@ -12,5 +13,6 @@ export interface MeasuringInstrumentListDto {
   managementLevel?: string;
   inServiceDate?: Date;
   managementUnit?: string;
+  instrumentStatus?: InstrumentStatus;
   enabled?: boolean;
 }
