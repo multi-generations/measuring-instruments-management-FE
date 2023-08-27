@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
-import { InstrumentRoutingModule } from './instrument-routing.module';
-import { InstrumentListComponent } from './component/instrument-list/instrument-list.component';
+import {InstrumentRoutingModule} from './instrument-routing.module';
+import {InstrumentListComponent} from './component/instrument-list/instrument-list.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../shared/shared.module";
-import { InstrumentSearchComponent } from './component/instrument-search/instrument-search.component';
-import { InstrumentDetailComponent } from './component/instrument-detail/instrument-detail.component';
+import {InstrumentSearchComponent} from './component/instrument-search/instrument-search.component';
+import {InstrumentDetailComponent} from './component/instrument-detail/instrument-detail.component';
 
 
 @NgModule({
@@ -16,13 +16,15 @@ import { InstrumentDetailComponent } from './component/instrument-detail/instrum
     InstrumentSearchComponent,
     InstrumentDetailComponent
   ],
-    imports: [
-        CommonModule,
-        InstrumentRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        SharedModule,
-        ReactiveFormsModule
-    ]
+  imports: [
+    CommonModule,
+    InstrumentRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    SharedModule,
+    ReactiveFormsModule,
+    NgOptimizedImage
+  ]
 })
-export class InstrumentModule { }
+export class InstrumentModule {
+}

@@ -11,6 +11,7 @@ export class ConstantsService {
   private _PASSWORD_REQUIRED = 'Mật khẩu không được để trống!';
   private _PASSWORD_PATTERN = 'Mật khẩu chứa ít nhất 8 ký tự, bao gồm 1 ký tự in hoa, 1 ký tự số và 1 ký tự đặc biệt!';
   private _INSTRUMENTS_NOT_FOUND = 'Không tin thấy thiết bị!';
+  private _INFO_NOT_FOUND = 'Không tin thông tin!';
 
   get NOT_CHOOSE_FOR_DELETE(): string {
     return this._NOT_CHOOSE_FOR_DELETE;
@@ -38,5 +39,9 @@ export class ConstantsService {
 
   get INSTRUMENTS_NOT_FOUND(): string {
     return this._INSTRUMENTS_NOT_FOUND;
+  }
+
+  get INFO_NOT_FOUND(): string {
+    return this._INFO_NOT_FOUND;
   }
 }

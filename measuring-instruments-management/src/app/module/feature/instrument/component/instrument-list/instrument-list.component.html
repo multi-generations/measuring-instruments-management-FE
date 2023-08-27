@@ -65,7 +65,7 @@
 </div>
 
 <div *ngIf="measuringInstrumentListDtos.length > 0"
-     class="btn-wrap float-end pe-3 mt-3">
+     class="btn-wrap d-flex justify-content-end pe-3 mt-3">
   <button type="button"
           class="btn btn-outline-danger me-2"
           [class.disabled]="!isAnyItemIsEnable"
@@ -77,4 +77,6 @@
   </button>
 </div>
 
-<app-pagination [totalPages]="totalPages" (emitCurrentPage)="changePage($event)"></app-pagination>
+<div class="overflow-x-auto me-3">
+  <app-pagination style="min-width: 100vw" [totalPages]="totalPages" (emitCurrentPage)="changePage($event)"></app-pagination>
+</div>

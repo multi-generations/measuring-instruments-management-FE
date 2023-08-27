@@ -1,0 +1,26 @@
+.image-active {
+  opacity: 1 !important;
+}
+
+.list-image-item {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: scale ease 0.2s, opacity ease 0.2s;
+}
+
+.list-image-item:hover {
+  opacity: 1 !important;
+  scale: 1.1 !important;
+}
+
+.list-group-item {
+  display: flex;
+}
+
+.list-group-item span:first-child {
+  font-weight: bold;
+  min-width: 150px;
+}
+
