@@ -193,7 +193,7 @@ export class InstrumentDetailComponent implements OnInit{
   carouselSlide() {
     const carousel = document.querySelector('#carousel-instrument-image');
     if (carousel !== null) {
-      carousel.addEventListener('slid.bs.carousel', ev => {
+      carousel.addEventListener('slid.bs.carousel', () => {
         this.activeImageList();
       })
     }
@@ -257,7 +257,7 @@ export class InstrumentDetailComponent implements OnInit{
                 break;
             }
           }
-        });
+        }).then();
       }
     })
   }
@@ -293,7 +293,7 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteTechnicalCharacteristicById(id: number) {
-    alert('delete');
+    alert('delete: ' + id);
   }
 
   public setModalBodyAttachedDocument(id: number) {
@@ -325,7 +325,7 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteAttachedDocumentById(id: number) {
-    alert('delete');
+    alert('delete: ' + id);
   }
 
   public setModalBodyInstrumentAccreditation(id: number) {
@@ -361,7 +361,7 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteInstrumentAccreditationById(id: number) {
-    alert('delete');
+    alert('delete: ' + id);
   }
 
   public setModalBodyInstrumentRepair(id: number) {
@@ -397,7 +397,7 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteInstrumentRepairById(id: number) {
-    alert('delete');
+    alert('delete: ' + id);
   }
 
   public setModalBodyInstrumentUsage(id: number) {
@@ -429,6 +429,6 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteInstrumentUsageById(id: number) {
-    alert('delete');
+    alert('delete: ' + id);
   }
 }
