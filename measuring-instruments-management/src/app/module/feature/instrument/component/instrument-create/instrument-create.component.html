@@ -1,1 +1,297 @@
+<h3 class="text-center mb-5 mt-3"
+    style="min-width: 782px; font-size: 32px;">Thêm mới phương tiện</h3>
 
+<form *ngIf="mainForm"
+      class="w-75 m-auto"
+      [formGroup]="mainForm"
+      style="min-width: 782px"
+      (ngSubmit)="submit()">
+    <div class="row">
+        <div class="mb-3 col-6 px-2 ">
+            <label for="instrument-group" class="form-label">Nhóm phương tiện
+                <sup class="text-danger fw-bold">*</sup></label>
+            <select id="instrument-group"
+                    class="form-select"
+                    aria-label="Default select instrument-group"
+                    formControlName="instrumentGroup"
+                    [ngClass]="{
+                    'is-invalid': (mainForm.controls['instrumentGroup'].touched) && (mainForm.controls['instrumentGroup'].invalid),
+                    'is-valid': (mainForm.controls['instrumentGroup'].touched) && (mainForm.controls['instrumentGroup'].valid)}">
+                <option selected value="">-- Chọn nhóm phương tiện --</option>
+                <ng-container *ngFor="let v of instrumentGroupList;">
+                    <option [value]="v.id">{{v.instrumentGroupName}}</option>
+                </ng-container>
+            </select>
+            <sub  class="text-danger"
+                   *ngIf="mainForm.controls['instrumentGroup'].hasError('required') &&
+            mainForm.controls['instrumentGroup'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+
+        <div class="mb-3 col-6 px-2 ">
+            <label for="instrument-name" class="form-label">Tên phương tiện
+                <sup class="text-danger fw-bold">*</sup></label>
+            <input id="instrument-name"
+                   type="text"
+                   class="form-control"
+                   placeholder="Nhập tên phương tiện"
+                   formControlName="instrumentName"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['instrumentName'].touched) && (mainForm.controls['instrumentName'].invalid),
+                    'is-valid': (mainForm.controls['instrumentName'].touched) && (mainForm.controls['instrumentName'].valid)}">
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['instrumentName'].hasError('required') &&
+            mainForm.controls['instrumentName'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 col-6 px-2 ">
+            <label for="instrument-symbol" class="form-label">Ký hiệu
+                <sup class="text-danger fw-bold">*</sup></label>
+            <input id="instrument-symbol"
+                   type="text"
+                   class="form-control"
+                   placeholder="Nhập ký hiệu"
+                   formControlName="instrumentSymbol"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['instrumentSymbol'].touched) && (mainForm.controls['instrumentSymbol'].invalid),
+                    'is-valid': (mainForm.controls['instrumentSymbol'].touched) && (mainForm.controls['instrumentSymbol'].valid)}">
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['instrumentSymbol'].hasError('required') &&
+            mainForm.controls['instrumentSymbol'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+
+        <div class="mb-3 col-6 px-2 ">
+            <label for="instrument-name" class="form-label">Số hiệu
+                <sup class="text-danger fw-bold">*</sup></label>
+            <input id="instrument-serial-number"
+                   type="text"
+                   class="form-control"
+                   placeholder="Nhập số hiệu"
+                   formControlName="instrumentSerialNumber"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['instrumentSerialNumber'].touched) && (mainForm.controls['instrumentSerialNumber'].invalid),
+                    'is-valid': (mainForm.controls['instrumentSerialNumber'].touched) && (mainForm.controls['instrumentSerialNumber'].valid)}">
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['instrumentSerialNumber'].hasError('required') &&
+            mainForm.controls['instrumentSerialNumber'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 col-6 px-2 ">
+            <label for="management-level" class="form-label">Cấp quản lý
+                <sup class="text-danger fw-bold">*</sup></label>
+            <select id="management-level"
+                    class="form-select"
+                    aria-label="Default select management-level"
+                    formControlName="managementLevel"
+                    [ngClass]="{
+                    'is-invalid': (mainForm.controls['managementLevel'].touched) && (mainForm.controls['managementLevel'].invalid),
+                    'is-valid': (mainForm.controls['managementLevel'].touched) && (mainForm.controls['managementLevel'].valid)}">
+                <option selected value="">-- Chọn cấp quản lý --</option>
+                <ng-container *ngFor="let v of managementLevelList;">
+                    <option [value]="v">{{v}}</option>
+                </ng-container>
+            </select>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['managementLevel'].hasError('required') &&
+            mainForm.controls['managementLevel'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+
+        <div class="mb-3 col-6 px-2 ">
+            <label for="manufacture-country" class="form-label">Nước sản xuất
+                <sup class="text-danger fw-bold">*</sup></label>
+            <select id="manufacture-country"
+                    class="form-select"
+                    aria-label="Default select manufacture-country"
+                    formControlName="manufactureCountry"
+                    [ngClass]="{
+                    'is-invalid': (mainForm.controls['manufactureCountry'].touched) && (mainForm.controls['manufactureCountry'].invalid),
+                    'is-valid': (mainForm.controls['manufactureCountry'].touched) && (mainForm.controls['manufactureCountry'].valid)}">
+                <option selected value="">-- Chọn nước sản xuất --</option>
+                <ng-container *ngFor="let v of countryList;">
+                    <option [value]="v">{{v}}</option>
+                </ng-container>
+            </select>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['manufactureCountry'].hasError('required') &&
+            mainForm.controls['manufactureCountry'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 col-6 px-2 ">
+            <label for="manufacture-year" class="form-label">Năm sản xuất
+                <sup class="text-danger fw-bold">*</sup></label>
+            <select id="manufacture-year"
+                    class="form-select"
+                    aria-label="Default select manufacture-year"
+                    formControlName="manufactureYear"
+                    [ngClass]="{
+                    'is-invalid': (mainForm.controls['manufactureYear'].touched) && (mainForm.controls['manufactureYear'].invalid),
+                    'is-valid': (mainForm.controls['manufactureYear'].touched) && (mainForm.controls['manufactureYear'].valid)}">
+                <option selected value="">-- Chọn năm sản xuất --</option>
+                <ng-container *ngFor="let v of yearList;">
+                    <option [value]="v">{{v}}</option>
+                </ng-container>
+            </select>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['manufactureYear'].hasError('required') &&
+            mainForm.controls['manufactureYear'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+
+        <div class="mb-3 col-6 px-2 ">
+            <label for="in-service-date" class="form-label">Ngày biên chế
+                <sup class="text-danger fw-bold">*</sup></label>
+            <input id="in-service-date"
+                   type="date"
+                   class="form-control"
+                   placeholder="Chọn ngày biên chế"
+                   formControlName="inServiceDate"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['inServiceDate'].touched) && (mainForm.controls['inServiceDate'].invalid),
+                    'is-valid': (mainForm.controls['inServiceDate'].touched) && (mainForm.controls['inServiceDate'].valid)}">
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['inServiceDate'].hasError('required') &&
+            mainForm.controls['inServiceDate'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['inServiceDate'].hasError('isMoreThanToday') &&
+            mainForm.controls['inServiceDate'].touched">{{constantsService.NOT_MORE_THAN_TODAY}}</sub>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 col-6 px-2 ">
+            <label for="management-unit" class="form-label">Đơn vị quản lý
+                <sup class="text-danger fw-bold">*</sup></label>
+            <select id="management-unit"
+                    class="form-select"
+                    aria-label="Default select management-unit"
+                    formControlName="managementUnit"
+                    [ngClass]="{
+                    'is-invalid': (mainForm.controls['managementUnit'].touched) && (mainForm.controls['managementUnit'].invalid),
+                    'is-valid': (mainForm.controls['managementUnit'].touched) && (mainForm.controls['managementUnit'].valid)}">
+                <option selected value="">-- Chọn đơn vị quản lý --</option>
+                <ng-container *ngFor="let v of managementUnitList;">
+                    <option [value]="v.id">{{v.managementUnitName}}</option>
+                </ng-container>
+            </select>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['managementUnit'].hasError('required') &&
+            mainForm.controls['managementUnit'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+
+        <div class="mb-3 col-6 px-2 ">
+            <label for="weapon-guarantee" class="form-label">Độ đảm bảo vũ khí
+                <sup class="text-danger fw-bold">*</sup></label>
+            <input id="weapon-guarantee"
+                   type="text"
+                   class="form-control"
+                   placeholder="Nhập độ đảm bảo vũ khí"
+                   formControlName="weaponGuarantee"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['weaponGuarantee'].touched) && (mainForm.controls['weaponGuarantee'].invalid),
+                    'is-valid': (mainForm.controls['weaponGuarantee'].touched) && (mainForm.controls['weaponGuarantee'].valid)}">
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['weaponGuarantee'].hasError('required') &&
+            mainForm.controls['weaponGuarantee'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 col-6 px-2 ">
+            <label for="accreditation-cycle" class="form-label">Chu kỳ kiểm định (tháng)
+                <sup class="text-danger fw-bold">*</sup></label>
+            <input id="accreditation-cycle"
+                   type="number"
+                   class="form-control"
+                   placeholder="Nhập chu kỳ kiểm định"
+                   formControlName="accreditationCycle"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['accreditationCycle'].touched) && (mainForm.controls['accreditationCycle'].invalid),
+                    'is-valid': (mainForm.controls['accreditationCycle'].touched) && (mainForm.controls['accreditationCycle'].valid)}">
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['accreditationCycle'].hasError('required') &&
+            mainForm.controls['accreditationCycle'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['accreditationCycle'].hasError('max') &&
+            mainForm.controls['accreditationCycle'].touched">{{invalidMessNumberToBig}}</sub>
+        </div>
+
+        <div class="mb-3 col-6 px-2 ">
+            <label for="accreditation-center" class="form-label">Trung tâm kiểm định
+                <sup class="text-danger fw-bold">*</sup></label>
+            <select id="accreditation-center"
+                    class="form-select"
+                    aria-label="Default select accreditation-center"
+                    formControlName="accreditationCenter"
+                    [ngClass]="{
+                    'is-invalid': (mainForm.controls['accreditationCenter'].touched) && (mainForm.controls['accreditationCenter'].invalid),
+                    'is-valid': (mainForm.controls['accreditationCenter'].touched) && (mainForm.controls['accreditationCenter'].valid)}">
+                <option selected value="">-- Chọn TT kiểm định --</option>
+                <ng-container *ngFor="let v of accreditationCenterList;">
+                    <option [value]="v.id">{{v.accreditationCenterName}}</option>
+                </ng-container>
+            </select>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['accreditationCenter'].hasError('required') &&
+            mainForm.controls['accreditationCenter'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 col-6 px-2 ">
+            <label for="quality-level" class="form-label">Mức chất lượng
+                <sup class="text-danger fw-bold">*</sup></label>
+            <select id="quality-level"
+                    class="form-select"
+                    aria-label="Default select quality-level"
+                    formControlName="qualityLevel"
+                    [ngClass]="{
+                    'is-invalid': (mainForm.controls['qualityLevel'].touched) && (mainForm.controls['qualityLevel'].invalid),
+                    'is-valid': (mainForm.controls['qualityLevel'].touched) && (mainForm.controls['qualityLevel'].valid)}">
+                <option selected value="">-- Chọn mức chất lượng --</option>
+                <ng-container *ngFor="let v of quantityLevelList;">
+                    <option [value]="v">{{v}}</option>
+                </ng-container>
+            </select>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['qualityLevel'].hasError('required') &&
+            mainForm.controls['qualityLevel'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+
+        <div class="mb-3 col-6 px-2 ">
+            <label for="instrument-status" class="form-label">Tình trạng
+                <sup class="text-danger fw-bold">*</sup></label>
+            <select id="instrument-status"
+                    class="form-select"
+                    aria-label="Default select instrument-status"
+                    formControlName="instrumentStatus"
+                    [ngClass]="{
+                    'is-invalid': (mainForm.controls['instrumentStatus'].touched) && (mainForm.controls['instrumentStatus'].invalid),
+                    'is-valid': (mainForm.controls['instrumentStatus'].touched) && (mainForm.controls['instrumentStatus'].valid)}">
+                <option selected value="">-- Chọn trình trạng --</option>
+                <ng-container *ngFor="let v of instrumentStatusList;">
+                    <option [value]="v.id">{{v.instrumentStatusName}}</option>
+                </ng-container>
+            </select>
+            <sub  class="text-danger"
+                  *ngIf="mainForm.controls['instrumentStatus'].hasError('required') &&
+            mainForm.controls['instrumentStatus'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3  w-single-col px-2">
+            <label for="detailed-description" class="form-label">Mô tả</label>
+            <textarea id="detailed-description"
+                      class="form-control"
+                      placeholder="Nhập mô tả"
+                      rows="5"
+                      formControlName="detailedDescription"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <input class="btn btn-danger me-2" type="reset" value="Làm mới" (click)="window.scrollTo(0, 0)">
+            <input class="btn btn-primary"
+                   type="submit"
+                   [disabled]="mainForm.invalid"
+                   value="Thêm mới">
+        </div>
+    </div>
+</form>
