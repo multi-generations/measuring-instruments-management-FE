@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MeasuringInstrumentListDto} from "../../model/dto/MeasuringInstrumentListDto";
+import {MeasuringInstrumentListDto} from "../../model/dto/list/MeasuringInstrumentListDto";
 import {InstrumentService} from "../../service/instrument.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Observer} from "rxjs";
@@ -198,7 +198,6 @@ export class InstrumentListComponent implements OnInit {
           this.deleteModalBody += '<tr class="col-12">' +
             `<td class="col-1">${this.deleteInstruments.indexOf(measuringInstrument) + 1}</td>` +
             `<td class="col-3">${measuringInstrument.instrumentName}</td>` +
-            `<td class="col-3">${measuringInstrument.instrumentPhoneticName}</td>` +
             `<td class="col-3">${measuringInstrument.instrumentSerialNumber}</td>` +
             `<td class="col-2">${measuringInstrument.instrumentSymbol}</td>` +
             '</tr>'
@@ -261,8 +260,7 @@ export class InstrumentListComponent implements OnInit {
     this.resetComponent();
 
     const isNotSearch = ($event.multipleSearch === "") && ($event.instrumentGroupId === "") &&
-      ($event.instrumentTypeId === "") && ($event.instrumentStatusId === "") &&
-      ($event.startInServiceDate === "") && ($event.endInServiceDate === "");
+      ($event.instrumentStatusId === "") && ($event.startInServiceDate === "") && ($event.endInServiceDate === "");
 
     if (isNotSearch) {
       this.measuringInstrumentSearchForm = undefined;

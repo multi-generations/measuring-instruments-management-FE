@@ -3,12 +3,12 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {AuthService} from "../../login/service/auth.service";
 import {MeasuringInstrumentSearchForm} from "../model/form/MeasuringInstrumentSearchForm";
-import {MeasuringInstrumentDetailDto} from "../model/dto/MeasuringInstrumentDetailDto";
-import {TechnicalCharacteristicDetailDto} from "../model/dto/TechnicalCharacteristicDetailDto";
-import {AttachedDocumentDetailDto} from "../model/dto/AttachedDocumentDetailDto";
-import {InstrumentAccreditationDetailDto} from "../model/dto/InstrumentAccreditationDetailDto";
-import {InstrumentRepairDetailDto} from "../model/dto/InstrumentRepairDetailDto";
-import {InstrumentUsageDetailDto} from "../model/dto/InstrumentUsageDetailDto";
+import {MeasuringInstrumentDetailDto} from "../model/dto/detail/MeasuringInstrumentDetailDto";
+import {TechnicalCharacteristicDetailDto} from "../model/dto/detail/TechnicalCharacteristicDetailDto";
+import {AttachedDocumentDetailDto} from "../model/dto/detail/AttachedDocumentDetailDto";
+import {InstrumentAccreditationDetailDto} from "../model/dto/detail/InstrumentAccreditationDetailDto";
+import {InstrumentRepairDetailDto} from "../model/dto/detail/InstrumentRepairDetailDto";
+import {InstrumentUsageDetailDto} from "../model/dto/detail/InstrumentUsageDetailDto";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,6 @@ export class InstrumentService {
     if (measuringInstrumentSearchForm !== undefined) {
       url += `&multipleSearch=${measuringInstrumentSearchForm.multipleSearch}`
       + `&instrumentGroupId=${measuringInstrumentSearchForm.instrumentGroupId}`
-      + `&instrumentTypeId=${measuringInstrumentSearchForm.instrumentTypeId}`
       + `&instrumentStatusId=${measuringInstrumentSearchForm.instrumentStatusId}`
       + `&startInServiceDate=${measuringInstrumentSearchForm.startInServiceDate}`
       + `&endInServiceDate=${measuringInstrumentSearchForm.endInServiceDate}`;

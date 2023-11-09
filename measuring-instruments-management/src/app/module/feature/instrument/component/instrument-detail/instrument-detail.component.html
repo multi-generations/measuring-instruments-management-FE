@@ -1,14 +1,11 @@
 <div id="instrument-main-info-container">
   <p class="mb-4" id="instrument-detail-title-container">
-    <span class="h3 text-uppercase">
-      {{measuringInstrumentDetailDto?.instrumentPhoneticName}}
-    </span>
     <span class="badge rounded-pill align-top text-capitalize user-select-none" style="font-size: 14px;"
-          [class.bg-success]="measuringInstrumentDetailDto?.instrumentStatusName === 'Đang sử dụng'"
-          [class.bg-danger]="measuringInstrumentDetailDto?.instrumentStatusName === 'Hỏng'"
-          [class.bg-warning]="measuringInstrumentDetailDto?.instrumentStatusName === 'Sửa chữa'"
-          [class.bg-primary]="measuringInstrumentDetailDto?.instrumentStatusName === 'Kiểm định'">
-        {{measuringInstrumentDetailDto?.instrumentStatusName}}</span>
+          [class.bg-success]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Tốt'"
+          [class.bg-danger]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Hỏng'"
+          [class.bg-warning]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Sửa chữa'"
+          [class.bg-primary]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Kiểm định'">
+        {{measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName}}</span>
   </p>
   <div class="d-flex mb-4" id="instrument-image-info-container">
     <div id="instrument-image-container"
@@ -68,64 +65,68 @@
     </div>
     <div id="instrument-info-container"
          class="col-8 d-flex flex-column overflow-auto pe-3" style="max-width: calc(100% - 350px)">
-      <div class="d-flex">
-        <ul class="list-group col-6 pe-2">
-          <li class="list-group-item">
-            <span>Tên gốc: </span>
-            <span>{{measuringInstrumentDetailDto?.instrumentName}}</span>
-          </li>
-          <li class="list-group-item">
+      <ul class="list-group">
+        <li class="list-group-item d-flex">
+          <span>Tên gốc: </span>
+          <span>{{measuringInstrumentDetailDto?.instrumentName}}</span>
+        </li>
+        <li class="list-group-item d-flex">
+          <div class="col-6">
             <span>Nhóm: </span>
-            <span>{{measuringInstrumentDetailDto?.instrumentGroupName}}</span>
-          </li>
-          <li class="list-group-item">
-            <span>Loại: </span>
-            <span>{{measuringInstrumentDetailDto?.instrumentTypeName}}</span>
-          </li>
-          <li class="list-group-item">
+            <span>{{measuringInstrumentDetailDto?.instrumentGroup?.instrumentGroupName}}</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="col-6">
             <span>Ký hiệu: </span>
             <span>{{measuringInstrumentDetailDto?.instrumentSymbol}}</span>
-          </li>
-          <li class="list-group-item">
+          </div>
+          <div class="col-6">
             <span>Số hiệu: </span>
             <span>{{measuringInstrumentDetailDto?.instrumentSerialNumber}}</span>
-          </li>
-          <li class="list-group-item">
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="col-6">
             <span>Cấp quản lý: </span>
             <span>{{measuringInstrumentDetailDto?.managementLevel}}</span>
-          </li>
-          <li class="list-group-item">
+          </div>
+          <div class="col-6">
             <span>Đơn vị quản lý: </span>
             <span>{{measuringInstrumentDetailDto?.managementUnit}}</span>
-          </li>
-        </ul>
-        <ul class="list-group col-6">
-          <li class="list-group-item">
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="col-6">
             <span>Ngày biên chế: </span>
             <span>{{measuringInstrumentDetailDto?.inServiceDate | date: 'dd/MM/yyyy'}}</span>
-          </li>
-          <li class="list-group-item">
+          </div>
+          <div class="col-6">
+            <span>Chu kỳ kiểm định: </span>
+            <span>{{measuringInstrumentDetailDto?.accreditationCycle}} tháng</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="col-6">
             <span>Nước sản xuất: </span>
             <span>{{measuringInstrumentDetailDto?.manufactureCountry}}</span>
-          </li>
-          <li class="list-group-item">
+          </div>
+          <div class="col-6">
             <span>Năm sản xuất: </span>
             <span>{{measuringInstrumentDetailDto?.manufactureYear}}</span>
-          </li>
-          <li class="list-group-item">
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="col-6">
             <span>Đảm bảo vũ khí: </span>
             <span>{{measuringInstrumentDetailDto?.weaponGuarantee}}</span>
-          </li>
-          <li class="list-group-item">
-            <span>Chu kỳ kiểm định: </span>
-            <span>{{measuringInstrumentDetailDto?.accreditationCycle}}</span>
-          </li>
-          <li class="list-group-item">
+          </div>
+          <div class="col-6">
             <span>Mức chất lượng: </span>
             <span>{{measuringInstrumentDetailDto?.qualityLevel}}</span>
-          </li>
-        </ul>
-      </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
   <div id="instrument-detail-description-container">
@@ -155,12 +156,14 @@
       </div>
       <thead *ngIf="technicalCharacteristics.length > 0">
       <tr class="text-center row col-12 flex-nowrap">
-        <th scope="col" class="col-3">Bắt buộc</th>
-        <th scope="col" class="col-3">Cơ bản</th>
-        <th scope="col" class="col-1">Đơn vị đo</th>
-        <th scope="col" class="col-1">Khoảng đo</th>
+        <th scope="col" class="col-3">Loại thiết bị</th>
+        <th scope="col" class="col-2">Tên kỹ thuật</th>
+        <th scope="col" class="col-1">Điểm đo đầu</th>
+        <th scope="col" class="col-1">Đơn vị</th>
+        <th scope="col" class="col-1">Điểm đo cuối</th>
+        <th scope="col" class="col-1">Đơn vị</th>
         <th scope="col" class="col-1">Phương sai</th>
-        <th scope="col" class="col-2">Độ không đảm bảo</th>
+        <th scope="col" class="col-1">Đơn vị</th>
         <th scope="col" class="col-1 text-danger">
           <i class="fa-solid fa-trash fs-5"></i>
         </th>
@@ -168,12 +171,14 @@
       </thead>
       <tbody *ngIf="technicalCharacteristics.length > 0">
       <tr class="row col-12" *ngFor="let item of technicalCharacteristics;">
-        <td class="col-3 d-flex align-items-start justify-content-start text-start">{{item.basicCharacteristic}}</td>
-        <td class="col-3 d-flex align-items-start justify-content-start text-start">{{item.requiredCharacteristic}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringUnitName}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringRange}}</td>
+        <td class="col-3 d-flex align-items-start justify-content-start text-start">{{item.instrumentType.instrumentTypeName}}</td>
+        <td class="col-3 d-flex align-items-start justify-content-start text-start">{{item.technicalType.technicalTypeName}}</td>
+        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringRangeStart}}</td>
+        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringUnitStart}}</td>
+        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringRangeEnd}}</td>
+        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringUnitEnd}}</td>
         <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringError}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-center">{{item.measuringUncertainlyDegree}}</td>
+        <td class="col-2 d-flex align-items-start justify-content-center">{{item.measuringErrorUnit}}</td>
         <td class="col-1 d-flex align-items-start justify-content-center ">
           <button class="btn btn-danger"
                   (click)="showDeleteModal(item.id, 'technicalCharacteristic')">
@@ -210,7 +215,6 @@
       </thead>
       <tbody *ngIf="attachedDocuments.length > 0">
       <tr class="row col-12" *ngFor="let item of attachedDocuments;">
-        <td class="col-3 d-flex align-items-start justify-content-center">{{item.documentPhoneticName}}</td>
         <td class="col-3 d-flex align-items-start justify-content-center">{{item.documentName}}</td>
         <td class="col-1 d-flex align-items-start justify-content-center">{{item.documentSymbol}}</td>
         <td class="col-1 d-flex align-items-start justify-content-center">{{item.quantity}}</td>

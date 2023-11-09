@@ -8,13 +8,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../shared/shared.module";
 import {InstrumentSearchComponent} from './component/instrument-search/instrument-search.component';
 import {InstrumentDetailComponent} from './component/instrument-detail/instrument-detail.component';
+import { InstrumentCreateComponent } from './component/instrument-create/instrument-create.component';
 
 
 @NgModule({
   declarations: [
     InstrumentListComponent,
     InstrumentSearchComponent,
-    InstrumentDetailComponent
+    InstrumentDetailComponent,
+    InstrumentCreateComponent
   ],
   imports: [
     CommonModule,
