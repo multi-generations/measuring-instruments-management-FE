@@ -9,6 +9,7 @@ import {AttachedDocumentDetailDto} from "../model/dto/detail/AttachedDocumentDet
 import {InstrumentAccreditationDetailDto} from "../model/dto/detail/InstrumentAccreditationDetailDto";
 import {InstrumentRepairDetailDto} from "../model/dto/detail/InstrumentRepairDetailDto";
 import {InstrumentUsageDetailDto} from "../model/dto/detail/InstrumentUsageDetailDto";
+import {MeasuringInstrumentForm} from "../model/form/MeasuringInstrumentForm";
 
 @Injectable({
   providedIn: 'root'
@@ -83,5 +84,11 @@ export class InstrumentService {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
     return this._http.get<InstrumentUsageDetailDto[]>(`${this._API_URL}/${id}/usages`, {headers});
+  }
+
+  public create(measuringInstrumentForm: MeasuringInstrumentForm): Observable<any> {
+    const jwt = this._authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
+    return this._http.post(this._API_URL, measuringInstrumentForm, {headers});
   }
 }
