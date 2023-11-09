@@ -13,3 +13,7 @@ button {
 button:hover {
   padding-left: 24px;
 }
+
+button.btn-child:hover {
+  padding-left: 56px !important;
+}

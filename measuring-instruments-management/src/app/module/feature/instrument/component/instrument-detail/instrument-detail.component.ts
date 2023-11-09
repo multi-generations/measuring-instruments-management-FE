@@ -1,14 +1,14 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MeasuringInstrumentDetailDto} from "../../model/dto/MeasuringInstrumentDetailDto";
+import {MeasuringInstrumentDetailDto} from "../../model/dto/detail/MeasuringInstrumentDetailDto";
 import {Observer} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {InstrumentService} from "../../service/instrument.service";
 import {ActivatedRoute} from "@angular/router";
-import {TechnicalCharacteristicDetailDto} from "../../model/dto/TechnicalCharacteristicDetailDto";
-import {AttachedDocumentDetailDto} from "../../model/dto/AttachedDocumentDetailDto";
-import {InstrumentAccreditationDetailDto} from "../../model/dto/InstrumentAccreditationDetailDto";
-import {InstrumentRepairDetailDto} from "../../model/dto/InstrumentRepairDetailDto";
-import {InstrumentUsageDetailDto} from "../../model/dto/InstrumentUsageDetailDto";
+import {TechnicalCharacteristicDetailDto} from "../../model/dto/detail/TechnicalCharacteristicDetailDto";
+import {AttachedDocumentDetailDto} from "../../model/dto/detail/AttachedDocumentDetailDto";
+import {InstrumentAccreditationDetailDto} from "../../model/dto/detail/InstrumentAccreditationDetailDto";
+import {InstrumentRepairDetailDto} from "../../model/dto/detail/InstrumentRepairDetailDto";
+import {InstrumentUsageDetailDto} from "../../model/dto/detail/InstrumentUsageDetailDto";
 import {Carousel} from "bootstrap";
 import {ConstantsService} from "../../../../shared/service/constants.service";
 import Swal from "sweetalert2";
@@ -268,12 +268,14 @@ export class InstrumentDetailComponent implements OnInit{
       '<table class="table text-center">' +
       '<thead>' +
       '<tr class="col-12">' +
-      '<th class="col-4">Bắt buộc</th>' +
-      '<th class="col-4">Cơ bản</th>' +
-      '<th class="col-1">Đơn vị đo</th>' +
-      '<th class="col-1">Khoảng đo</th>' +
+      '<th class="col-3">Loại thiết bị</th>' +
+      '<th class="col-3">Tên kỹ thuật</th>' +
+      '<th class="col-1">Điểm đo đầu</th>' +
+      '<th class="col-1">Đơn vị</th>' +
+      '<th class="col-1">Điểm đo cuối</th>' +
+      '<th class="col-1">Đơn vị</th>' +
       '<th class="col-1">Phương sai</th>' +
-      '<th class="col-1">Độ không đảm bảo</th>' +
+      '<th class="col-1">Đơn vị</th>' +
       '</tr>' +
       '</thead>' +
       '<tbody>';
@@ -281,12 +283,14 @@ export class InstrumentDetailComponent implements OnInit{
     const deleteTechnicalCharacteristic = this.technicalCharacteristics.find(value => value.id === id);
 
     modalBody += '<tr class="col-12">' +
-      `<td class="col-4 text-start">${deleteTechnicalCharacteristic?.requiredCharacteristic}</td>` +
-      `<td class="col-4 text-start">${deleteTechnicalCharacteristic?.basicCharacteristic}</td>` +
-      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringUnitName}</td>` +
-      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringRange}</td>` +
+      `<td class="col-4 text-start">${deleteTechnicalCharacteristic?.instrumentType.instrumentTypeName}</td>` +
+      `<td class="col-4 text-start">${deleteTechnicalCharacteristic?.technicalType.technicalTypeName}</td>` +
+      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringRangeStart}</td>` +
+      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringUnitStart}</td>` +
+      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringRangeEnd}</td>` +
+      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringUnitEnd}</td>` +
       `<td class="col-1">${deleteTechnicalCharacteristic?.measuringError}</td>` +
-      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringUncertainlyDegree}</td>` +
+      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringErrorUnit}</td>` +
       '</tr></body></table></div>'
 
     return modalBody;
@@ -314,7 +318,6 @@ export class InstrumentDetailComponent implements OnInit{
     const deleteAttachedDocument = this.attachedDocuments.find(value => value.id === id);
 
     modalBody += '<tr class="col-12">' +
-      `<td class="col-3">${deleteAttachedDocument?.documentPhoneticName}</td>` +
       `<td class="col-3">${deleteAttachedDocument?.documentName}</td>` +
       `<td class="col-1">${deleteAttachedDocument?.documentSymbol}</td>` +
       `<td class="col-1">${deleteAttachedDocument?.quantity}</td>` +

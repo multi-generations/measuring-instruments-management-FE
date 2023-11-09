@@ -4,60 +4,57 @@
         (ngSubmit)="submit()"
         class="px-4 py-2">
     <div class="row">
-      <div class="mb-2 col-4">
-        <label for="multipleSearch" class="form-label">Tên/ Số hiệu/ Ký hiệu/ Cấp/ Đơn vị:</label>
+      <div class="col-6 mb-2 mw-600px">
+        <label for="multipleSearch" class="form-label">Tên/ Số hiệu/ Ký hiệu/ Đơn vị quản lý:</label>
         <input type="text" class="form-control" id="multipleSearch" formControlName="multipleSearch">
       </div>
-      <div class="mb-2 col-4">
+      <div class="col-6 mb-2 mw-600px">
         <label for="instrumentGroupId" class="form-label">Nhóm:</label>
         <select class="form-select"
                 aria-label="Default select"
                 id="instrumentGroupId"
                 formControlName="instrumentGroupId">
-          <option selected value="">--Chọn nhóm thiết bị--</option>
+          <option selected value="">-- Chọn nhóm thiết bị --</option>
           <option
             *ngFor="let g of instrumentGroups"
             [value]="g.id">{{g.instrumentGroupName}}</option>
         </select>
       </div>
-      <div class="mb-2 col-4">
-        <label for="instrumentTypeId" class="form-label">Loại:</label>
-        <select class="form-select"
-                aria-label="Default select"
-                id="instrumentTypeId"
-                formControlName="instrumentTypeId">
-          <option selected value="">--Chọn loại thiết bị--</option>
-          <option
-            *ngFor="let t of instrumentTypes"
-            [value]="t.id">{{t.instrumentTypeName}}</option>
-        </select>
-      </div>
     </div>
     <div class="row">
-      <div class="mb-2 col-4">
+      <div class="col-6 mb-2 mw-600px">
         <label for="instrumentStatusId" class="form-label">Tình trạng:</label>
         <select class="form-select"
                 aria-label="Default select"
                 id="instrumentStatusId"
                 formControlName="instrumentStatusId">
-          <option selected value="">--Chọn tình trạng--</option>
+          <option selected value="">-- Chọn tình trạng --</option>
           <option
             *ngFor="let s of instrumentStatuses"
             [value]="s.id">{{s.instrumentStatusName}}</option>
         </select>
       </div>
-      <div class="mb-2 col-4">
-        <label for="startInServiceDate" class="form-label">Vào biên chế từ ngày:</label>
-        <input type="date" class="form-control" id="startInServiceDate" formControlName="startInServiceDate">
+      <div class="col-6 mb-2 d-flex pe-2 mw-600px">
+        <div class="col-auto" style="width: 180px;">
+          <label for="startInServiceDate" class="form-label">Vào biên chế từ ngày:</label>
+          <input type="date" class="form-control" id="startInServiceDate" formControlName="startInServiceDate">
+        </div>
+        <div class="col-auto">
+          <div class="d-flex align-items-center justify-content-center px-2" style="height: 38px; margin-top: 32px">
+            <span>-</span>
+          </div>
+        </div>
+        <div class="col-auto" style="width: 180px;">
+          <label for="endInServiceDate" class="form-label">Đến ngày:</label>
+          <input type="date" class="form-control" id="endInServiceDate" formControlName="endInServiceDate">
+        </div>
+        <div class="flex-grow-1 d-flex justify-content-end">
+          <div style="height: 38px; margin-top: 32px">
+            <button class="btn btn-light me-2" type="button" (click)="resetForm()">Làm mới</button>
+            <button class="btn btn-secondary" type="submit">Tìm kiếm</button>
+          </div>
+        </div>
       </div>
-      <div class="mb-2 col-4">
-        <label for="endInServiceDate" class="form-label">Đến ngày:</label>
-        <input type="date" class="form-control" id="endInServiceDate" formControlName="endInServiceDate">
-      </div>
-    </div>
-    <div class="row justify-content-end pe-2">
-      <button class="btn btn-light col-auto me-2" type="button" (click)="resetForm()">Làm mới</button>
-      <button class="btn btn-secondary col-auto" type="submit">Tìm kiếm</button>
     </div>
   </form>
 </div>

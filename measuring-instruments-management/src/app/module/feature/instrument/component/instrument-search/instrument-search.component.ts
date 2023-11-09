@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {InstrumentGroup} from "../../model/entity/InstrumentGroup";
-import {InstrumentType} from "../../model/entity/InstrumentType";
 import {InstrumentStatus} from "../../model/entity/InstrumentStatus";
 import {Observer} from "rxjs";
 import {InstrumentGroupService} from "../../service/instrument-group.service";
@@ -20,7 +19,6 @@ export class InstrumentSearchComponent {
   emitSearchValue: EventEmitter<MeasuringInstrumentSearchForm> = new EventEmitter<MeasuringInstrumentSearchForm>();
   searchForm: FormGroup;
   instrumentGroups: InstrumentGroup[] = [];
-  instrumentTypes: InstrumentType[] = [];
   instrumentStatuses: InstrumentStatus[] = [];
 
   constructor(private _instrumentGroupService: InstrumentGroupService,
@@ -29,14 +27,12 @@ export class InstrumentSearchComponent {
     this.searchForm = new FormGroup({
       multipleSearch: new FormControl(''),
       instrumentGroupId: new FormControl(''),
-      instrumentTypeId: new FormControl(''),
       instrumentStatusId: new FormControl(''),
       startInServiceDate: new FormControl(''),
       endInServiceDate: new FormControl('')
     });
 
     this.findAllInstrumentGroups();
-    this.findAllInstrumentTypes();
     this.findAllInstrumentStatuses();
   }
 
@@ -58,26 +54,6 @@ export class InstrumentSearchComponent {
     }
 
     this._instrumentGroupService.findAll().subscribe(observer);
-  }
-
-  public findAllInstrumentTypes() {
-    const observer: Observer<InstrumentType[]> = {
-      next: data => {
-        this.instrumentTypes = data;
-      },
-      error: err => {
-        Swal.fire({
-          position: 'center',
-          title: 'Lỗi!',
-          html: '<p>Có lỗi xảy ra! </p><p>(' + err.message + ')</p>',
-          icon: 'error'
-        })
-      },
-      complete: () => {
-      }
-    }
-
-    this._instrumentTypeService.findAll().subscribe(observer);
   }
 
   public findAllInstrumentStatuses() {
@@ -104,11 +80,11 @@ export class InstrumentSearchComponent {
     this.searchForm.setValue({
       multipleSearch: '',
       instrumentGroupId: '',
-      instrumentTypeId: '',
       instrumentStatusId: '',
       startInServiceDate: '',
       endInServiceDate: ''
-    })
+    });
+    this.emitSearchValue.emit(this.searchForm.value);
   }
 
   public submit() {
