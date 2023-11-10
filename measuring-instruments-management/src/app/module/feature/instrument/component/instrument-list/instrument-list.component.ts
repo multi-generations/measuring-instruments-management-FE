@@ -186,10 +186,9 @@ export class InstrumentListComponent implements OnInit {
         '<thead>' +
         '<tr class="col-12">' +
         '<th class="col-1">#</th>' +
-        '<th class="col-3">Tên</th>' +
-        '<th class="col-3">Phiên âm</th>' +
+        '<th class="col-5">Tên</th>' +
         '<th class="col-3">Số hiệu</th>' +
-        '<th class="col-2">Ký hiệu</th>' +
+        '<th class="col-3">Ký hiệu</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>';
@@ -197,9 +196,9 @@ export class InstrumentListComponent implements OnInit {
         if (measuringInstrument) {
           this.deleteModalBody += '<tr class="col-12">' +
             `<td class="col-1">${this.deleteInstruments.indexOf(measuringInstrument) + 1}</td>` +
-            `<td class="col-3">${measuringInstrument.instrumentName}</td>` +
+            `<td class="col-5">${measuringInstrument.instrumentName}</td>` +
             `<td class="col-3">${measuringInstrument.instrumentSerialNumber}</td>` +
-            `<td class="col-2">${measuringInstrument.instrumentSymbol}</td>` +
+            `<td class="col-3">${measuringInstrument.instrumentSymbol}</td>` +
             '</tr>'
         }
       }

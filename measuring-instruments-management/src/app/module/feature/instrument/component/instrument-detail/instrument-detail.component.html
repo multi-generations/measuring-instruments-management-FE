@@ -1,5 +1,6 @@
 <div id="instrument-main-info-container">
   <p class="mb-4" id="instrument-detail-title-container">
+    <span class="fs-3 me-2">{{measuringInstrumentDetailDto?.instrumentName}}</span>
     <span class="badge rounded-pill align-top text-capitalize user-select-none" style="font-size: 14px;"
           [class.bg-success]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Tốt'"
           [class.bg-danger]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Hỏng'"
@@ -67,12 +68,8 @@
          class="col-8 d-flex flex-column overflow-auto pe-3" style="max-width: calc(100% - 350px)">
       <ul class="list-group">
         <li class="list-group-item d-flex">
-          <span>Tên gốc: </span>
-          <span>{{measuringInstrumentDetailDto?.instrumentName}}</span>
-        </li>
-        <li class="list-group-item d-flex">
           <div class="col-6">
-            <span>Nhóm: </span>
+            <span>Nhóm máy: </span>
             <span>{{measuringInstrumentDetailDto?.instrumentGroup?.instrumentGroupName}}</span>
           </div>
         </li>
@@ -93,7 +90,7 @@
           </div>
           <div class="col-6">
             <span>Đơn vị quản lý: </span>
-            <span>{{measuringInstrumentDetailDto?.managementUnit}}</span>
+            <span>{{measuringInstrumentDetailDto?.managementUnit?.managementUnitName}}</span>
           </div>
         </li>
         <li class="list-group-item">

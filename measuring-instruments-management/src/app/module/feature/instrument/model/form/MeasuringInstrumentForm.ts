@@ -4,6 +4,7 @@ import {AccreditationCenter} from "../entity/AccreditationCenter";
 import {InstrumentStatus} from "../entity/InstrumentStatus";
 
 export interface MeasuringInstrumentForm {
+  id?: number;
   instrumentGroup?: InstrumentGroup;
   instrumentName?: string;
   instrumentSymbol?: string;
