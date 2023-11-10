@@ -29,10 +29,10 @@ export class InstrumentService {
 
     if (measuringInstrumentSearchForm !== undefined) {
       url += `&multipleSearch=${measuringInstrumentSearchForm.multipleSearch}`
-      + `&instrumentGroupId=${measuringInstrumentSearchForm.instrumentGroupId}`
-      + `&instrumentStatusId=${measuringInstrumentSearchForm.instrumentStatusId}`
-      + `&startInServiceDate=${measuringInstrumentSearchForm.startInServiceDate}`
-      + `&endInServiceDate=${measuringInstrumentSearchForm.endInServiceDate}`;
+        + `&instrumentGroupId=${measuringInstrumentSearchForm.instrumentGroupId}`
+        + `&instrumentStatusId=${measuringInstrumentSearchForm.instrumentStatusId}`
+        + `&startInServiceDate=${measuringInstrumentSearchForm.startInServiceDate}`
+        + `&endInServiceDate=${measuringInstrumentSearchForm.endInServiceDate}`;
     }
 
     return this._http.get<any>(url, {headers});
