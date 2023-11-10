@@ -47,11 +47,11 @@ export class InstrumentCreateComponent implements OnInit {
         this.createForm();
         this.initInstrumentGroupList();
         this.initManagementUnitList();
-        this.initAccreditationCenterList();
         this.initInstrumentStatusList();
         this.initYearList();
         this.initCountryList();
         this.initQuantityLevelList();
+        this.initAccreditationCenterList();
     }
 
     createForm() {

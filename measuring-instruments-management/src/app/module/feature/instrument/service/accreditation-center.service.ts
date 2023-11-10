@@ -8,7 +8,7 @@ import {AccreditationCenter} from "../model/entity/AccreditationCenter";
   providedIn: 'root'
 })
 export class AccreditationCenterService {
-  private _API_URL = 'http://localhost:8080/api/v1/accreditation-centers'
+  private _API_URL = 'http://localhost:8080/api/v1/accreditation-center'
 
   constructor(private _http: HttpClient,
               private _authService: AuthService) {
