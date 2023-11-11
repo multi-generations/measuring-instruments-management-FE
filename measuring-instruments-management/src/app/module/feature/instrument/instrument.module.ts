@@ -14,6 +14,7 @@ import { TechnicalCharacteristicCreateComponent } from './component/technical-ch
 import { TechnicalCharacteristicUpdateComponent } from './component/technical-characterristic-update/technical-characteristic-update.component';
 import { AttachedDocumentCreateComponent } from './component/attached-document-create/attached-document-create.component';
 import { AttachedDocumentUpdateComponent } from './component/attached-document-update/attached-document-update.component';
+import { InstrumentUsageCreateComponent } from './component/instrument-usage-create/instrument-usage-create.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AttachedDocumentUpdateComponent } from './component/attached-document-u
     TechnicalCharacteristicCreateComponent,
     TechnicalCharacteristicUpdateComponent,
     AttachedDocumentCreateComponent,
-    AttachedDocumentUpdateComponent
+    AttachedDocumentUpdateComponent,
+    InstrumentUsageCreateComponent
   ],
   imports: [
     CommonModule,
