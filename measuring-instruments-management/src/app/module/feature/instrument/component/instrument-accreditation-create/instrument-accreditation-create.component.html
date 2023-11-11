@@ -1,0 +1,244 @@
+<div
+  class="modal fade"
+  id="instrument-accreditation-create"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          Thêm mới Theo dõi kiểm định
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          id="instrument-accreditation-create-modal-close-btn"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <form [formGroup]="mainForm" (ngSubmit)="submit()" *ngIf="mainForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3 col-6 pe-1">
+              <label for="accreditation-date" class="form-label"
+                >Ngày tháng năm kiểm định
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="accreditation-date"
+                type="date"
+                class="form-control"
+                placeholder="Chọn ngày kiểm định"
+                formControlName="accreditationDate"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['accreditationDate'].touched &&
+                    mainForm.controls['accreditationDate'].invalid,
+                  'is-valid':
+                    mainForm.controls['accreditationDate'].touched &&
+                    mainForm.controls['accreditationDate'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['accreditationDate'].hasError('required') &&
+                  mainForm.controls['accreditationDate'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['accreditationDate'].hasError(
+                    'isMoreThanToday'
+                  ) && mainForm.controls['accreditationDate'].touched
+                "
+                >{{ constantsService.NOT_MORE_THAN_TODAY }}</sub
+              >
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="valid-accreditation-end-date" class="form-label"
+                >Thời hạn hết hiệu lực
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="valid-accreditation-end-date"
+                type="date"
+                class="form-control"
+                placeholder="Nhập thời hạn hết hiệu lực"
+                formControlName="validAccreditationEndDate"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['validAccreditationEndDate'].touched &&
+                    mainForm.controls['validAccreditationEndDate'].invalid,
+                  'is-valid':
+                    mainForm.controls['validAccreditationEndDate'].touched &&
+                    mainForm.controls['validAccreditationEndDate'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['validAccreditationEndDate'].hasError(
+                    'required'
+                  ) && mainForm.controls['validAccreditationEndDate'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="accreditation-place" class="form-label"
+                >Nơi kiểm định <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="accreditation-place"
+                type="text"
+                class="form-control"
+                placeholder="Nhập người sử dụng"
+                formControlName="accreditationPlace"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['accreditationPlace'].touched &&
+                    mainForm.controls['accreditationPlace'].invalid,
+                  'is-valid':
+                    mainForm.controls['accreditationPlace'].touched &&
+                    mainForm.controls['accreditationPlace'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['accreditationPlace'].hasError(
+                    'required'
+                  ) && mainForm.controls['accreditationPlace'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="accreditation-result" class="form-label"
+                >Kết quả kiểm định
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <textarea
+                id="accreditation-result"
+                type="text"
+                class="form-control"
+                placeholder="Nhập kết quả kiểm định"
+                formControlName="accreditationResult"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['accreditationResult'].touched &&
+                    mainForm.controls['accreditationResult'].invalid,
+                  'is-valid':
+                    mainForm.controls['accreditationResult'].touched &&
+                    mainForm.controls['accreditationResult'].valid
+                }"
+              ></textarea>
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['accreditationResult'].hasError(
+                    'required'
+                  ) && mainForm.controls['accreditationResult'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="accreditation-confirm-number" class="form-label"
+                >Số giấy chứng nhận kiểm định
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="accreditation-confirm-number"
+                type="text"
+                class="form-control"
+                placeholder="Nhập số giấy chứng nhận kiểm định"
+                formControlName="accreditationConfirmNumber"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['accreditationConfirmNumber'].touched &&
+                    mainForm.controls['accreditationConfirmNumber'].invalid,
+                  'is-valid':
+                    mainForm.controls['accreditationConfirmNumber'].touched &&
+                    mainForm.controls['accreditationConfirmNumber'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['accreditationConfirmNumber'].hasError(
+                    'required'
+                  ) && mainForm.controls['accreditationConfirmNumber'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="accreditor" class="form-label"
+                >Người kiểm định <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="accreditor"
+                type="text"
+                class="form-control"
+                placeholder="Nhập người kiểm định"
+                formControlName="accreditor"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['accreditor'].touched &&
+                    mainForm.controls['accreditor'].invalid,
+                  'is-valid':
+                    mainForm.controls['accreditor'].touched &&
+                    mainForm.controls['accreditor'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['accreditor'].hasError('required') &&
+                  mainForm.controls['accreditor'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="accreditation-note" class="form-label">Ghi chú</label>
+              <textarea
+                id="accreditation-note"
+                type="text"
+                class="form-control"
+                placeholder="Nhập ghi chú"
+                formControlName="accreditationNote"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Thêm mới</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
