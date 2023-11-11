@@ -91,4 +91,10 @@ export class InstrumentService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
     return this._http.post(this._API_URL, measuringInstrumentForm, {headers});
   }
+
+  public update(id: number, measuringInstrumentForm: MeasuringInstrumentForm): Observable<any> {
+    const jwt = this._authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
+    return this._http.put(this._API_URL + `/${id}`, measuringInstrumentForm, {headers});
+  }
 }

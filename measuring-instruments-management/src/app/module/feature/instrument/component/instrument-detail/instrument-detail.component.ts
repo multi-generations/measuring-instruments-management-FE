@@ -12,6 +12,7 @@ import {InstrumentUsageDetailDto} from "../../model/dto/detail/InstrumentUsageDe
 import {Carousel} from "bootstrap";
 import {ConstantsService} from "../../../../shared/service/constants.service";
 import Swal from "sweetalert2";
+import {TechnicalCharacteristicService} from "../../service/technical-characteristic.service";
 
 @Component({
   selector: 'app-instrument-detail',
@@ -21,6 +22,7 @@ import Swal from "sweetalert2";
 export class InstrumentDetailComponent implements OnInit{
   @ViewChild('carousel', {static: false}) carousel: ElementRef | undefined;
 
+  curId: number = 0
   measuringInstrumentDetailDto: MeasuringInstrumentDetailDto | undefined;
   instrumentImageLinks: string[] = [];
   technicalCharacteristics: TechnicalCharacteristicDetailDto[] = [];
@@ -29,20 +31,25 @@ export class InstrumentDetailComponent implements OnInit{
   instrumentRepairs: InstrumentRepairDetailDto[] = [];
   instrumentUsages: InstrumentUsageDetailDto[] = [];
   instrumentImageActiveSrc = '';
+  technicalCharacteristicIdUpdate = 0;
 
 
   constructor(private _instrumentService: InstrumentService,
               private _activatedRoute: ActivatedRoute,
-              public constantsService: ConstantsService) {
+              public constantsService: ConstantsService,
+              private technicalCharacteristicService: TechnicalCharacteristicService) {
     this._activatedRoute.params.subscribe(value => {
       const id = value['id'];
-      this.findDtoById(id);
-      this.findAllImageLinks(id);
-      this.findAllTechnicalCharacteristics(id);
-      this.findAllAttachedDocuments(id);
-      this.findAllAccreditations(id);
-      this.findAllRepairs(id);
-      this.findAllUsages(id);
+      if (id) {
+        this.curId = +id;
+        this.findDtoById(id);
+        this.findAllImageLinks(id);
+        this.findAllTechnicalCharacteristics(id);
+        this.findAllAttachedDocuments(id);
+        this.findAllAccreditations(id);
+        this.findAllRepairs(id);
+        this.findAllUsages(id);
+      }
     })
   }
 
@@ -199,6 +206,13 @@ export class InstrumentDetailComponent implements OnInit{
     }
   }
 
+  // Update
+  setTechnicalCharacteristicIdUpdate(id: number) {
+    this.technicalCharacteristicIdUpdate = id;
+  }
+
+  // Delete
+
   public showDeleteModal(id: number, deleteType: string) {
     let modalBody = this.constantsService.NOT_CHOOSE_FOR_DELETE;
 
@@ -297,7 +311,24 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteTechnicalCharacteristicById(id: number) {
-    alert('delete: ' + id);
+    this.technicalCharacteristicService.deleteById(id).subscribe(next => {
+      Swal.fire({
+        position: 'center',
+        title: 'Thành công!',
+        text: 'Xóa thành công!',
+        icon: 'success',
+        timer: 200,
+        showConfirmButton: false
+      });
+      this.findAllTechnicalCharacteristics(this.curId);
+    }, (error: HttpErrorResponse) => {
+      Swal.fire({
+        position: 'center',
+        title: 'Lỗi!',
+        html: '<p>Xóa không thành công! </p><p>(' + error.message + ')</p>',
+        icon: 'error'
+      })
+    });
   }
 
   public setModalBodyAttachedDocument(id: number) {
@@ -433,5 +464,15 @@ export class InstrumentDetailComponent implements OnInit{
 
   public deleteInstrumentUsageById(id: number) {
     alert('delete: ' + id);
+  }
+
+  checkResult(typeChange: string, resultChange: boolean) {
+    if (resultChange) {
+      switch (typeChange) {
+        case 'technical-characteristic':
+          this.findAllTechnicalCharacteristics(this.curId);
+          break;
+      }
+    }
   }
 }
