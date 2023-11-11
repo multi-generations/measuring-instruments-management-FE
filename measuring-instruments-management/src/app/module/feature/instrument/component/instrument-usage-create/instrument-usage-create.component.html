@@ -1,6 +1,6 @@
 <div
   class="modal fade"
-  id="technical-characteristic-create"
+  id="instrument-usage-create"
   data-bs-backdrop="static"
   data-bs-keyboard="false"
   tabindex="-1"
@@ -66,7 +66,7 @@
 
             <div class="mb-3 col-6 ps-1">
               <label for="working-duration" class="form-label"
-                >Thời gian sử dụng
+                >Thời gian sử dụng (giờ)
                 <sup class="text-danger fw-bold">*</sup></label
               >
               <input
@@ -96,12 +96,12 @@
           </div>
 
           <div class="row">
-            <div class="mb-3 col-6 pe-1">
-              <label for="measuring-range-end" class="form-label"
+            <div class="mb-3 col-12 pe-1">
+              <label for="instrument-user" class="form-label"
                 >Người sử dụng <sup class="text-danger fw-bold">*</sup></label
               >
               <input
-                id="measuring-range-end"
+                id="instrument-user"
                 type="text"
                 class="form-control"
                 placeholder="Nhập người sử dụng"
@@ -124,13 +124,14 @@
                 >{{ constantsService.FIELD_REQUIRED }}</sub
               >
             </div>
-
-            <div class="mb-3 col-6 ps-1">
+          </div>
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
               <label for="instrument-status" class="form-label"
                 >Tình trạng thiết bị khi sử dụng
                 <sup class="text-danger fw-bold">*</sup></label
               >
-              <input
+              <textarea
                 id="instrument-status"
                 type="text"
                 class="form-control"
@@ -144,7 +145,7 @@
                     mainForm.controls['instrumentStatus'].touched &&
                     mainForm.controls['instrumentStatus'].valid
                 }"
-              />
+              ></textarea>
               <sub
                 class="text-danger"
                 *ngIf="
@@ -158,32 +159,16 @@
 
           <div class="row">
             <div class="mb-3 col-12 pe-1">
-              <label for="measuring-error" class="form-label"
+              <label for="usage-note" class="form-label"
                 >Ghi chú sử dụng <sup class="text-danger fw-bold">*</sup></label
               >
-              <input
-                id="measuring-error"
+              <textarea
+                id="usage-note"
                 type="text"
                 class="form-control"
                 placeholder="Nhập ghi chú"
                 formControlName="usageNote"
-                [ngClass]="{
-                  'is-invalid':
-                    mainForm.controls['usageNote'].touched &&
-                    mainForm.controls['usageNote'].invalid,
-                  'is-valid':
-                    mainForm.controls['usageNote'].touched &&
-                    mainForm.controls['usageNote'].valid
-                }"
-              />
-              <sub
-                class="text-danger"
-                *ngIf="
-                  mainForm.controls['usageNote'].hasError('required') &&
-                  mainForm.controls['usageNote'].touched
-                "
-                >{{ constantsService.FIELD_REQUIRED }}</sub
-              >
+              ></textarea>
             </div>
           </div>
         </div>

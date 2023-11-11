@@ -1,6 +1,3 @@
-import { InstrumentType } from '../entity/InstrumentType';
-import { TechnicalType } from '../entity/TechnicalType';
-import { MeasuringUnit } from '../entity/MeasuringUnit';
 import { MeasuringInstrumentForm } from './MeasuringInstrumentForm';
 
 export interface InstrumentUsageForm {

@@ -33,7 +33,7 @@ export class InstrumentUsageCreateComponent {
       workingDuration: new FormControl('', [Validators.required]),
       instrumentUser: new FormControl('', [Validators.required]),
       instrumentStatus: new FormControl('', [Validators.required]),
-      usageNote: new FormControl('', [Validators.required]),
+      usageNote: new FormControl(''),
     });
   }
 
@@ -54,6 +54,7 @@ export class InstrumentUsageCreateComponent {
 
   submit() {
     let instrumentUsageForm = this.initInstrumentUsageForm();
+    console.log(instrumentUsageForm);
     // Swal.fire({
     //   title: 'Đang thêm mới...',
     //   allowOutsideClick: false,
