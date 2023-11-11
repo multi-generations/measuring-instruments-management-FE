@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../login/service/auth.service';
 import { Observable } from 'rxjs';
-import { AttachedDocumentDetailDto } from '../model/dto/detail/AttachedDocumentDetailDto';
-import { AttachedDocumentForm } from '../model/form/AttachedDocumentForm';
 import { InstrumentUsageForm } from '../model/form/InstrumentUsageForm';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InstrumentUsageService {
-  private _API_URL = 'http://localhost:8080/api/v1/instrument-services';
+  private _API_URL = 'http://localhost:8080/api/v1/instrument-usages';
 
   constructor(private _http: HttpClient, private _authService: AuthService) {}
 
@@ -28,12 +26,11 @@ export class InstrumentUsageService {
     return this._http.delete<void>(this._API_URL, { headers, body: id });
   }
 
-  public create(instrumentUsage: InstrumentUsageForm): Observable<any> {
+  public create(instrumentUsageForm: InstrumentUsageForm): Observable<any> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.post(this._API_URL, {
+    return this._http.post(this._API_URL, instrumentUsageForm, {
       headers,
-      body: instrumentUsage,
     });
   }
 

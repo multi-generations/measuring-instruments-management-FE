@@ -159,9 +159,7 @@
 
           <div class="row">
             <div class="mb-3 col-12 pe-1">
-              <label for="usage-note" class="form-label"
-                >Ghi chú sử dụng <sup class="text-danger fw-bold">*</sup></label
-              >
+              <label for="usage-note" class="form-label">Ghi chú </label>
               <textarea
                 id="usage-note"
                 type="text"
@@ -173,7 +171,13 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Thêm mới</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="mainForm.invalid"
+          >
+            Thêm mới
+          </button>
         </div>
       </form>
     </div>
