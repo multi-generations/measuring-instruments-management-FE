@@ -26,7 +26,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
   @Output()
   emitResult: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  mainForm: FormGroup = new FormGroup({});
+  mainForm: FormGroup = this.createForm();
   instrumentTypeList: InstrumentType[] = [];
   technicalTypeList: TechnicalType[] = [];
   measuringUnitList: MeasuringUnit[] = [];
@@ -48,20 +48,36 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
   }
 
   createForm() {
+    return new FormGroup({
+      instrumentType: new FormControl('', [Validators.required]),
+      technicalType: new FormControl('', [Validators.required]),
+      measuringRangeStart: new FormControl('', [Validators.required]),
+      measuringUnitStart: new FormControl('', [Validators.required]),
+      measuringRangeEnd: new FormControl('', [Validators.required]),
+      measuringUnitEnd: new FormControl('', [Validators.required]),
+      measuringError: new FormControl('', [Validators.required]),
+      measuringErrorUnit: new FormControl('', [Validators.required])
+    })
+  }
+
+  updateForm() {
     if (this.technicalCharacteristicId != 0) {
       this.technicalCharacteristicService.findDtoById(this.technicalCharacteristicId).subscribe(next => {
-        this.mainForm = new FormGroup({
-          instrumentType: new FormControl(next.instrumentType?.id, [Validators.required]),
-          technicalType: new FormControl(next.technicalType?.id, [Validators.required]),
-          measuringRangeStart: new FormControl(next.measuringRangeStart, [Validators.required]),
-          measuringUnitStart: new FormControl(next.measuringUnitStart?.id, [Validators.required]),
-          measuringRangeEnd: new FormControl(next.measuringRangeEnd, [Validators.required]),
-          measuringUnitEnd: new FormControl(next.measuringUnitEnd?.id, [Validators.required]),
-          measuringError: new FormControl(next.measuringError, [Validators.required]),
-          measuringErrorUnit: new FormControl(next.measuringErrorUnit?.id, [Validators.required])
-        })
+          this.mainForm.get('instrumentType')?.setValue(next.instrumentType?.id);
+          this.mainForm.get('technicalType')?.setValue(next.technicalType?.id);
+          this.mainForm.get('measuringRangeStart')?.setValue(next.measuringRangeStart);
+          this.mainForm.get('measuringUnitStart')?.setValue(next.measuringUnitStart?.id);
+          this.mainForm.get('measuringRangeEnd')?.setValue(next.measuringRangeEnd);
+          this.mainForm.get('measuringUnitEnd')?.setValue(next.measuringUnitEnd?.id);
+          this.mainForm.get('measuringError')?.setValue(next.measuringError);
+          this.mainForm.get('measuringErrorUnit')?.setValue(next.measuringErrorUnit?.id);
       })
     }
+  }
+
+  resetForm() {
+    this.mainForm = this.createForm();
+    this.updateForm();
   }
 
   initInstrumentTypeList() {
@@ -104,7 +120,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
         measuringUnitEnd: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringUnitEnd')?.value),
         measuringError: +this.mainForm.get('measuringError')?.value,
         measuringErrorUnit: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringErrorUnit')?.value),
-        measuringInstrumentId: this.measuringInstrumentId
+        measuringInstrument: {id: this.measuringInstrumentId}
       };
     }
 
@@ -146,7 +162,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
 
   resetModal() {
     this.emitResult.emit(this.resultChange);
-    this.createForm();
+    this.resetForm();
   }
 
   closeModalClick() {

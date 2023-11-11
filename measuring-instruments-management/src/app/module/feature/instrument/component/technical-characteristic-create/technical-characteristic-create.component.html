@@ -1,15 +1,15 @@
-<div class="modal fade" id="technical-characteristic-update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="technical-characteristic-create" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Cập nhật đặc điểm kỹ thuật</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm mới đặc điểm kỹ thuật</h1>
         <button type="button"
                 class="btn-close"
                 id="technical-characteristic-create-modal-close-btn"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                (click)="resetModal()"></button>
+                (click)="closeModal()"></button>
       </div>
       <form [formGroup]="mainForm" (ngSubmit)="submit()" *ngIf="mainForm">
         <div class="modal-body">
@@ -41,6 +41,7 @@
               <select id="technical-type"
                       class="form-select"
                       aria-label="Default select technical-type"
+                      (change)="updateMeasuringUnitList()"
                       formControlName="technicalType"
                       [ngClass]="{
                       'is-invalid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].invalid),
@@ -74,7 +75,7 @@
             </div>
 
             <div class="mb-3 col-6 ps-1">
-              <label for="measuring-unit-start" class="form-label">Đơn vị
+              <label for="measuring-unit-start" class="form-label">Đơn vị điểm đầu
                 <sup class="text-danger fw-bold">*</sup></label>
               <select id="measuring-unit-start"
                       class="form-select"
@@ -112,7 +113,7 @@
             </div>
 
             <div class="mb-3 col-6 ps-1">
-              <label for="measuring-unit-end" class="form-label">Đơn vị
+              <label for="measuring-unit-end" class="form-label">Đơn vị điểm cuối
                 <sup class="text-danger fw-bold">*</sup></label>
               <select id="measuring-unit-end"
                       class="form-select"
@@ -150,7 +151,7 @@
             </div>
 
             <div class="mb-3 col-6 ps-1">
-              <label for="measuring-error-unit" class="form-label">Đơn vị
+              <label for="measuring-error-unit" class="form-label">Đơn vị sai số
                 <sup class="text-danger fw-bold">*</sup></label>
               <select id="measuring-error-unit"
                       class="form-select"
@@ -171,8 +172,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" (click)="createForm()">Hủy bỏ</button>
-          <button type="submit" class="btn btn-primary">Cập nhật</button>
+          <button type="submit" [disabled]="mainForm.invalid" class="btn btn-primary">Thêm mới</button>
         </div>
       </form>
     </div>

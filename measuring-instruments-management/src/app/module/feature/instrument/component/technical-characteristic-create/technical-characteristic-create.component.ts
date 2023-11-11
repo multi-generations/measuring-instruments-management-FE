@@ -79,7 +79,7 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
   updateMeasuringUnitList() {
     const technicalTypeId = this.mainForm.get('technicalType')?.value;
 
-    if (technicalTypeId) {
+    if (technicalTypeId != '') {
       this.measuringUnitService.findByTechnicalType(+technicalTypeId).subscribe(next => {
         this.measuringUnitList = next;
       })
@@ -97,7 +97,7 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
         measuringUnitEnd: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringUnitEnd')?.value),
         measuringError: +this.mainForm.get('measuringError')?.value,
         measuringErrorUnit: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringErrorUnit')?.value),
-        measuringInstrumentId: this.measuringInstrumentId
+        measuringInstrument: {id: this.measuringInstrumentId}
       };
     }
 
@@ -122,7 +122,7 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
               showConfirmButton: false
             });
             this.resultChange = true;
-            this.closeModalClick();
+            this.closeModalBtnClick();
           }, (error: HttpErrorResponse) => {
             Swal.fire({
               position: 'center',
@@ -142,7 +142,7 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
     this.createForm();
   }
 
-  closeModalClick() {
+  closeModalBtnClick() {
     document.getElementById('technical-characteristic-create-modal-close-btn')?.click();
   }
 

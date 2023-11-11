@@ -13,6 +13,7 @@ import {Carousel} from "bootstrap";
 import {ConstantsService} from "../../../../shared/service/constants.service";
 import Swal from "sweetalert2";
 import {TechnicalCharacteristicService} from "../../service/technical-characteristic.service";
+import {AttachedDocumentService} from "../../service/attached-document.service";
 
 @Component({
   selector: 'app-instrument-detail',
@@ -32,12 +33,14 @@ export class InstrumentDetailComponent implements OnInit{
   instrumentUsages: InstrumentUsageDetailDto[] = [];
   instrumentImageActiveSrc = '';
   technicalCharacteristicIdUpdate = 0;
+  attachedDocumentIdUpdate = 0;
 
 
   constructor(private _instrumentService: InstrumentService,
               private _activatedRoute: ActivatedRoute,
               public constantsService: ConstantsService,
-              private technicalCharacteristicService: TechnicalCharacteristicService) {
+              private technicalCharacteristicService: TechnicalCharacteristicService,
+              private attachedDocumentService: AttachedDocumentService) {
     this._activatedRoute.params.subscribe(value => {
       const id = value['id'];
       if (id) {
@@ -211,6 +214,10 @@ export class InstrumentDetailComponent implements OnInit{
     this.technicalCharacteristicIdUpdate = id;
   }
 
+  setAttachedDocumentIdUpdate(id: number) {
+    this.attachedDocumentIdUpdate = id;
+  }
+
   // Delete
 
   public showDeleteModal(id: number, deleteType: string) {
@@ -359,7 +366,24 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteAttachedDocumentById(id: number) {
-    alert('delete: ' + id);
+    this.attachedDocumentService.deleteById(id).subscribe(next => {
+      Swal.fire({
+        position: 'center',
+        title: 'Thành công!',
+        text: 'Xóa thành công!',
+        icon: 'success',
+        timer: 200,
+        showConfirmButton: false
+      });
+      this.findAllAttachedDocuments(this.curId);
+    }, (error: HttpErrorResponse) => {
+      Swal.fire({
+        position: 'center',
+        title: 'Lỗi!',
+        html: '<p>Xóa không thành công! </p><p>(' + error.message + ')</p>',
+        icon: 'error'
+      })
+    });
   }
 
   public setModalBodyInstrumentAccreditation(id: number) {
@@ -471,6 +495,9 @@ export class InstrumentDetailComponent implements OnInit{
       switch (typeChange) {
         case 'technical-characteristic':
           this.findAllTechnicalCharacteristics(this.curId);
+          break;
+        case 'attached-document':
+          this.findAllAttachedDocuments(this.curId);
           break;
       }
     }

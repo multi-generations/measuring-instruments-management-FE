@@ -4,5 +4,5 @@ export interface AttachedDocumentDetailDto {
   documentSymbol: string;
   quantity: number;
   documentNote: string;
-  measuringInstrumentChildId: number;
+  measuringInstrumentId?: number;
 }

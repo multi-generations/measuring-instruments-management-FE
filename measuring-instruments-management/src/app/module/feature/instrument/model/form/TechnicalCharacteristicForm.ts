@@ -1,6 +1,7 @@
 import {InstrumentType} from "../entity/InstrumentType";
 import {TechnicalType} from "../entity/TechnicalType";
 import {MeasuringUnit} from "../entity/MeasuringUnit";
+import {MeasuringInstrumentForm} from "./MeasuringInstrumentForm";
 
 export interface TechnicalCharacteristicForm {
   id?: number;
@@ -12,5 +13,5 @@ export interface TechnicalCharacteristicForm {
   measuringUnitEnd?: MeasuringUnit;
   measuringError?: number;
   measuringErrorUnit?: MeasuringUnit;
-  measuringInstrumentId?: number;
+  measuringInstrument?: MeasuringInstrumentForm;
 }

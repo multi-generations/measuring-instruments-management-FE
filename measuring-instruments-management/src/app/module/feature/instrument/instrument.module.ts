@@ -10,8 +10,8 @@ import {InstrumentSearchComponent} from './component/instrument-search/instrumen
 import {InstrumentDetailComponent} from './component/instrument-detail/instrument-detail.component';
 import { InstrumentCreateComponent } from './component/instrument-create/instrument-create.component';
 import { InstrumentUpdateComponent } from './component/instrument-update/instrument-update.component';
-import { TechnicalCharacteristicCreateComponent } from './component/technical-characterristic-create/technical-characteristic-create.component';
-import { TechnicalCharacteristicUpdateComponent } from './component/technical-characterristic-update/technical-characteristic-update.component';
+import { TechnicalCharacteristicCreateComponent } from './component/technical-characteristic-create/technical-characteristic-create.component';
+import { TechnicalCharacteristicUpdateComponent } from './component/technical-characteristic-update/technical-characteristic-update.component';
 import { AttachedDocumentCreateComponent } from './component/attached-document-create/attached-document-create.component';
 import { AttachedDocumentUpdateComponent } from './component/attached-document-update/attached-document-update.component';
 

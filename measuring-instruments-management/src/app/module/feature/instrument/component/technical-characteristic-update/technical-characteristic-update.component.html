@@ -1,17 +1,17 @@
-<div class="modal fade" id="technical-characteristic-create" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="technical-characteristic-update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm mới đặc điểm kỹ thuật</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Cập nhật đặc điểm kỹ thuật</h1>
         <button type="button"
                 class="btn-close"
                 id="technical-characteristic-create-modal-close-btn"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                (click)="closeModal()"></button>
+                (click)="resetModal()"></button>
       </div>
-      <form [formGroup]="mainForm" (ngSubmit)="submit()" *ngIf="mainForm">
+      <form [formGroup]="mainForm" (ngSubmit)="submit()">
         <div class="modal-body">
           <div class="row">
             <div class="mb-3 col-6 pe-1">
@@ -171,7 +171,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Thêm mới</button>
+          <button type="button" class="btn btn-danger" (click)="resetForm()">Hủy bỏ</button>
+          <button type="submit" class="btn btn-primary" [disabled]="mainForm.invalid">Cập nhật</button>
         </div>
       </form>
     </div>

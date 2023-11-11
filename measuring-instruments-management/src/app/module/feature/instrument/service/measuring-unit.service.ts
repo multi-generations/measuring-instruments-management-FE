@@ -22,6 +22,6 @@ export class MeasuringUnitService {
   public findByTechnicalType(technicalTypeId: number): Observable<MeasuringUnit[]> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.get<MeasuringUnit[]>(this._API_URL + `?technicalTypeId=${technicalTypeId}`, {headers});
+    return this._http.get<MeasuringUnit[]>(this._API_URL + `/technical-type/${technicalTypeId}`, {headers});
   }
 }
