@@ -42,7 +42,6 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
 
     this.initInstrumentTypeList();
     this.initTechnicalTypeList();
-    this.initMeasuringUnitList();
   }
 
   createForm() {
@@ -71,12 +70,6 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
   }
 
   initMeasuringUnitList() {
-    this.measuringUnitService.findAll().subscribe(next => {
-      this.measuringUnitList = next;
-    })
-  }
-
-  updateMeasuringUnitList() {
     const technicalTypeId = this.mainForm.get('technicalType')?.value;
 
     if (technicalTypeId != '') {
@@ -144,6 +137,13 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
 
   closeModalBtnClick() {
     document.getElementById('technical-characteristic-create-modal-close-btn')?.click();
+  }
+
+  changeMeasuringUnit() {
+    this.mainForm.get('measuringUnitStart')?.setValue('');
+    this.mainForm.get('measuringUnitEnd')?.setValue('');
+    this.mainForm.get('measuringErrorUnit')?.setValue('');
+    this.initMeasuringUnitList();
   }
 
   // Getter

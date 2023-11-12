@@ -10,6 +10,7 @@
             id="instrument-management-sidebar-create"
             class="list-group-item list-group-item-action list-group-item-light ps-5 btn-child" aria-current="true"
             routerLink="/instruments/create"
+            [class.active-child]="activeButtonId == 'instrument-management-sidebar-create'"
             (click)="sidebarClick($event)"><i class="fa-solid fa-plus small"></i> Thêm mới</button>
 <!--    <button type="button"-->
 <!--            id="accreditation-management-sidebar"-->

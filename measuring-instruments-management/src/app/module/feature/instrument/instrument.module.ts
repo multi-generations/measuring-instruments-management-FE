@@ -17,6 +17,8 @@ import { AttachedDocumentUpdateComponent } from './component/attached-document-u
 import { InstrumentUsageCreateComponent } from './component/instrument-usage-create/instrument-usage-create.component';
 import { InstrumentRepairCreateComponent } from './component/instrument-repair-create/instrument-repair-create.component';
 import { InstrumentAccreditationCreateComponent } from './component/instrument-accreditation-create/instrument-accreditation-create.component';
+import { InstrumentForwardCreateComponent } from './component/instrument-forward-create/instrument-forward-create.component';
+import { InstrumentForwardUpdateComponent } from './component/instrument-forward-update/instrument-forward-update.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { InstrumentAccreditationCreateComponent } from './component/instrument-a
     InstrumentUsageCreateComponent,
     InstrumentRepairCreateComponent,
     InstrumentAccreditationCreateComponent,
+    InstrumentForwardCreateComponent,
+    InstrumentForwardUpdateComponent,
   ],
   imports: [
     CommonModule,

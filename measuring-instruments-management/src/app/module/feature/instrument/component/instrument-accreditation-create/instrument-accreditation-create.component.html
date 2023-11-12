@@ -27,7 +27,7 @@
           <div class="row">
             <div class="mb-3 col-6 pe-1">
               <label for="accreditation-date" class="form-label"
-                >Ngày tháng năm kiểm định
+              >Ngày tháng năm kiểm định
                 <sup class="text-danger fw-bold">*</sup></label
               >
               <input
@@ -51,8 +51,7 @@
                   mainForm.controls['accreditationDate'].hasError('required') &&
                   mainForm.controls['accreditationDate'].touched
                 "
-                >{{ constantsService.FIELD_REQUIRED }}</sub
-              >
+              >{{ constantsService.FIELD_REQUIRED }}</sub>
               <sub
                 class="text-danger"
                 *ngIf="
@@ -60,13 +59,12 @@
                     'isMoreThanToday'
                   ) && mainForm.controls['accreditationDate'].touched
                 "
-                >{{ constantsService.NOT_MORE_THAN_TODAY }}</sub
-              >
+              >{{ constantsService.NOT_MORE_THAN_TODAY }}</sub>
             </div>
 
             <div class="mb-3 col-6 ps-1">
               <label for="valid-accreditation-end-date" class="form-label"
-                >Thời hạn hết hiệu lực
+              >Thời hạn hết hiệu lực
                 <sup class="text-danger fw-bold">*</sup></label
               >
               <input
@@ -91,7 +89,7 @@
                     'required'
                   ) && mainForm.controls['validAccreditationEndDate'].touched
                 "
-                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >{{ constantsService.FIELD_REQUIRED }}</sub
               >
             </div>
           </div>
@@ -99,7 +97,7 @@
           <div class="row">
             <div class="mb-3 col-12 pe-1">
               <label for="accreditation-place" class="form-label"
-                >Nơi kiểm định <sup class="text-danger fw-bold">*</sup></label
+              >Nơi kiểm định <sup class="text-danger fw-bold">*</sup></label
               >
               <input
                 id="accreditation-place"
@@ -123,14 +121,14 @@
                     'required'
                   ) && mainForm.controls['accreditationPlace'].touched
                 "
-                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >{{ constantsService.FIELD_REQUIRED }}</sub
               >
             </div>
           </div>
           <div class="row">
             <div class="mb-3 col-12 pe-1">
               <label for="accreditation-result" class="form-label"
-                >Kết quả kiểm định
+              >Kết quả kiểm định
                 <sup class="text-danger fw-bold">*</sup></label
               >
               <textarea
@@ -155,7 +153,7 @@
                     'required'
                   ) && mainForm.controls['accreditationResult'].touched
                 "
-                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >{{ constantsService.FIELD_REQUIRED }}</sub
               >
             </div>
           </div>
@@ -163,7 +161,7 @@
           <div class="row">
             <div class="mb-3 col-12 pe-1">
               <label for="accreditation-confirm-number" class="form-label"
-                >Số giấy chứng nhận kiểm định
+              >Số giấy chứng nhận kiểm định
                 <sup class="text-danger fw-bold">*</sup></label
               >
               <input
@@ -188,14 +186,14 @@
                     'required'
                   ) && mainForm.controls['accreditationConfirmNumber'].touched
                 "
-                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >{{ constantsService.FIELD_REQUIRED }}</sub
               >
             </div>
           </div>
           <div class="row">
             <div class="mb-3 col-12 pe-1">
               <label for="accreditor" class="form-label"
-                >Người kiểm định <sup class="text-danger fw-bold">*</sup></label
+              >Người kiểm định <sup class="text-danger fw-bold">*</sup></label
               >
               <input
                 id="accreditor"
@@ -218,7 +216,7 @@
                   mainForm.controls['accreditor'].hasError('required') &&
                   mainForm.controls['accreditor'].touched
                 "
-                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >{{ constantsService.FIELD_REQUIRED }}</sub
               >
             </div>
           </div>

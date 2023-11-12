@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../login/service/auth.service';
 import { Observable } from 'rxjs';
-import { AttachedDocumentDetailDto } from '../model/dto/detail/AttachedDocumentDetailDto';
-import { AttachedDocumentForm } from '../model/form/AttachedDocumentForm';
 import { InstrumentUsageForm } from '../model/form/InstrumentUsageForm';
 
 @Injectable({

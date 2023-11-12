@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {InstrumentType} from "../../model/entity/InstrumentType";
 import {TechnicalType} from "../../model/entity/TechnicalType";
@@ -17,7 +17,7 @@ import {HttpErrorResponse} from "@angular/common/http";
   templateUrl: './technical-characteristic-update.component.html',
   styleUrls: ['./technical-characteristic-update.component.css']
 })
-export class TechnicalCharacteristicUpdateComponent implements OnInit {
+export class TechnicalCharacteristicUpdateComponent implements OnInit, OnChanges {
   @Input()
   technicalCharacteristicId: number = 0
   @Input()
@@ -40,11 +40,15 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createForm();
-
     this.initInstrumentTypeList();
     this.initTechnicalTypeList();
     this.initMeasuringUnitList();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['technicalCharacteristicId']) {
+      this.updateForm();
+    }
   }
 
   createForm() {
@@ -63,14 +67,17 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
   updateForm() {
     if (this.technicalCharacteristicId != 0) {
       this.technicalCharacteristicService.findDtoById(this.technicalCharacteristicId).subscribe(next => {
-          this.mainForm.get('instrumentType')?.setValue(next.instrumentType?.id);
-          this.mainForm.get('technicalType')?.setValue(next.technicalType?.id);
-          this.mainForm.get('measuringRangeStart')?.setValue(next.measuringRangeStart);
-          this.mainForm.get('measuringUnitStart')?.setValue(next.measuringUnitStart?.id);
-          this.mainForm.get('measuringRangeEnd')?.setValue(next.measuringRangeEnd);
-          this.mainForm.get('measuringUnitEnd')?.setValue(next.measuringUnitEnd?.id);
-          this.mainForm.get('measuringError')?.setValue(next.measuringError);
-          this.mainForm.get('measuringErrorUnit')?.setValue(next.measuringErrorUnit?.id);
+        this.mainForm.get('instrumentType')?.setValue(next.instrumentType?.id);
+        this.mainForm.get('technicalType')?.setValue(next.technicalType?.id);
+        this.mainForm.get('measuringRangeStart')?.setValue(next.measuringRangeStart);
+        this.mainForm.get('measuringUnitStart')?.setValue(next.measuringUnitStart?.id);
+        this.mainForm.get('measuringRangeEnd')?.setValue(next.measuringRangeEnd);
+        this.mainForm.get('measuringUnitEnd')?.setValue(next.measuringUnitEnd?.id);
+        this.mainForm.get('measuringError')?.setValue(next.measuringError);
+        this.mainForm.get('measuringErrorUnit')?.setValue(next.measuringErrorUnit?.id);
+
+        this.updateMeasuringUnitList();
+
       })
     }
   }
@@ -167,6 +174,13 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
 
   closeModalClick() {
     document.getElementById('technical-characteristic-update-modal-close-btn')?.click();
+  }
+
+  changeMeasuringUnit() {
+    this.mainForm.get('measuringUnitStart')?.setValue('');
+    this.mainForm.get('measuringUnitEnd')?.setValue('');
+    this.mainForm.get('measuringErrorUnit')?.setValue('');
+    this.updateMeasuringUnitList();
   }
 
   // Getter

@@ -1,6 +1,6 @@
 <div class="modal fade" id="attached-document-update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Cập nhật tài liệu đi kèm</h1>
@@ -62,19 +62,11 @@
           </div>
 
           <div class="mb-3">
-            <label for="document-note" class="form-label">Ghi chú
-              <sup class="text-danger fw-bold">*</sup></label>
-            <input id="document-note"
-                   type="text"
-                   class="form-control"
-                   placeholder="Nhập ghi chú"
-                   formControlName="documentNote"
-                   [ngClass]="{
-                    'is-invalid': (mainForm.controls['documentNote'].touched) && (mainForm.controls['documentNote'].invalid),
-                    'is-valid': (mainForm.controls['documentNote'].touched) && (mainForm.controls['documentNote'].valid)}">
-            <sub class="text-danger"
-                 *ngIf="mainForm.controls['documentNote'].hasError('required') &&
-            mainForm.controls['documentNote'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            <label for="document-note" class="form-label">Ghi chú</label>
+            <textarea id="document-note"
+                      class="form-control"
+                      placeholder="Nhập ghi chú"
+                      formControlName="documentNote"></textarea>
           </div>
         </div>
         <div class="modal-footer">

@@ -6,7 +6,7 @@
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Cập nhật đặc điểm kỹ thuật</h1>
         <button type="button"
                 class="btn-close"
-                id="technical-characteristic-create-modal-close-btn"
+                id="technical-characteristic-update-modal-close-btn"
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 (click)="resetModal()"></button>
@@ -42,6 +42,7 @@
                       class="form-select"
                       aria-label="Default select technical-type"
                       formControlName="technicalType"
+                      (change)="changeMeasuringUnit()"
                       [ngClass]="{
                       'is-invalid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].invalid),
                       'is-valid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].valid)}">
