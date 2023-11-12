@@ -1,6 +1,6 @@
 <div
   class="modal fade"
-  id="instrument-accreditation-create"
+  id="instrument-accreditation-update"
   data-bs-backdrop="static"
   data-bs-keyboard="false"
   tabindex="-1"
@@ -11,12 +11,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">
-          Thêm mới Theo dõi kiểm định
+          Cập nhật Theo dõi kiểm định
         </h1>
         <button
           type="button"
           class="btn-close"
-          id="instrument-accreditation-create-modal-close-btn"
+          id="instrument-accreditation-update-modal-close-btn"
           data-bs-dismiss="modal"
           aria-label="Close"
           (click)="closeModal()"
@@ -236,7 +236,10 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" [disabled]="mainForm.invalid">Thêm mới</button>
+          <button type="button" (click)="resetForm()" class="btn btn-danger">
+            Hủy bỏ
+          </button>
+          <button type="submit" class="btn btn-primary"  [disabled]="mainForm.invalid">Cập nhật</button>
         </div>
       </form>
     </div>
