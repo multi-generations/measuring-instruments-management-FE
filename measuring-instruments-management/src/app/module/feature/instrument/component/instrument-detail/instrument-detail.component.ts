@@ -16,6 +16,9 @@ import {TechnicalCharacteristicService} from "../../service/technical-characteri
 import {AttachedDocumentService} from "../../service/attached-document.service";
 import {InstrumentForwardDetailDto} from "../../model/dto/detail/InstrumentForwardDetailDto";
 import {InstrumentForwardService} from "../../service/instrument-forward.service";
+import { InstrumentAccreditationService } from '../../service/instrument-accreditation.service';
+import { InstrumentRepairService } from '../../service/instrument-repair.service';
+import { InstrumentUsageService } from '../../service/instrument-usage-service';
 
 @Component({
   selector: 'app-instrument-detail',
@@ -38,14 +41,19 @@ export class InstrumentDetailComponent implements OnInit{
   technicalCharacteristicIdUpdate = 0;
   attachedDocumentIdUpdate = 0;
   instrumentForwardIdUpdate = 0;
-
+  instrumentAccreditationIdUpdate = 0;
+  instrumentRepairIdUpdate = 0;
+  instrumentUsageIdUpdate = 0;
 
   constructor(private _instrumentService: InstrumentService,
               private _activatedRoute: ActivatedRoute,
               public constantsService: ConstantsService,
               private technicalCharacteristicService: TechnicalCharacteristicService,
               private attachedDocumentService: AttachedDocumentService,
-              private instrumentForwardService: InstrumentForwardService) {
+              private instrumentForwardService: InstrumentForwardService,
+              private instrumentAccreditationService: InstrumentAccreditationService,
+              private instrumentRepairService: InstrumentRepairService,
+              private instrumentUsageService: InstrumentUsageService) {
     this._activatedRoute.params.subscribe(value => {
       const id = value['id'];
       if (id) {
@@ -242,6 +250,18 @@ export class InstrumentDetailComponent implements OnInit{
 
   setInstrumentForwardIdUpdate(id: number) {
     this.instrumentForwardIdUpdate = id;
+  }
+
+  setInstrumentAccreditationIdUpdate(id: number) {
+    this.instrumentAccreditationIdUpdate = id;
+  }
+
+  setInstrumentRepairIdUpdate(id: number) {
+    this.instrumentRepairIdUpdate = id;
+  }
+
+  setInstrumentUsageIdUpdate(id: number) {
+    this.instrumentUsageIdUpdate = id;
   }
 
   // Delete
@@ -505,7 +525,24 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteInstrumentAccreditationById(id: number) {
-    alert('delete: ' + id);
+    this.instrumentAccreditationService.deleteById(id).subscribe(next => {
+      Swal.fire({
+        position: 'center',
+        title: 'Thành công!',
+        text: 'Xóa thành công!',
+        icon: 'success',
+        timer: 200,
+        showConfirmButton: false
+      });
+      this.findAllAccreditations(this.curId);
+    }, (error: HttpErrorResponse) => {
+      Swal.fire({
+        position: 'center',
+        title: 'Lỗi!',
+        html: '<p>Xóa không thành công! </p><p>(' + error.message + ')</p>',
+        icon: 'error'
+      })
+    });
   }
 
   public setModalBodyInstrumentRepair(id: number) {
@@ -541,7 +578,24 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteInstrumentRepairById(id: number) {
-    alert('delete: ' + id);
+    this.instrumentRepairService.deleteById(id).subscribe(next => {
+      Swal.fire({
+        position: 'center',
+        title: 'Thành công!',
+        text: 'Xóa thành công!',
+        icon: 'success',
+        timer: 200,
+        showConfirmButton: false
+      });
+      this.findAllRepairs(this.curId);
+    }, (error: HttpErrorResponse) => {
+      Swal.fire({
+        position: 'center',
+        title: 'Lỗi!',
+        html: '<p>Xóa không thành công! </p><p>(' + error.message + ')</p>',
+        icon: 'error'
+      })
+    });
   }
 
   public setModalBodyInstrumentUsage(id: number) {
@@ -573,7 +627,24 @@ export class InstrumentDetailComponent implements OnInit{
   }
 
   public deleteInstrumentUsageById(id: number) {
-    alert('delete: ' + id);
+    this.instrumentUsageService.deleteById(id).subscribe(next => {
+      Swal.fire({
+        position: 'center',
+        title: 'Thành công!',
+        text: 'Xóa thành công!',
+        icon: 'success',
+        timer: 200,
+        showConfirmButton: false
+      });
+      this.findAllUsages(this.curId);
+    }, (error: HttpErrorResponse) => {
+      Swal.fire({
+        position: 'center',
+        title: 'Lỗi!',
+        html: '<p>Xóa không thành công! </p><p>(' + error.message + ')</p>',
+        icon: 'error'
+      })
+    });
   }
 
   checkResult(typeChange: string, resultChange: boolean) {
