@@ -231,7 +231,13 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Thêm mới</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="mainForm.invalid"
+          >
+            Thêm mới
+          </button>
         </div>
       </form>
     </div>

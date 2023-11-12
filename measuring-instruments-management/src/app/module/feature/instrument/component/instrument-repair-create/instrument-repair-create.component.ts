@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConstantsService } from 'src/app/module/shared/service/constants.service';
 import { InstrumentRepairForm } from '../../model/form/InstrumentRepairForm';
+import Swal from 'sweetalert2';
+import { InstrumentRepairService } from '../../service/instrument-repair.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-instrument-repair-create',
@@ -19,7 +22,10 @@ export class InstrumentRepairCreateComponent {
 
   resultChange: boolean = false;
 
-  constructor(private _constantsService: ConstantsService) {}
+  constructor(
+    private instrumentRepairService: InstrumentRepairService,
+    private _constantsService: ConstantsService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -38,7 +44,7 @@ export class InstrumentRepairCreateComponent {
     });
   }
 
-  initInstrumentUsageForm(): InstrumentRepairForm | null {
+  initInstrumentRepairForm(): InstrumentRepairForm | null {
     if (this.mainForm.valid) {
       return {
         repairDate: this.mainForm.get('repairDate')?.value,
@@ -56,45 +62,42 @@ export class InstrumentRepairCreateComponent {
   }
 
   submit() {
-    let instrumentUsageForm = this.initInstrumentUsageForm();
-    console.log(instrumentUsageForm);
-    // Swal.fire({
-    //   title: 'Đang thêm mới...',
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //     if (instrumentUsageForm != null) {
-    //       this.technicalCharacteristicService
-    //         .create(technicalCharacteristicForm)
-    //         .subscribe(
-    //           (next) => {
-    //             Swal.fire({
-    //               position: 'center',
-    //               title: 'Thành công!',
-    //               text: 'Đặc điểm đã được thêm!',
-    //               icon: 'success',
-    //               timer: 200,
-    //               showConfirmButton: false,
-    //             });
-    //             this.resultChange = true;
-    //             this.closeModalClick();
-    //           },
-    //           (error: HttpErrorResponse) => {
-    //             Swal.fire({
-    //               position: 'center',
-    //               title: 'Lỗi!',
-    //               html:
-    //                 '<p>Thêm mới không thành công! </p><p>(' +
-    //                 error.message +
-    //                 ')</p>',
-    //               icon: 'error',
-    //             });
-    //             this.resultChange = false;
-    //           }
-    //         );
-    //     }
-    //   },
-    // });
+    let instrumentRepairForm = this.initInstrumentRepairForm();
+    Swal.fire({
+      title: 'Đang thêm mới...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+        if (instrumentRepairForm != null) {
+          this.instrumentRepairService.create(instrumentRepairForm).subscribe(
+            (next) => {
+              Swal.fire({
+                position: 'center',
+                title: 'Thành công!',
+                text: 'Đã thêm mới Theo dõi sửa chữa thành công!',
+                icon: 'success',
+                timer: 200,
+                showConfirmButton: false,
+              });
+              this.resultChange = true;
+              this.closeModalClick();
+            },
+            (error: HttpErrorResponse) => {
+              Swal.fire({
+                position: 'center',
+                title: 'Lỗi!',
+                html:
+                  '<p>Thêm mới không thành công! </p><p>(' +
+                  error.message +
+                  ')</p>',
+                icon: 'error',
+              });
+              this.resultChange = false;
+            }
+          );
+        }
+      },
+    });
   }
 
   closeModal() {
@@ -103,7 +106,9 @@ export class InstrumentRepairCreateComponent {
   }
 
   closeModalClick() {
-    document.getElementById('instrument-usage-create-modal-close-btn')?.click();
+    document
+      .getElementById('instrument-repair-create-modal-close-btn')
+      ?.click();
   }
 
   // Getter
