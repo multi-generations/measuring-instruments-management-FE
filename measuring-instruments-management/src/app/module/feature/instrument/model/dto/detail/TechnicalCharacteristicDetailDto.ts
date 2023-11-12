@@ -12,4 +12,5 @@ export interface TechnicalCharacteristicDetailDto {
   measuringUnitEnd: MeasuringUnit;
   measuringError: number;
   measuringErrorUnit: MeasuringUnit;
+  measuringInstrumentId?: number;
 }

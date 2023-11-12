@@ -10,6 +10,7 @@ import {InstrumentAccreditationDetailDto} from "../model/dto/detail/InstrumentAc
 import {InstrumentRepairDetailDto} from "../model/dto/detail/InstrumentRepairDetailDto";
 import {InstrumentUsageDetailDto} from "../model/dto/detail/InstrumentUsageDetailDto";
 import {MeasuringInstrumentForm} from "../model/form/MeasuringInstrumentForm";
+import {InstrumentForwardDetailDto} from "../model/dto/detail/InstrumentForwardDetailDto";
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,12 @@ export class InstrumentService {
     return this._http.get<AttachedDocumentDetailDto[]>(`${this._API_URL}/${id}/attached-documents`, {headers});
   }
 
+  public findAllForwards(id: number): Observable<InstrumentForwardDetailDto[]> {
+    const jwt = this._authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
+    return this._http.get<InstrumentForwardDetailDto[]>(`${this._API_URL}/${id}/instrument-forwards`, {headers});
+  }
+
   public findAllAccreditations(id: number): Observable<InstrumentAccreditationDetailDto[]> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
@@ -90,5 +97,11 @@ export class InstrumentService {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
     return this._http.post(this._API_URL, measuringInstrumentForm, {headers});
+  }
+
+  public update(id: number, measuringInstrumentForm: MeasuringInstrumentForm): Observable<any> {
+    const jwt = this._authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
+    return this._http.put(this._API_URL + `/${id}`, measuringInstrumentForm, {headers});
   }
 }

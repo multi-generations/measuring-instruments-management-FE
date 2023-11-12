@@ -1,0 +1,239 @@
+<div
+  class="modal fade"
+  id="instrument-repair-create"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          Thêm mới Theo dõi sửa chữa
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          id="instrument-repair-create-modal-close-btn"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <form [formGroup]="mainForm" (ngSubmit)="submit()" *ngIf="mainForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3 col-6 pe-1">
+              <label for="repair-date" class="form-label"
+                >Ngày tháng năm sửa chữa
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="repair-date"
+                type="date"
+                class="form-control"
+                placeholder="Chọn ngày sửa chữa"
+                formControlName="repairDate"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['repairDate'].touched &&
+                    mainForm.controls['repairDate'].invalid,
+                  'is-valid':
+                    mainForm.controls['repairDate'].touched &&
+                    mainForm.controls['repairDate'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['repairDate'].hasError('required') &&
+                  mainForm.controls['repairDate'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['repairDate'].hasError('isMoreThanToday') &&
+                  mainForm.controls['repairDate'].touched
+                "
+                >{{ constantsService.NOT_MORE_THAN_TODAY }}</sub
+              >
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="repairer" class="form-label"
+                >Người sửa chữa <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="repairer"
+                type="text"
+                class="form-control"
+                placeholder="Nhập người sửa chữa"
+                formControlName="repairer"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['repairer'].touched &&
+                    mainForm.controls['repairer'].invalid,
+                  'is-valid':
+                    mainForm.controls['repairer'].touched &&
+                    mainForm.controls['repairer'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['repairer'].hasError('required') &&
+                  mainForm.controls['repairer'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="repair-place" class="form-label"
+                >Nơi sửa chữa <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="repair-place"
+                type="text"
+                class="form-control"
+                placeholder="Nhập người sử dụng"
+                formControlName="repairPlace"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['repairPlace'].touched &&
+                    mainForm.controls['repairPlace'].invalid,
+                  'is-valid':
+                    mainForm.controls['repairPlace'].touched &&
+                    mainForm.controls['repairPlace'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['repairPlace'].hasError('required') &&
+                  mainForm.controls['repairPlace'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="instrument-condition" class="form-label"
+                >Tình trạng thiết bị khi sửa chữa
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <textarea
+                id="instrument-condition"
+                type="text"
+                class="form-control"
+                placeholder="Nhập tình trạng thiết bị khi sửa chữa"
+                formControlName="instrumentCondition"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['instrumentCondition'].touched &&
+                    mainForm.controls['instrumentCondition'].invalid,
+                  'is-valid':
+                    mainForm.controls['instrumentCondition'].touched &&
+                    mainForm.controls['instrumentCondition'].valid
+                }"
+              ></textarea>
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['instrumentCondition'].hasError(
+                    'required'
+                  ) && mainForm.controls['instrumentCondition'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="repair-reason" class="form-label"
+                >Lý do sửa chữa <sup class="text-danger fw-bold">*</sup></label
+              >
+              <textarea
+                id="repair-reason"
+                type="text"
+                class="form-control"
+                placeholder="Nhập lý do sửa chữa"
+                formControlName="repairReason"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['repairReason'].touched &&
+                    mainForm.controls['repairReason'].invalid,
+                  'is-valid':
+                    mainForm.controls['repairReason'].touched &&
+                    mainForm.controls['repairReason'].valid
+                }"
+              ></textarea>
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['repairReason'].hasError('required') &&
+                  mainForm.controls['repairReason'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="repair-result" class="form-label"
+                >Kết quả sửa chữa
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <textarea
+                id="repair-result"
+                type="text"
+                class="form-control"
+                placeholder="Nhập kết quả sửa chữa"
+                formControlName="repairResult"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['repairResult'].touched &&
+                    mainForm.controls['repairResult'].invalid,
+                  'is-valid':
+                    mainForm.controls['repairResult'].touched &&
+                    mainForm.controls['repairResult'].valid
+                }"
+              ></textarea>
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['repairResult'].hasError('required') &&
+                  mainForm.controls['repairResult'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="repair-note" class="form-label">Ghi chú</label>
+              <textarea
+                id="repair-note"
+                type="text"
+                class="form-control"
+                placeholder="Nhập ghi chú"
+                formControlName="repairNote"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Thêm mới</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

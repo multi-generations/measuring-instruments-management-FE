@@ -1,26 +1,28 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {InstrumentGroupService} from "../../service/instrument-group.service";
-import {InstrumentStatusService} from "../../service/instrument-status.service";
 import {InstrumentGroup} from "../../model/entity/InstrumentGroup";
 import {ManagementUnit} from "../../model/entity/ManagementUnit";
 import {AccreditationCenter} from "../../model/entity/AccreditationCenter";
 import {InstrumentStatus} from "../../model/entity/InstrumentStatus";
+import {InstrumentService} from "../../service/instrument.service";
+import {InstrumentGroupService} from "../../service/instrument-group.service";
 import {ManagementUnitService} from "../../service/management-unit.service";
 import {AccreditationCenterService} from "../../service/accreditation-center.service";
+import {InstrumentStatusService} from "../../service/instrument-status.service";
 import {ConstantsService} from "../../../../shared/service/constants.service";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MeasuringInstrumentForm} from "../../model/form/MeasuringInstrumentForm";
-import {InstrumentService} from "../../service/instrument.service";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'app-instrument-create',
-  templateUrl: './instrument-create.component.html',
-  styleUrls: ['./instrument-create.component.css']
+  selector: 'app-instrument-update',
+  templateUrl: './instrument-update.component.html',
+  styleUrls: ['./instrument-update.component.css']
 })
-export class InstrumentCreateComponent implements OnInit {
+export class InstrumentUpdateComponent implements OnInit {
+  curId: number = 0;
   mainForm: FormGroup = new FormGroup({});
   instrumentGroupList: InstrumentGroup[] = [];
   managementUnitList: ManagementUnit[] = [];
@@ -40,11 +42,11 @@ export class InstrumentCreateComponent implements OnInit {
               private accreditationCenterService: AccreditationCenterService,
               private instrumentStatusService: InstrumentStatusService,
               private _constantsService: ConstantsService,
-              private router: Router) {
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.createForm();
     this.initInstrumentGroupList();
     this.initManagementUnitList();
     this.initInstrumentStatusList();
@@ -52,26 +54,35 @@ export class InstrumentCreateComponent implements OnInit {
     this.initCountryList();
     this.initQuantityLevelList();
     this.initAccreditationCenterList();
+    this.createForm();
   }
 
   createForm() {
-    this.mainForm = new FormGroup({
-      instrumentGroup: new FormControl('', [Validators.required]),
-      instrumentName: new FormControl('', [Validators.required]),
-      instrumentSymbol: new FormControl('', [Validators.required]),
-      instrumentSerialNumber: new FormControl('', [Validators.required]),
-      managementLevel: new FormControl('', [Validators.required]),
-      manufactureCountry: new FormControl('', [Validators.required]),
-      manufactureYear: new FormControl('', [Validators.required]),
-      inServiceDate: new FormControl('', [Validators.required, this.isMoreThanToday]),
-      managementUnit: new FormControl('', [Validators.required]),
-      weaponGuarantee: new FormControl('', [Validators.required]),
-      accreditationCycle: new FormControl('', [Validators.required, Validators.max(120)]),
-      accreditationCenter: new FormControl('', [Validators.required]),
-      qualityLevel: new FormControl('', [Validators.required]),
-      instrumentStatus: new FormControl('', [Validators.required]),
-      detailedDescription: new FormControl('', [])
+    this.activatedRoute.params.subscribe(params => {
+      this.curId = +params['id'];
+
+      this.instrumentService.findDtoById(this.curId).subscribe(next => {
+        this.mainForm = new FormGroup({
+          instrumentGroup: new FormControl(next.instrumentGroup.id, [Validators.required]),
+          instrumentName: new FormControl(next.instrumentName, [Validators.required]),
+          instrumentSymbol: new FormControl(next.instrumentSymbol, [Validators.required]),
+          instrumentSerialNumber: new FormControl(next.instrumentSerialNumber, [Validators.required]),
+          managementLevel: new FormControl(next.managementLevel, [Validators.required]),
+          manufactureCountry: new FormControl(next.manufactureCountry, [Validators.required]),
+          manufactureYear: new FormControl(next.manufactureYear ? next.manufactureYear : '', [Validators.required]),
+          inServiceDate: new FormControl(this.formatDate(next.inServiceDate), [Validators.required, this.isMoreThanToday]),
+          managementUnit: new FormControl(next.managementUnit.id, [Validators.required]),
+          weaponGuarantee: new FormControl(next.weaponGuarantee, [Validators.required]),
+          accreditationCycle: new FormControl(next.accreditationCycle, [Validators.required, Validators.max(120)]),
+          accreditationCenter: new FormControl(next.accreditationCenter.id, [Validators.required]),
+          qualityLevel: new FormControl(next.qualityLevel, [Validators.required]),
+          instrumentStatus: new FormControl(next.instrumentStatus.id, [Validators.required]),
+          detailedDescription: new FormControl(next.detailedDescription, [])
+        })
+      })
     })
+
+
   }
 
   initInstrumentGroupList() {
@@ -110,6 +121,10 @@ export class InstrumentCreateComponent implements OnInit {
     this.quantityLevelList = this._constantsService.QUANTITY_LEVEL_LIST;
   }
 
+  formatDate(curDate: Date): string | null {
+    return new DatePipe('en-US').transform(curDate, 'yyyy-MM-dd');
+  }
+
   initMeasuringInstrumentForm(): MeasuringInstrumentForm | null {
     if (this.mainForm.valid) {
       return {
@@ -137,34 +152,41 @@ export class InstrumentCreateComponent implements OnInit {
   submit() {
     let measuringInstrumentForm = this.initMeasuringInstrumentForm();
     Swal.fire({
-      title: 'Đang thêm mới...',
+      title: 'Đang cập nhật...',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
         if (measuringInstrumentForm != null) {
-          this.instrumentService.create(measuringInstrumentForm).subscribe(next => {
+          this.instrumentService.update(this.curId, measuringInstrumentForm).subscribe(next => {
             Swal.fire({
               position: 'center',
               title: 'Thành công!',
-              text: 'Phương tiện đã được thêm!',
+              text: 'Phương tiện đã được cập nhật!',
               icon: 'success',
               timer: 200,
               showConfirmButton: false
             });
-            this.router.navigateByUrl(`/instruments/${next.id}`);
           }, (error: HttpErrorResponse) => {
+            console.log(error);
             Swal.fire({
               position: 'center',
               title: 'Lỗi!',
-              html: '<p>Thêm mới không thành công! </p><p>(' + error.message + ')</p>',
+              html: '<p>Cập nhật không thành công! </p><p>(' + error.message + ')</p>',
               icon: 'error'
             })
-            this.router.navigateByUrl('/instruments');
+          }, () => {
+            this.router.navigateByUrl(`/instruments/${this.curId}`);
           })
         }
       }
     });
   }
+
+  cancelUpdate() {
+    this.ngOnInit();
+    window.scrollTo(0, 0);
+  }
+
 
 //   Custom validators
   isMoreThanToday(control: AbstractControl): ValidationErrors | null {

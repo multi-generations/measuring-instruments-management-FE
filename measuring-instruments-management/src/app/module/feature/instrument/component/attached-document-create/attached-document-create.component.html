@@ -1,0 +1,78 @@
+<div class="modal fade" id="attached-document-create" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm mới tài liệu đi kèm</h1>
+        <button type="button"
+                class="btn-close"
+                id="attached-document-create-modal-close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                (click)="closeModal()"></button>
+      </div>
+      <form [formGroup]="mainForm" (ngSubmit)="submit()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="document-name" class="form-label">Tên tài liệu
+              <sup class="text-danger fw-bold">*</sup></label>
+            <input id="document-name"
+                   type="text"
+                   class="form-control"
+                   placeholder="Nhập tên tài liệu"
+                   formControlName="documentName"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['documentName'].touched) && (mainForm.controls['documentName'].invalid),
+                    'is-valid': (mainForm.controls['documentName'].touched) && (mainForm.controls['documentName'].valid)}">
+            <sub class="text-danger"
+                 *ngIf="mainForm.controls['documentName'].hasError('required') &&
+            mainForm.controls['documentName'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+          </div>
+
+          <div class="mb-3">
+            <label for="document-symbol" class="form-label">Ký hiệu
+              <sup class="text-danger fw-bold">*</sup></label>
+            <input id="document-symbol"
+                   type="text"
+                   class="form-control"
+                   placeholder="Nhập ký hiệu"
+                   formControlName="documentSymbol"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['documentSymbol'].touched) && (mainForm.controls['documentSymbol'].invalid),
+                    'is-valid': (mainForm.controls['documentSymbol'].touched) && (mainForm.controls['documentSymbol'].valid)}">
+            <sub class="text-danger"
+                 *ngIf="mainForm.controls['documentSymbol'].hasError('required') &&
+            mainForm.controls['documentSymbol'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+          </div>
+
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Số lượng
+              <sup class="text-danger fw-bold">*</sup></label>
+            <input id="quantity"
+                   type="number"
+                   class="form-control"
+                   placeholder="Nhập số lượng"
+                   formControlName="quantity"
+                   [ngClass]="{
+                    'is-invalid': (mainForm.controls['quantity'].touched) && (mainForm.controls['quantity'].invalid),
+                    'is-valid': (mainForm.controls['quantity'].touched) && (mainForm.controls['quantity'].valid)}">
+            <sub class="text-danger"
+                 *ngIf="mainForm.controls['quantity'].hasError('required') &&
+            mainForm.controls['quantity'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+          </div>
+
+          <div class="mb-3">
+            <label for="document-note" class="form-label">Ghi chú</label>
+            <textarea id="document-note"
+                      class="form-control"
+                      placeholder="Nhập ghi chú"
+                      formControlName="documentNote"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" [disabled]="mainForm.invalid" class="btn btn-primary">Thêm mới</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

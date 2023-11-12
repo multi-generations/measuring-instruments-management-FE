@@ -1,0 +1,181 @@
+<div
+  class="modal fade"
+  id="instrument-usage-create"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          Thêm mới Theo dõi sử dụng
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          id="instrument-usage-create-modal-close-btn"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <form [formGroup]="mainForm" (ngSubmit)="submit()" *ngIf="mainForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3 col-6 pe-1">
+              <label for="monitor-date" class="form-label"
+                >Ngày tháng năm sử dụng
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="monitor-date"
+                type="date"
+                class="form-control"
+                placeholder="Chọn ngày sử dụng"
+                formControlName="monitorDate"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['monitorDate'].touched &&
+                    mainForm.controls['monitorDate'].invalid,
+                  'is-valid':
+                    mainForm.controls['monitorDate'].touched &&
+                    mainForm.controls['monitorDate'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['monitorDate'].hasError('required') &&
+                  mainForm.controls['monitorDate'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['monitorDate'].hasError(
+                    'isMoreThanToday'
+                  ) && mainForm.controls['monitorDate'].touched
+                "
+                >{{ constantsService.NOT_MORE_THAN_TODAY }}</sub
+              >
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="working-duration" class="form-label"
+                >Thời gian sử dụng (giờ)
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="working-duration"
+                type="number"
+                class="form-control"
+                placeholder="Nhập thời gian sử dụng"
+                formControlName="workingDuration"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['workingDuration'].touched &&
+                    mainForm.controls['workingDuration'].invalid,
+                  'is-valid':
+                    mainForm.controls['workingDuration'].touched &&
+                    mainForm.controls['workingDuration'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['workingDuration'].hasError('required') &&
+                  mainForm.controls['workingDuration'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="instrument-user" class="form-label"
+                >Người sử dụng <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="instrument-user"
+                type="text"
+                class="form-control"
+                placeholder="Nhập người sử dụng"
+                formControlName="instrumentUser"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['instrumentUser'].touched &&
+                    mainForm.controls['instrumentUser'].invalid,
+                  'is-valid':
+                    mainForm.controls['instrumentUser'].touched &&
+                    mainForm.controls['instrumentUser'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['instrumentUser'].hasError('required') &&
+                  mainForm.controls['instrumentUser'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="instrument-status" class="form-label"
+                >Tình trạng thiết bị khi sử dụng
+                <sup class="text-danger fw-bold">*</sup></label
+              >
+              <textarea
+                id="instrument-status"
+                type="text"
+                class="form-control"
+                placeholder="Nhập tình trạng thiết bị khi sử dụng"
+                formControlName="instrumentStatus"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['instrumentStatus'].touched &&
+                    mainForm.controls['instrumentStatus'].invalid,
+                  'is-valid':
+                    mainForm.controls['instrumentStatus'].touched &&
+                    mainForm.controls['instrumentStatus'].valid
+                }"
+              ></textarea>
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['instrumentStatus'].hasError('required') &&
+                  mainForm.controls['instrumentStatus'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-12 pe-1">
+              <label for="usage-note" class="form-label"
+                >Ghi chú sử dụng <sup class="text-danger fw-bold">*</sup></label
+              >
+              <textarea
+                id="usage-note"
+                type="text"
+                class="form-control"
+                placeholder="Nhập ghi chú"
+                formControlName="usageNote"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Thêm mới</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

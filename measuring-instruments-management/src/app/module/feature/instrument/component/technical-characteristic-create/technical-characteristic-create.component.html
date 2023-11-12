@@ -1,0 +1,179 @@
+<div class="modal fade" id="technical-characteristic-create" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm mới đặc điểm kỹ thuật</h1>
+        <button type="button"
+                class="btn-close"
+                id="technical-characteristic-create-modal-close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                (click)="closeModal()"></button>
+      </div>
+      <form [formGroup]="mainForm" (ngSubmit)="submit()" *ngIf="mainForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3 col-6 pe-1">
+              <label for="instrument-type" class="form-label">Loại phương tiện
+                <sup class="text-danger fw-bold">*</sup></label>
+              <select id="instrument-type"
+                      class="form-select"
+                      aria-label="Default select instrument-type"
+                      formControlName="instrumentType"
+                      [ngClass]="{
+                      'is-invalid': (mainForm.controls['instrumentType'].touched) && (mainForm.controls['instrumentType'].invalid),
+                      'is-valid': (mainForm.controls['instrumentType'].touched) && (mainForm.controls['instrumentType'].valid)}">
+                <option selected value="">-- Chọn loại phương tiện --</option>
+                <ng-container *ngFor="let v of instrumentTypeList;">
+                  <option [value]="v.id">{{v.instrumentTypeName}}</option>
+                </ng-container>
+              </select>
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['instrumentType'].hasError('required') &&
+              mainForm.controls['instrumentType'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="technical-type" class="form-label">Loại kỹ thuật
+                <sup class="text-danger fw-bold">*</sup></label>
+              <select id="technical-type"
+                      class="form-select"
+                      aria-label="Default select technical-type"
+                      (change)="changeMeasuringUnit()"
+                      formControlName="technicalType"
+                      [ngClass]="{
+                      'is-invalid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].invalid),
+                      'is-valid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].valid)}">
+                <option selected value="">-- Chọn loại kỹ thuật --</option>
+                <ng-container *ngFor="let v of technicalTypeList;">
+                  <option [value]="v.id">{{v.technicalTypeName}}</option>
+                </ng-container>
+              </select>
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['technicalType'].hasError('required') &&
+              mainForm.controls['technicalType'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6 pe-1 ">
+              <label for="measuring-range-start" class="form-label">Điểm đo đầu
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="measuring-range-start"
+                     type="text"
+                     class="form-control"
+                     placeholder="Nhập điểm đo đầu"
+                     formControlName="measuringRangeStart"
+                     [ngClass]="{
+                    'is-invalid': (mainForm.controls['measuringRangeStart'].touched) && (mainForm.controls['measuringRangeStart'].invalid),
+                    'is-valid': (mainForm.controls['measuringRangeStart'].touched) && (mainForm.controls['measuringRangeStart'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['measuringRangeStart'].hasError('required') &&
+            mainForm.controls['measuringRangeStart'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="measuring-unit-start" class="form-label">Đơn vị điểm đầu
+                <sup class="text-danger fw-bold">*</sup></label>
+              <select id="measuring-unit-start"
+                      class="form-select"
+                      aria-label="Default select measuring-unit-start"
+                      formControlName="measuringUnitStart"
+                      [ngClass]="{
+                      'is-invalid': (mainForm.controls['measuringUnitStart'].touched) && (mainForm.controls['measuringUnitStart'].invalid),
+                      'is-valid': (mainForm.controls['measuringUnitStart'].touched) && (mainForm.controls['measuringUnitStart'].valid)}">
+                <option selected value="">-- Chọn đơn vị --</option>
+                <ng-container *ngFor="let v of measuringUnitList;">
+                  <option [value]="v.id">{{v.measuringUnitName}}</option>
+                </ng-container>
+              </select>
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['measuringUnitStart'].hasError('required') &&
+              mainForm.controls['measuringUnitStart'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6 pe-1 ">
+              <label for="measuring-range-end" class="form-label">Điểm đo cuối
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="measuring-range-end"
+                     type="text"
+                     class="form-control"
+                     placeholder="Nhập điểm đo cuối"
+                     formControlName="measuringRangeEnd"
+                     [ngClass]="{
+                    'is-invalid': (mainForm.controls['measuringRangeEnd'].touched) && (mainForm.controls['measuringRangeEnd'].invalid),
+                    'is-valid': (mainForm.controls['measuringRangeEnd'].touched) && (mainForm.controls['measuringRangeEnd'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['measuringRangeEnd'].hasError('required') &&
+            mainForm.controls['measuringRangeEnd'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="measuring-unit-end" class="form-label">Đơn vị điểm cuối
+                <sup class="text-danger fw-bold">*</sup></label>
+              <select id="measuring-unit-end"
+                      class="form-select"
+                      aria-label="Default select measuring-unit-end"
+                      formControlName="measuringUnitEnd"
+                      [ngClass]="{
+                      'is-invalid': (mainForm.controls['measuringUnitEnd'].touched) && (mainForm.controls['measuringUnitEnd'].invalid),
+                      'is-valid': (mainForm.controls['measuringUnitEnd'].touched) && (mainForm.controls['measuringUnitEnd'].valid)}">
+                <option selected value="">-- Chọn đơn vị --</option>
+                <ng-container *ngFor="let v of measuringUnitList;">
+                  <option [value]="v.id">{{v.measuringUnitName}}</option>
+                </ng-container>
+              </select>
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['measuringUnitEnd'].hasError('required') &&
+              mainForm.controls['measuringUnitEnd'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6 pe-1 ">
+              <label for="measuring-error" class="form-label">Sai số
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="measuring-error"
+                     type="text"
+                     class="form-control"
+                     placeholder="Nhập sai số"
+                     formControlName="measuringError"
+                     [ngClass]="{
+                    'is-invalid': (mainForm.controls['measuringError'].touched) && (mainForm.controls['measuringError'].invalid),
+                    'is-valid': (mainForm.controls['measuringError'].touched) && (mainForm.controls['measuringError'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['measuringError'].hasError('required') &&
+            mainForm.controls['measuringError'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="measuring-error-unit" class="form-label">Đơn vị sai số
+                <sup class="text-danger fw-bold">*</sup></label>
+              <select id="measuring-error-unit"
+                      class="form-select"
+                      aria-label="Default select measuring-error-unit"
+                      formControlName="measuringErrorUnit"
+                      [ngClass]="{
+                      'is-invalid': (mainForm.controls['measuringErrorUnit'].touched) && (mainForm.controls['measuringErrorUnit'].invalid),
+                      'is-valid': (mainForm.controls['measuringErrorUnit'].touched) && (mainForm.controls['measuringErrorUnit'].valid)}">
+                <option selected value="">-- Chọn đơn vị --</option>
+                <ng-container *ngFor="let v of measuringUnitList;">
+                  <option [value]="v.id">{{v.measuringUnitName}}</option>
+                </ng-container>
+              </select>
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['measuringErrorUnit'].hasError('required') &&
+              mainForm.controls['measuringErrorUnit'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" [disabled]="mainForm.invalid" class="btn btn-primary">Thêm mới</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
