@@ -23,7 +23,7 @@ export class InstrumentUsageService {
   public deleteById(id: number): Observable<void> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.delete<void>(this._API_URL, { headers, body: id });
+    return this._http.delete<void>(this._API_URL + `/${id}`, {headers});
   }
 
   public create(instrumentUsageForm: InstrumentUsageForm): Observable<any> {
@@ -40,9 +40,8 @@ export class InstrumentUsageService {
   ): Observable<any> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.put(this._API_URL + `/${id}`, {
+    return this._http.put(this._API_URL + `/${id}`, instrumentUsage, {
       headers,
-      body: instrumentUsage,
     });
   }
 }
