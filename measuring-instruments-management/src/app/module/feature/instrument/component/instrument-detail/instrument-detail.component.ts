@@ -13,6 +13,9 @@ import {Carousel} from "bootstrap";
 import {ConstantsService} from "../../../../shared/service/constants.service";
 import Swal from "sweetalert2";
 import {TechnicalCharacteristicService} from "../../service/technical-characteristic.service";
+import {AttachedDocumentService} from "../../service/attached-document.service";
+import {InstrumentForwardDetailDto} from "../../model/dto/detail/InstrumentForwardDetailDto";
+import {InstrumentForwardService} from "../../service/instrument-forward.service";
 
 @Component({
   selector: 'app-instrument-detail',
@@ -30,14 +33,19 @@ export class InstrumentDetailComponent implements OnInit{
   instrumentAccreditations: InstrumentAccreditationDetailDto[] = [];
   instrumentRepairs: InstrumentRepairDetailDto[] = [];
   instrumentUsages: InstrumentUsageDetailDto[] = [];
+  instrumentForwards: InstrumentForwardDetailDto[] = [];
   instrumentImageActiveSrc = '';
   technicalCharacteristicIdUpdate = 0;
+  attachedDocumentIdUpdate = 0;
+  instrumentForwardIdUpdate = 0;
 
 
   constructor(private _instrumentService: InstrumentService,
               private _activatedRoute: ActivatedRoute,
               public constantsService: ConstantsService,
-              private technicalCharacteristicService: TechnicalCharacteristicService) {
+              private technicalCharacteristicService: TechnicalCharacteristicService,
+              private attachedDocumentService: AttachedDocumentService,
+              private instrumentForwardService: InstrumentForwardService) {
     this._activatedRoute.params.subscribe(value => {
       const id = value['id'];
       if (id) {
@@ -46,6 +54,7 @@ export class InstrumentDetailComponent implements OnInit{
         this.findAllImageLinks(id);
         this.findAllTechnicalCharacteristics(id);
         this.findAllAttachedDocuments(id);
+        this.findAllInstrumentForwards(id);
         this.findAllAccreditations(id);
         this.findAllRepairs(id);
         this.findAllUsages(id);
@@ -120,6 +129,22 @@ export class InstrumentDetailComponent implements OnInit{
     }
 
     this._instrumentService.findAllAttachedDocuments(id).subscribe(observer);
+  }
+
+  public findAllInstrumentForwards(id: number) {
+    const observer: Observer<InstrumentForwardDetailDto[]> = {
+      next: (data: InstrumentForwardDetailDto[]) => {
+        this.instrumentForwards = data;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err.status);
+        console.log(err.message);
+      },
+      complete: () => {
+      }
+    }
+
+    this._instrumentService.findAllForwards(id).subscribe(observer);
   }
 
   public findAllAccreditations(id: number) {
@@ -211,6 +236,14 @@ export class InstrumentDetailComponent implements OnInit{
     this.technicalCharacteristicIdUpdate = id;
   }
 
+  setAttachedDocumentIdUpdate(id: number) {
+    this.attachedDocumentIdUpdate = id;
+  }
+
+  setInstrumentForwardIdUpdate(id: number) {
+    this.instrumentForwardIdUpdate = id;
+  }
+
   // Delete
 
   public showDeleteModal(id: number, deleteType: string) {
@@ -222,6 +255,9 @@ export class InstrumentDetailComponent implements OnInit{
         break;
       case 'attachedDocument':
         modalBody = this.setModalBodyAttachedDocument(id);
+        break;
+      case 'instrumentForward':
+        modalBody = this.setModalBodyInstrumentForward(id);
         break;
       case 'instrumentAccreditation':
         modalBody = this.setModalBodyInstrumentAccreditation(id);
@@ -237,7 +273,7 @@ export class InstrumentDetailComponent implements OnInit{
     Swal.fire({
       position: 'center',
       title: 'Xác nhận bạn muốn xóa',
-      width: '50vw',
+      width: '80vw',
       html: modalBody,
       icon: 'warning',
       showCancelButton: true,
@@ -259,6 +295,9 @@ export class InstrumentDetailComponent implements OnInit{
                 break;
               case 'attachedDocument':
                 this.deleteAttachedDocumentById(id);
+                break;
+              case 'instrumentForward':
+                this.deleteInstrumentForwardById(id);
                 break;
               case 'instrumentAccreditation':
                 this.deleteInstrumentAccreditationById(id);
@@ -282,14 +321,14 @@ export class InstrumentDetailComponent implements OnInit{
       '<table class="table text-center">' +
       '<thead>' +
       '<tr class="col-12">' +
-      '<th class="col-3">Loại thiết bị</th>' +
-      '<th class="col-3">Tên kỹ thuật</th>' +
-      '<th class="col-1">Điểm đo đầu</th>' +
-      '<th class="col-1">Đơn vị</th>' +
-      '<th class="col-1">Điểm đo cuối</th>' +
-      '<th class="col-1">Đơn vị</th>' +
+      '<th class="col-2">Loại thiết bị</th>' +
+      '<th class="col-2">Tên kỹ thuật</th>' +
+      '<th class="col-2">Điểm đo đầu</th>' +
+      '<th class="col-1">Đơn vị điểmầu</th>' +
+      '<th class="col-22">Điểm đo cuối</th>' +
+      '<th class="col-1">Đơn vị điểm cuối</th>' +
       '<th class="col-1">Phương sai</th>' +
-      '<th class="col-1">Đơn vị</th>' +
+      '<th class="col-1">Đơn vị phương sai</th>' +
       '</tr>' +
       '</thead>' +
       '<tbody>';
@@ -297,14 +336,14 @@ export class InstrumentDetailComponent implements OnInit{
     const deleteTechnicalCharacteristic = this.technicalCharacteristics.find(value => value.id === id);
 
     modalBody += '<tr class="col-12">' +
-      `<td class="col-4 text-start">${deleteTechnicalCharacteristic?.instrumentType.instrumentTypeName}</td>` +
-      `<td class="col-4 text-start">${deleteTechnicalCharacteristic?.technicalType.technicalTypeName}</td>` +
-      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringRangeStart}</td>` +
-      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringUnitStart}</td>` +
-      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringRangeEnd}</td>` +
-      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringUnitEnd}</td>` +
+      `<td class="col-2">${deleteTechnicalCharacteristic?.instrumentType.instrumentTypeName}</td>` +
+      `<td class="col-2">${deleteTechnicalCharacteristic?.technicalType.technicalTypeName}</td>` +
+      `<td class="col-2">${deleteTechnicalCharacteristic?.measuringRangeStart}</td>` +
+      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringUnitStart.measuringUnitName}</td>` +
+      `<td class="col-2">${deleteTechnicalCharacteristic?.measuringRangeEnd}</td>` +
+      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringUnitEnd.measuringUnitName}</td>` +
       `<td class="col-1">${deleteTechnicalCharacteristic?.measuringError}</td>` +
-      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringErrorUnit}</td>` +
+      `<td class="col-1">${deleteTechnicalCharacteristic?.measuringErrorUnit.measuringUnitName}</td>` +
       '</tr></body></table></div>'
 
     return modalBody;
@@ -337,11 +376,10 @@ export class InstrumentDetailComponent implements OnInit{
       '<table class="table text-center">' +
       '<thead>' +
       '<tr class="col-12">' +
-      '<th class="col-3">Phiên âm</th>' +
-      '<th class="col-3">Tên gốc</th>' +
-      '<th class="col-1">Ký hiệu</th>' +
+      '<th class="col-4">Tên tài liệu</th>' +
+      '<th class="col-2">Ký hiệu</th>' +
       '<th class="col-1">Số lượng</th>' +
-      '<th class="col-4">Ghi chú</th>' +
+      '<th class="col-5">Ghi chú</th>' +
       '</tr>' +
       '</thead>' +
       '<tbody>';
@@ -349,17 +387,89 @@ export class InstrumentDetailComponent implements OnInit{
     const deleteAttachedDocument = this.attachedDocuments.find(value => value.id === id);
 
     modalBody += '<tr class="col-12">' +
-      `<td class="col-3">${deleteAttachedDocument?.documentName}</td>` +
-      `<td class="col-1">${deleteAttachedDocument?.documentSymbol}</td>` +
+      `<td class="col-4">${deleteAttachedDocument?.documentName}</td>` +
+      `<td class="col-2">${deleteAttachedDocument?.documentSymbol}</td>` +
       `<td class="col-1">${deleteAttachedDocument?.quantity}</td>` +
-      `<td class="col-4 text-start">${deleteAttachedDocument?.documentNote}</td>` +
+      `<td class="col-5">${deleteAttachedDocument?.documentNote}</td>` +
       '</tr></body></table></div>'
 
     return modalBody;
   }
 
   public deleteAttachedDocumentById(id: number) {
-    alert('delete: ' + id);
+    this.attachedDocumentService.deleteById(id).subscribe(next => {
+      Swal.fire({
+        position: 'center',
+        title: 'Thành công!',
+        text: 'Xóa thành công!',
+        icon: 'success',
+        timer: 200,
+        showConfirmButton: false
+      });
+      this.findAllAttachedDocuments(this.curId);
+    }, (error: HttpErrorResponse) => {
+      Swal.fire({
+        position: 'center',
+        title: 'Lỗi!',
+        html: '<p>Xóa không thành công! </p><p>(' + error.message + ')</p>',
+        icon: 'error'
+      })
+    });
+  }
+
+  public setModalBodyInstrumentForward(id: number) {
+    let modalBody =
+      '<div class="overflow-auto" style="max-height: 30vh; min-width: 500px">' +
+      '<table class="table text-center">' +
+      '<thead>' +
+      '<tr class="col-12">' +
+      '<th class="col-1">Ngày giao nhận</th>' +
+      '<th class="col-2">Đơn vị nhận</th>' +
+      '<th class="col-1">Người giao</th>' +
+      '<th class="col-1">Người nhận</th>' +
+      '<th class="col-2">Cơ quan phát lệnh</th>' +
+      '<th class="col-1">Số lệnh</th>' +
+      '<th class="col-2">Tình trạng</th>' +
+      '<th class="col-2">Ghi chú</th>' +
+      '</tr>' +
+      '</thead>' +
+      '<tbody>';
+
+    const deleteInstrumentForward = this.instrumentForwards.find(value => value.id === id);
+
+    modalBody += '<tr class="col-12">' +
+      `<td class="col-1">${deleteInstrumentForward?.forwardDate}</td>` +
+      `<td class="col-2">${deleteInstrumentForward?.receiveUnit}</td>` +
+      `<td class="col-1">${deleteInstrumentForward?.sender}</td>` +
+      `<td class="col-1">${deleteInstrumentForward?.receiver}</td>` +
+      `<td class="col-2">${deleteInstrumentForward?.issuingAuthority}</td>` +
+      `<td class="col-1">${deleteInstrumentForward?.commandNumber}</td>` +
+      `<td class="col-2">${deleteInstrumentForward?.instrumentForwardStatus}</td>` +
+      `<td class="col-2">${deleteInstrumentForward?.forwardNote}</td>` +
+      '</tr></body></table></div>'
+
+    return modalBody;
+  }
+
+  public deleteInstrumentForwardById(id: number) {
+    this.instrumentForwardService.deleteById(id).subscribe(next => {
+      Swal.fire({
+        position: 'center',
+        title: 'Thành công!',
+        text: 'Xóa thành công!',
+        icon: 'success',
+        timer: 200,
+        showConfirmButton: false
+      });
+      this.findAllInstrumentForwards(this.curId);
+    }, (error: HttpErrorResponse) => {
+      Swal.fire({
+        position: 'center',
+        title: 'Lỗi!',
+        html: '<p>Xóa không thành công! </p><p>(' + error.message + ')</p>',
+        icon: 'error'
+      })
+    });
   }
 
   public setModalBodyInstrumentAccreditation(id: number) {
@@ -371,10 +481,10 @@ export class InstrumentDetailComponent implements OnInit{
       '<th class="col-1">Ngày kiểm định</th>' +
       '<th class="col-2">Nơi kiểm định</th>' +
       '<th class="col-2">Người kiểm định</th>' +
-      '<th class="col-2 text-start">Kết quả</th>' +
+      '<th class="col-2">Kết quả</th>' +
       '<th class="col-1">Số xác nhận</th>' +
       '<th class="col-1">Ngày hết hiệu lực</th>' +
-      '<th class="col-3 text-start">Ghi chú</th>' +
+      '<th class="col-3">Ghi chú</th>' +
       '</tr>' +
       '</thead>' +
       '<tbody>';
@@ -419,12 +529,12 @@ export class InstrumentDetailComponent implements OnInit{
 
     modalBody += '<tr class="col-12">' +
       `<td class="col-1">${deleteInstrumentRepair?.repairDate}</td>` +
-      `<td class="col-2 text-start">${deleteInstrumentRepair?.repairReason}</td>` +
-      `<td class="col-2 text-start">${deleteInstrumentRepair?.instrumentCondition}</td>` +
-      `<td class="col-2 text-start">${deleteInstrumentRepair?.repairResult}</td>` +
+      `<td class="col-2">${deleteInstrumentRepair?.repairReason}</td>` +
+      `<td class="col-2">${deleteInstrumentRepair?.instrumentCondition}</td>` +
+      `<td class="col-2">${deleteInstrumentRepair?.repairResult}</td>` +
       `<td class="col-1">${deleteInstrumentRepair?.repairPlace}</td>` +
       `<td class="col-1">${deleteInstrumentRepair?.repairer}</td>` +
-      `<td class="col-3 text-start">${deleteInstrumentRepair?.repairNote}</td>` +
+      `<td class="col-3">${deleteInstrumentRepair?.repairNote}</td>` +
       '</tr></body></table></div>'
 
     return modalBody;
@@ -453,10 +563,10 @@ export class InstrumentDetailComponent implements OnInit{
 
     modalBody += '<tr class="col-12">' +
       `<td class="col-1">${deleteInstrumentUsage?.monitorDate}</td>` +
-      `<td class="col-4 text-start">${deleteInstrumentUsage?.instrumentStatus}</td>` +
+      `<td class="col-4">${deleteInstrumentUsage?.instrumentStatus}</td>` +
       `<td class="col-1">${deleteInstrumentUsage?.workingDuration}</td>` +
       `<td class="col-3">${deleteInstrumentUsage?.instrumentUser}</td>` +
-      `<td class="col-3 text-start">${deleteInstrumentUsage?.usageNote}</td>` +
+      `<td class="col-3">${deleteInstrumentUsage?.usageNote}</td>` +
       '</tr></body></table></div>'
 
     return modalBody;
@@ -471,6 +581,21 @@ export class InstrumentDetailComponent implements OnInit{
       switch (typeChange) {
         case 'technical-characteristic':
           this.findAllTechnicalCharacteristics(this.curId);
+          break;
+        case 'attached-document':
+          this.findAllAttachedDocuments(this.curId);
+          break;
+        case 'instrument-forward':
+          this.findAllInstrumentForwards(this.curId);
+          break;
+        case 'instrument-usage':
+          this.findAllUsages(this.curId);
+          break;
+        case 'instrument-repair':
+          this.findAllRepairs(this.curId);
+          break;
+        case 'instrument-accreditation':
+          this.findAllAccreditations(this.curId);
           break;
       }
     }

@@ -6,12 +6,12 @@
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Cập nhật đặc điểm kỹ thuật</h1>
         <button type="button"
                 class="btn-close"
-                id="technical-characteristic-create-modal-close-btn"
+                id="technical-characteristic-update-modal-close-btn"
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 (click)="resetModal()"></button>
       </div>
-      <form [formGroup]="mainForm" (ngSubmit)="submit()" *ngIf="mainForm">
+      <form [formGroup]="mainForm" (ngSubmit)="submit()">
         <div class="modal-body">
           <div class="row">
             <div class="mb-3 col-6 pe-1">
@@ -42,6 +42,7 @@
                       class="form-select"
                       aria-label="Default select technical-type"
                       formControlName="technicalType"
+                      (change)="changeMeasuringUnit()"
                       [ngClass]="{
                       'is-invalid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].invalid),
                       'is-valid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].valid)}">
@@ -171,8 +172,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" (click)="createForm()">Hủy bỏ</button>
-          <button type="submit" class="btn btn-primary">Cập nhật</button>
+          <button type="button" class="btn btn-danger" (click)="resetForm()">Hủy bỏ</button>
+          <button type="submit" class="btn btn-primary" [disabled]="mainForm.invalid">Cập nhật</button>
         </div>
       </form>
     </div>

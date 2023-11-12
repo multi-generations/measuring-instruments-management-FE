@@ -6,20 +6,18 @@ import {MeasuringUnit} from "../../model/entity/MeasuringUnit";
 import {InstrumentTypeService} from "../../service/instrument-type.service";
 import {TechnicalTypeService} from "../../service/technical-type.service";
 import {MeasuringUnitService} from "../../service/measuring-unit.service";
-import {TechnicalCharacteristicService} from "../../service/technical-characteristic.service";
-import {ConstantsService} from "../../../../shared/service/constants.service";
 import {TechnicalCharacteristicForm} from "../../model/form/TechnicalCharacteristicForm";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+import {TechnicalCharacteristicService} from "../../service/technical-characteristic.service";
+import {ConstantsService} from "../../../../shared/service/constants.service";
 
 @Component({
-  selector: 'app-technical-characteristic-update',
-  templateUrl: './technical-characteristic-update.component.html',
-  styleUrls: ['./technical-characteristic-update.component.css']
+  selector: 'app-technical-characteristic-create',
+  templateUrl: './technical-characteristic-create.component.html',
+  styleUrls: ['./technical-characteristic-create.component.css']
 })
-export class TechnicalCharacteristicUpdateComponent implements OnInit {
-  @Input()
-  technicalCharacteristicId: number = 0
+export class TechnicalCharacteristicCreateComponent implements OnInit{
   @Input()
   measuringInstrumentId: number = 0;
 
@@ -44,24 +42,19 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
 
     this.initInstrumentTypeList();
     this.initTechnicalTypeList();
-    this.initMeasuringUnitList();
   }
 
   createForm() {
-    if (this.technicalCharacteristicId != 0) {
-      this.technicalCharacteristicService.findDtoById(this.technicalCharacteristicId).subscribe(next => {
-        this.mainForm = new FormGroup({
-          instrumentType: new FormControl(next.instrumentType?.id, [Validators.required]),
-          technicalType: new FormControl(next.technicalType?.id, [Validators.required]),
-          measuringRangeStart: new FormControl(next.measuringRangeStart, [Validators.required]),
-          measuringUnitStart: new FormControl(next.measuringUnitStart?.id, [Validators.required]),
-          measuringRangeEnd: new FormControl(next.measuringRangeEnd, [Validators.required]),
-          measuringUnitEnd: new FormControl(next.measuringUnitEnd?.id, [Validators.required]),
-          measuringError: new FormControl(next.measuringError, [Validators.required]),
-          measuringErrorUnit: new FormControl(next.measuringErrorUnit?.id, [Validators.required])
-        })
-      })
-    }
+    this.mainForm = new FormGroup({
+      instrumentType: new FormControl('', [Validators.required]),
+      technicalType: new FormControl('', [Validators.required]),
+      measuringRangeStart: new FormControl('', [Validators.required]),
+      measuringUnitStart: new FormControl('', [Validators.required]),
+      measuringRangeEnd: new FormControl('', [Validators.required]),
+      measuringUnitEnd: new FormControl('', [Validators.required]),
+      measuringError: new FormControl('', [Validators.required]),
+      measuringErrorUnit: new FormControl('', [Validators.required]),
+    })
   }
 
   initInstrumentTypeList() {
@@ -77,15 +70,9 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
   }
 
   initMeasuringUnitList() {
-    this.measuringUnitService.findAll().subscribe(next => {
-      this.measuringUnitList = next;
-    })
-  }
-
-  updateMeasuringUnitList() {
     const technicalTypeId = this.mainForm.get('technicalType')?.value;
 
-    if (technicalTypeId) {
+    if (technicalTypeId != '') {
       this.measuringUnitService.findByTechnicalType(+technicalTypeId).subscribe(next => {
         this.measuringUnitList = next;
       })
@@ -95,7 +82,6 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
   initTechnicalCharacteristicForm(): TechnicalCharacteristicForm | null {
     if (this.mainForm.valid) {
       return {
-        id: this.technicalCharacteristicId,
         instrumentType: this.instrumentTypeList.find(obj => obj.id === +this.mainForm.get('instrumentType')?.value),
         technicalType: this.technicalTypeList.find(obj => obj.id === +this.mainForm.get('technicalType')?.value),
         measuringRangeStart: +this.mainForm.get('measuringRangeStart')?.value,
@@ -104,7 +90,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
         measuringUnitEnd: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringUnitEnd')?.value),
         measuringError: +this.mainForm.get('measuringError')?.value,
         measuringErrorUnit: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringErrorUnit')?.value),
-        measuringInstrumentId: this.measuringInstrumentId
+        measuringInstrument: {id: this.measuringInstrumentId}
       };
     }
 
@@ -114,29 +100,29 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
   submit() {
     let technicalCharacteristicForm = this.initTechnicalCharacteristicForm();
     Swal.fire({
-      title: 'Đang cập nhật...',
+      title: 'Đang thêm mới...',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
         if (technicalCharacteristicForm != null) {
-          this.technicalCharacteristicService.update(this.technicalCharacteristicId, technicalCharacteristicForm).subscribe(next => {
+          this.technicalCharacteristicService.create(technicalCharacteristicForm).subscribe(next => {
             Swal.fire({
               position: 'center',
               title: 'Thành công!',
-              text: 'Đặc điểm đã được cập nhật!',
+              text: 'Đặc điểm đã được thêm!',
               icon: 'success',
               timer: 200,
               showConfirmButton: false
             });
             this.resultChange = true;
-            this.closeModalClick();
+            this.closeModalBtnClick();
           }, (error: HttpErrorResponse) => {
             Swal.fire({
               position: 'center',
               title: 'Lỗi!',
-              html: '<p>Cập nhật không thành công! </p><p>(' + error.message + ')</p>',
+              html: '<p>Thêm mới không thành công! </p><p>(' + error.message + ')</p>',
               icon: 'error'
-            })
+            });
             this.resultChange = false;
           })
         }
@@ -144,13 +130,20 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit {
     });
   }
 
-  resetModal() {
+  closeModal() {
     this.emitResult.emit(this.resultChange);
     this.createForm();
   }
 
-  closeModalClick() {
-    document.getElementById('technical-characteristic-update-modal-close-btn')?.click();
+  closeModalBtnClick() {
+    document.getElementById('technical-characteristic-create-modal-close-btn')?.click();
+  }
+
+  changeMeasuringUnit() {
+    this.mainForm.get('measuringUnitStart')?.setValue('');
+    this.mainForm.get('measuringUnitEnd')?.setValue('');
+    this.mainForm.get('measuringErrorUnit')?.setValue('');
+    this.initMeasuringUnitList();
   }
 
   // Getter

@@ -17,3 +17,8 @@ button:hover {
 button.btn-child:hover {
   padding-left: 56px !important;
 }
+
+.active-child {
+  background-color: lightslategray;
+  color: white;
+}

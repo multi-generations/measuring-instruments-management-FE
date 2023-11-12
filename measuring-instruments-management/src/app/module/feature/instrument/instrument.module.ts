@@ -10,13 +10,15 @@ import { InstrumentSearchComponent } from './component/instrument-search/instrum
 import { InstrumentDetailComponent } from './component/instrument-detail/instrument-detail.component';
 import { InstrumentCreateComponent } from './component/instrument-create/instrument-create.component';
 import { InstrumentUpdateComponent } from './component/instrument-update/instrument-update.component';
-import { TechnicalCharacteristicCreateComponent } from './component/technical-characterristic-create/technical-characteristic-create.component';
-import { TechnicalCharacteristicUpdateComponent } from './component/technical-characterristic-update/technical-characteristic-update.component';
+import { TechnicalCharacteristicCreateComponent } from './component/technical-characteristic-create/technical-characteristic-create.component';
+import { TechnicalCharacteristicUpdateComponent } from './component/technical-characteristic-update/technical-characteristic-update.component';
 import { AttachedDocumentCreateComponent } from './component/attached-document-create/attached-document-create.component';
 import { AttachedDocumentUpdateComponent } from './component/attached-document-update/attached-document-update.component';
 import { InstrumentUsageCreateComponent } from './component/instrument-usage-create/instrument-usage-create.component';
 import { InstrumentRepairCreateComponent } from './component/instrument-repair-create/instrument-repair-create.component';
 import { InstrumentAccreditationCreateComponent } from './component/instrument-accreditation-create/instrument-accreditation-create.component';
+import { InstrumentForwardCreateComponent } from './component/instrument-forward-create/instrument-forward-create.component';
+import { InstrumentForwardUpdateComponent } from './component/instrument-forward-update/instrument-forward-update.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { InstrumentAccreditationCreateComponent } from './component/instrument-a
     InstrumentUsageCreateComponent,
     InstrumentRepairCreateComponent,
     InstrumentAccreditationCreateComponent,
+    InstrumentForwardCreateComponent,
+    InstrumentForwardUpdateComponent,
   ],
   imports: [
     CommonModule,

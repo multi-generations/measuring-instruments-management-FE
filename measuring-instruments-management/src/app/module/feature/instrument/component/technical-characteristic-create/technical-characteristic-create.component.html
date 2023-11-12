@@ -20,7 +20,6 @@
               <select id="instrument-type"
                       class="form-select"
                       aria-label="Default select instrument-type"
-                      (change)="updateMeasuringUnitList()"
                       formControlName="instrumentType"
                       [ngClass]="{
                       'is-invalid': (mainForm.controls['instrumentType'].touched) && (mainForm.controls['instrumentType'].invalid),
@@ -41,6 +40,7 @@
               <select id="technical-type"
                       class="form-select"
                       aria-label="Default select technical-type"
+                      (change)="changeMeasuringUnit()"
                       formControlName="technicalType"
                       [ngClass]="{
                       'is-invalid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].invalid),
@@ -74,7 +74,7 @@
             </div>
 
             <div class="mb-3 col-6 ps-1">
-              <label for="measuring-unit-start" class="form-label">Đơn vị
+              <label for="measuring-unit-start" class="form-label">Đơn vị điểm đầu
                 <sup class="text-danger fw-bold">*</sup></label>
               <select id="measuring-unit-start"
                       class="form-select"
@@ -112,7 +112,7 @@
             </div>
 
             <div class="mb-3 col-6 ps-1">
-              <label for="measuring-unit-end" class="form-label">Đơn vị
+              <label for="measuring-unit-end" class="form-label">Đơn vị điểm cuối
                 <sup class="text-danger fw-bold">*</sup></label>
               <select id="measuring-unit-end"
                       class="form-select"
@@ -150,7 +150,7 @@
             </div>
 
             <div class="mb-3 col-6 ps-1">
-              <label for="measuring-error-unit" class="form-label">Đơn vị
+              <label for="measuring-error-unit" class="form-label">Đơn vị sai số
                 <sup class="text-danger fw-bold">*</sup></label>
               <select id="measuring-error-unit"
                       class="form-select"
@@ -171,7 +171,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Thêm mới</button>
+          <button type="submit" [disabled]="mainForm.invalid" class="btn btn-primary">Thêm mới</button>
         </div>
       </form>
     </div>

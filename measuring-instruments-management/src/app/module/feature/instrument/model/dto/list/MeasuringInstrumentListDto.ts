@@ -12,5 +12,6 @@ export interface MeasuringInstrumentListDto {
   inServiceDate?: Date;
   managementUnit?: ManagementUnit;
   instrumentStatus?: InstrumentStatus;
+  detailedDescription?: string;
   enabled?: boolean;
 }

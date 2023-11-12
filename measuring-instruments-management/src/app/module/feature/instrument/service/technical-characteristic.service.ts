@@ -23,18 +23,18 @@ export class TechnicalCharacteristicService {
   public deleteById(id: number): Observable<void> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.delete<void>(this._API_URL, {headers, body: id});
+    return this._http.delete<void>(this._API_URL + `/${id}}`, {headers});
   }
 
   public create(technicalCharacteristicForm: TechnicalCharacteristicForm): Observable<any> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.post(this._API_URL, {headers, body: technicalCharacteristicForm});
+    return this._http.post(this._API_URL, technicalCharacteristicForm, {headers});
   }
 
   public update(id: number, technicalCharacteristicForm: TechnicalCharacteristicForm): Observable<any> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.put(this._API_URL + `/${id}`, {headers, body: technicalCharacteristicForm});
+    return this._http.put(this._API_URL + `/${id}`, technicalCharacteristicForm, {headers});
   }
 }

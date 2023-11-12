@@ -16,14 +16,14 @@
                  (ngModelChange)="enableAllItems()">
         </div>
       </th>
-      <th scope="col" class="col-3">Tên</th>
+      <th scope="col" class="col-2">Tên</th>
       <th scope="col" class="col-1">Số hiệu</th>
       <th scope="col" class="col-1">Ký hiệu</th>
       <th scope="col" class="col-1">Nhóm</th>
       <th scope="col" class="col-1">Biên chế</th>
-      <th scope="col" class="col-1">Cấp</th>
       <th scope="col" class="col-1">Đơn vị</th>
       <th scope="col" class="col-1">Tình trạng</th>
+      <th scope="col" class="col-2">Ghi chú</th>
       <th scope="col" class="col-1 text-danger">
         <i class="fa-solid fa-trash fs-5"></i>
       </th>
@@ -39,15 +39,15 @@
                  (ngModelChange)="enableItem(ins.id)">
         </div>
       </th>
-      <td class="col-3 d-flex align-items-center justify-content-start">
+      <td class="col-2 d-flex align-items-center justify-content-start">
         <a [routerLink]="[ins.id]" class="link-info">{{ins.instrumentName}}</a></td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentSerialNumber}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentSymbol}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentGroup?.instrumentGroupName}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.inServiceDate | date: "dd/MM/yyyy"}}</td>
-      <td class="col-1 d-flex align-items-center justify-content-center">{{ins.managementLevel}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.managementUnit?.managementUnitName}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentStatus?.instrumentStatusName}}</td>
+      <td class="col-2 d-flex align-items-center justify-content-center">{{ins.detailedDescription}}</td>
       <td class="col-1 d-flex justify-content-center align-items-center">
         <button class="btn btn-danger"
                 (click)="showDeleteModal(ins.id)">
@@ -67,7 +67,7 @@
     Xóa tất cả
   </button>
   <button type="button" class="btn btn-outline-primary">
-    Thêm mới
+    <i class="fa-solid fa-qrcode"></i> Quét QR
   </button>
 </div>
 

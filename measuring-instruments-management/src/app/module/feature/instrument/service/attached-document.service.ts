@@ -24,18 +24,18 @@ export class AttachedDocumentService {
   public deleteById(id: number): Observable<void> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.delete<void>(this._API_URL, {headers, body: id});
+    return this._http.delete<void>(this._API_URL +`/${id}`, {headers});
   }
 
   public create(attachedDocumentForm: AttachedDocumentForm): Observable<any> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.post(this._API_URL, {headers, body: attachedDocumentForm});
+    return this._http.post(this._API_URL, attachedDocumentForm, {headers});
   }
 
   public update(id: number, attachedDocumentForm: AttachedDocumentForm): Observable<any> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.put(this._API_URL + `/${id}`, {headers, body: attachedDocumentForm});
+    return this._http.put(this._API_URL + `/${id}`, attachedDocumentForm, {headers});
   }
 }
