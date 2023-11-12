@@ -1,0 +1,153 @@
+<div class="modal fade" id="instrument-forward-update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Cập nhật theo dõi giao nhận</h1>
+        <button type="button"
+                class="btn-close"
+                id="instrument-forward-update-modal-close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                (click)="closeModal()"></button>
+      </div>
+      <form [formGroup]="mainForm" (ngSubmit)="submit()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3 col-6 pe-1">
+              <label for="forward-date" class="form-label">Ngày giao nhận
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="forward-date"
+                     type="date"
+                     class="form-control"
+                     placeholder="Nhập ngày giao nhận"
+                     formControlName="forwardDate"
+                     [ngClass]="{
+                      'is-invalid': (mainForm.controls['forwardDate'].touched) && (mainForm.controls['forwardDate'].invalid),
+                      'is-valid': (mainForm.controls['forwardDate'].touched) && (mainForm.controls['forwardDate'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['forwardDate'].hasError('required') &&
+              mainForm.controls['forwardDate'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="receive-unit" class="form-label">Đơn vị nhận
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="receive-unit"
+                     type="text"
+                     class="form-control"
+                     placeholder="Nhập đơn vị nhận"
+                     formControlName="receiveUnit"
+                     [ngClass]="{
+                      'is-invalid': (mainForm.controls['receiveUnit'].touched) && (mainForm.controls['receiveUnit'].invalid),
+                      'is-valid': (mainForm.controls['receiveUnit'].touched) && (mainForm.controls['receiveUnit'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['receiveUnit'].hasError('required') &&
+              mainForm.controls['receiveUnit'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6 pe-1">
+              <label for="sender" class="form-label">Người giao
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="sender"
+                     type="text"
+                     class="form-control"
+                     placeholder="Nhập người giao"
+                     formControlName="sender"
+                     [ngClass]="{
+                      'is-invalid': (mainForm.controls['sender'].touched) && (mainForm.controls['sender'].invalid),
+                      'is-valid': (mainForm.controls['sender'].touched) && (mainForm.controls['sender'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['sender'].hasError('required') &&
+              mainForm.controls['sender'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="receiver" class="form-label">Người nhận
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="receiver"
+                     type="text"
+                     class="form-control"
+                     placeholder="Nhập người nhận"
+                     formControlName="receiver"
+                     [ngClass]="{
+                      'is-invalid': (mainForm.controls['receiver'].touched) && (mainForm.controls['receiver'].invalid),
+                      'is-valid': (mainForm.controls['receiver'].touched) && (mainForm.controls['receiver'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['receiver'].hasError('required') &&
+              mainForm.controls['receiver'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6 pe-1">
+              <label for="issuing-authority" class="form-label">Cơ quan phát lệnh
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="issuing-authority"
+                     type="text"
+                     class="form-control"
+                     placeholder="Nhập cơ quan phát lệnh"
+                     formControlName="issuingAuthority"
+                     [ngClass]="{
+                      'is-invalid': (mainForm.controls['issuingAuthority'].touched) && (mainForm.controls['issuingAuthority'].invalid),
+                      'is-valid': (mainForm.controls['issuingAuthority'].touched) && (mainForm.controls['issuingAuthority'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['issuingAuthority'].hasError('required') &&
+              mainForm.controls['issuingAuthority'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="command-number" class="form-label">Số lệnh
+                <sup class="text-danger fw-bold">*</sup></label>
+              <input id="command-number"
+                     type="text"
+                     class="form-control"
+                     placeholder="Nhập số lệnh"
+                     formControlName="commandNumber"
+                     [ngClass]="{
+                      'is-invalid': (mainForm.controls['commandNumber'].touched) && (mainForm.controls['commandNumber'].invalid),
+                      'is-valid': (mainForm.controls['commandNumber'].touched) && (mainForm.controls['commandNumber'].valid)}">
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['commandNumber'].hasError('required') &&
+              mainForm.controls['commandNumber'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-12">
+              <label for="instrument-forward-status" class="form-label">Tình trạng phương tiện
+                <sup class="text-danger fw-bold">*</sup></label>
+              <textarea id="instrument-forward-status"
+                        class="form-control"
+                        placeholder="Nhập tình trạng phương tiện"
+                        formControlName="instrumentForwardStatus"
+                        [ngClass]="{
+                      'is-invalid': (mainForm.controls['instrumentForwardStatus'].touched) && (mainForm.controls['instrumentForwardStatus'].invalid),
+                      'is-valid': (mainForm.controls['instrumentForwardStatus'].touched) && (mainForm.controls['instrumentForwardStatus'].valid)}"></textarea>
+              <sub class="text-danger"
+                   *ngIf="mainForm.controls['instrumentForwardStatus'].hasError('required') &&
+              mainForm.controls['instrumentForwardStatus'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-12">
+              <label for="forward-note" class="form-label">Ghi chú</label>
+              <textarea id="forward-note"
+                        class="form-control"
+                        placeholder="Nhập ghi chú"
+                        formControlName="forwardNote"></textarea>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="resetForm()" class="btn btn-danger">Hủy bỏ</button>
+          <button type="submit" [disabled]="mainForm.invalid" class="btn btn-primary">Cập nhật</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
