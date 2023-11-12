@@ -33,14 +33,13 @@ export class InstrumentRepairCreateComponent {
 
   createForm() {
     this.mainForm = new FormGroup({
-      createdTime: new FormControl('', [Validators.required]),
       repairDate: new FormControl('', [Validators.required]),
       instrumentCondition: new FormControl('', [Validators.required]),
       repairReason: new FormControl('', [Validators.required]),
       repairResult: new FormControl('', [Validators.required]),
       repairPlace: new FormControl('', [Validators.required]),
       repairer: new FormControl('', [Validators.required]),
-      repairNote: new FormControl('', [Validators.required]),
+      repairNote: new FormControl(''),
     });
   }
 
@@ -63,6 +62,7 @@ export class InstrumentRepairCreateComponent {
 
   submit() {
     let instrumentRepairForm = this.initInstrumentRepairForm();
+    console.log(instrumentRepairForm);
     Swal.fire({
       title: 'Đang thêm mới...',
       allowOutsideClick: false,
