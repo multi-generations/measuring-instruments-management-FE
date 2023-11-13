@@ -25,7 +25,7 @@ export class DocumentVolatilityService {
   public deleteById(id: number): Observable<void> {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
-    return this._http.delete<void>(this._API_URL + `/${id}}`, {headers});
+    return this._http.delete<void>(this._API_URL + `/${id}`, {headers});
   }
 
   public create(documentVolatilityForm: DocumentVolatilityForm): Observable<any> {

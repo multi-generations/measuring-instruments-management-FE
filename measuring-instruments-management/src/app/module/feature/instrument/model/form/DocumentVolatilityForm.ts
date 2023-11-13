@@ -1,11 +1,11 @@
-import {AttachedDocumentDetailDto} from "./AttachedDocumentDetailDto";
-import {MeasuringInstrumentDetailDto} from "./MeasuringInstrumentDetailDto";
+import {MeasuringInstrumentForm} from "./MeasuringInstrumentForm";
+import {AttachedDocumentForm} from "./AttachedDocumentForm";
 
 export interface DocumentVolatilityForm {
   id?: number;
   volatilityDate?: Date;
-  attachedDocument?: AttachedDocumentDetailDto;
+  attachedDocument?: AttachedDocumentForm;
   volatilityPurpose?: string;
   quantity?: number;
-  measuringInstrument?: MeasuringInstrumentDetailDto;
+  measuringInstrument?: MeasuringInstrumentForm;
 }

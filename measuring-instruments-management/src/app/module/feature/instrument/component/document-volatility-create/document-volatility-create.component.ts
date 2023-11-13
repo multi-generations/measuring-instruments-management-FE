@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ConstantsService} from "../../../../shared/service/constants.service";
 import Swal from "sweetalert2";
@@ -13,7 +13,7 @@ import {InstrumentService} from "../../service/instrument.service";
   templateUrl: './document-volatility-create.component.html',
   styleUrls: ['./document-volatility-create.component.css']
 })
-export class DocumentVolatilityCreateComponent implements OnInit{
+export class DocumentVolatilityCreateComponent implements OnChanges{
   @Input()
   measuringInstrumentId: number = 0;
 
@@ -30,8 +30,10 @@ export class DocumentVolatilityCreateComponent implements OnInit{
               private _constantsService: ConstantsService) {
   }
 
-  ngOnInit(): void {
-    this.initAttachedDocuments();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['measuringInstrumentId']) {
+      this.initAttachedDocuments();
+    }
   }
 
   createForm() {
@@ -47,7 +49,9 @@ export class DocumentVolatilityCreateComponent implements OnInit{
     if (this.measuringInstrumentId != 0 && this.mainForm.valid) {
       return {
         volatilityDate: this.mainForm.get('volatilityDate')?.value,
-        attachedDocument: this.mainForm.get('attachedDocument')?.value,
+        attachedDocument: {
+          id: +this.mainForm.get('attachedDocument')?.value
+        },
         volatilityPurpose: this.mainForm.get('volatilityPurpose')?.value,
         quantity: +this.mainForm.get('quantity')?.value,
         measuringInstrument: {
@@ -98,7 +102,7 @@ export class DocumentVolatilityCreateComponent implements OnInit{
   }
 
   closeModalBtnClick() {
-    document.getElementById('document-volatility-create-create-modal-close-btn')?.click();
+    document.getElementById('document-volatility-create-modal-close-btn')?.click();
   }
 
   initAttachedDocuments() {
