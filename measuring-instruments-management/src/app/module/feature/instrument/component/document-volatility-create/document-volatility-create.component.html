@@ -1,0 +1,89 @@
+<div class="modal fade" id="document-volatility-create" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm mới biến động tài liệu</h1>
+                <button type="button"
+                        class="btn-close"
+                        id="document-volatility-create-modal-close-btn"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        (click)="closeModal()"></button>
+            </div>
+            <form [formGroup]="mainForm" (ngSubmit)="submit()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="volatility-date" class="form-label">Ngày ghi nhận
+                            <sup class="text-danger fw-bold">*</sup></label>
+                        <input id="volatility-date"
+                               type="date"
+                               class="form-control"
+                               formControlName="volatilityDate"
+                               [ngClass]="{
+                    'is-invalid': (mainForm.controls['volatilityDate'].touched) && (mainForm.controls['volatilityDate'].invalid),
+                    'is-valid': (mainForm.controls['volatilityDate'].touched) && (mainForm.controls['volatilityDate'].valid)}">
+                        <sub class="text-danger"
+                             *ngIf="mainForm.controls['volatilityDate'].hasError('required') &&
+            mainForm.controls['volatilityDate'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="attached-document" class="form-label">Chọn tài liệu
+                            <sup class="text-danger fw-bold">*</sup></label>
+                        <select id="attached-document"
+                                class="form-select"
+                                aria-label="Default select attached-document"
+                                formControlName="attachedDocument"
+                                [ngClass]="{
+                    'is-invalid': (mainForm.controls['attachedDocument'].touched) && (mainForm.controls['attachedDocument'].invalid),
+                    'is-valid': (mainForm.controls['attachedDocument'].touched) && (mainForm.controls['attachedDocument'].valid)}">
+                            <option selected value="">-- Chọn tài liệu --</option>
+                            <ng-container *ngFor="let v of attachedDocuments;">
+                                <option [value]="v.id">{{v.documentName}} - {{v.documentSymbol}}</option>
+                            </ng-container>
+                        </select>
+                        <sub  class="text-danger"
+                              *ngIf="mainForm.controls['attachedDocument'].hasError('required') &&
+            mainForm.controls['attachedDocument'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="volatility-purpose" class="form-label">Lý do thay đổi
+                            <sup class="text-danger fw-bold">*</sup></label>
+                        <input id="volatility-purpose"
+                               type="text"
+                               class="form-control"
+                               placeholder="Nhập lý do"
+                               formControlName="volatilityPurpose"
+                               [ngClass]="{
+                    'is-invalid': (mainForm.controls['volatilityPurpose'].touched) && (mainForm.controls['volatilityPurpose'].invalid),
+                    'is-valid': (mainForm.controls['volatilityPurpose'].touched) && (mainForm.controls['volatilityPurpose'].valid)}">
+                        <sub class="text-danger"
+                             *ngIf="mainForm.controls['volatilityPurpose'].hasError('required') &&
+            mainForm.controls['volatilityPurpose'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Số lượng
+                            <sup class="text-danger fw-bold">*</sup></label>
+                        <input id="quantity"
+                               type="number"
+                               class="form-control"
+                               placeholder="Nhập số lượng"
+                               formControlName="quantity"
+                               [ngClass]="{
+                    'is-invalid': (mainForm.controls['quantity'].touched) && (mainForm.controls['quantity'].invalid),
+                    'is-valid': (mainForm.controls['quantity'].touched) && (mainForm.controls['quantity'].valid)}">
+                        <sub class="text-danger"
+                             *ngIf="mainForm.controls['quantity'].hasError('required') &&
+            mainForm.controls['quantity'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" [disabled]="mainForm.invalid" class="btn btn-primary">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

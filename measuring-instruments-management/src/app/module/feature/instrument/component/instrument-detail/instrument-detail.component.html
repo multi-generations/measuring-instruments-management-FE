@@ -1,531 +1,599 @@
 <div id="instrument-main-info-container">
-  <div class="mb-4" id="instrument-detail-title-container">
-    <span class="fs-3 me-2">{{measuringInstrumentDetailDto?.instrumentName}}</span>
-    <span class="badge rounded-pill align-top text-capitalize user-select-none" style="font-size: 14px;"
-          [class.bg-success]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Tốt'"
-          [class.bg-danger]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Hỏng'"
-          [class.bg-warning]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Sửa chữa'"
-          [class.bg-primary]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Kiểm định'">
+    <div class="mb-4" id="instrument-detail-title-container">
+        <span class="fs-3 me-2">{{measuringInstrumentDetailDto?.instrumentName}}</span>
+        <span class="badge rounded-pill align-top text-capitalize user-select-none" style="font-size: 14px;"
+              [class.bg-success]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Tốt'"
+              [class.bg-danger]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Hỏng'"
+              [class.bg-warning]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Sửa chữa'"
+              [class.bg-primary]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Kiểm định'">
         {{measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName}}</span>
-    <button class="btn btn-outline-primary float-end me-4"
-            [routerLink]="'/instruments/update/' + measuringInstrumentDetailDto?.id">
-      Chỉnh sửa
-    </button>
-  </div>
-  <div class="d-flex mb-4" id="instrument-image-info-container">
-    <div id="instrument-image-container"
-         class="col-4 d-flex justify-content-center"
-         style="min-width: 350px">
-      <div class="d-flex flex-column align-items-center">
-        <div #carousel id="carousel-instrument-image"
-             style="width: 350px;"
-             class="carousel slide carousel-fade">
-          <div class="carousel-inner w-100">
-            <ng-container *ngIf="instrumentImageLinks.length === 0">
-              <div class="carousel-item active">
-                <img src="assets/image/Image_not_available.jpg" class="d-block w-100" alt="Ảnh thiết bị">
-              </div>
-            </ng-container>
-            <ng-container *ngIf="instrumentImageLinks.length > 0">
-              <div class="carousel-item active">
-                <img [src]="instrumentImageLinks[0]" class="d-block w-100" alt="Ảnh thiết bị">
-              </div>
-              <ng-container *ngFor="let img of instrumentImageLinks; let first = first">
-                <div class="carousel-item" *ngIf="!first">
-                  <img [src]="img" class="d-block w-100" alt="Ảnh thiết bị">
+        <button class="btn btn-outline-primary float-end me-4"
+                [routerLink]="'/instruments/update/' + measuringInstrumentDetailDto?.id">
+            Chỉnh sửa
+        </button>
+    </div>
+    <div class="d-flex mb-4" id="instrument-image-info-container">
+        <div id="instrument-image-container"
+             class="col-4 d-flex justify-content-center"
+             style="min-width: 350px">
+            <div class="d-flex flex-column align-items-center">
+                <div #carousel id="carousel-instrument-image"
+                     style="width: 350px;"
+                     class="carousel slide carousel-fade">
+                    <div class="carousel-inner w-100">
+                        <ng-container *ngIf="instrumentImageLinks.length === 0">
+                            <div class="carousel-item active">
+                                <img src="assets/image/Image_not_available.jpg" class="d-block w-100"
+                                     alt="Ảnh thiết bị">
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="instrumentImageLinks.length > 0">
+                            <div class="carousel-item active">
+                                <img [src]="instrumentImageLinks[0]" class="d-block w-100" alt="Ảnh thiết bị">
+                            </div>
+                            <ng-container *ngFor="let img of instrumentImageLinks; let first = first">
+                                <div class="carousel-item" *ngIf="!first">
+                                    <img [src]="img" class="d-block w-100" alt="Ảnh thiết bị">
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                    <button class="carousel-control-prev"
+                            type="button"
+                            data-bs-target="#carousel-instrument-image"
+                            data-bs-slide="prev" (click)="carouselSlide()">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next"
+                            type="button"
+                            data-bs-target="#carousel-instrument-image"
+                            data-bs-slide="next" (click)="carouselSlide()">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-              </ng-container>
-            </ng-container>
-          </div>
-          <button class="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#carousel-instrument-image"
-                  data-bs-slide="prev" (click)="carouselSlide()">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next"
-                  type="button"
-                  data-bs-target="#carousel-instrument-image"
-                  data-bs-slide="next" (click)="carouselSlide()">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+                <div class="overflow-x-auto mt-3 w-100 d-flex justify-content-center"
+                     *ngIf="instrumentImageLinks.length > 0">
+                    <ul class="d-flex flex-wrap p-0">
+                        <ng-container *ngFor="let img of instrumentImageLinks; let i = index">
+                            <li class="list-group-item list-image-item mb-1"
+                                [class.image-active]="instrumentImageActiveSrc.includes(img)">
+                                <img [src]="img"
+                                     [id]="'img-'+ i"
+                                     alt="Ảnh thiết bị"
+                                     class="w-100 h-100"
+                                     (click)="changeImage($event)">
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="overflow-x-auto mt-3 w-100 d-flex justify-content-center" *ngIf="instrumentImageLinks.length > 0">
-          <ul class="d-flex flex-wrap p-0">
-            <ng-container *ngFor="let img of instrumentImageLinks; let i = index">
-              <li class="list-group-item list-image-item mb-1"
-                  [class.image-active]="instrumentImageActiveSrc.includes(img)">
-                <img [src]="img"
-                     [id]="'img-'+ i"
-                     alt="Ảnh thiết bị"
-                     class="w-100 h-100"
-                     (click)="changeImage($event)">
-              </li>
-            </ng-container>
-          </ul>
+        <div id="instrument-info-container"
+             class="col-8 d-flex flex-column overflow-auto pe-3" style="max-width: calc(100% - 350px)">
+            <ul class="list-group">
+                <li class="list-group-item d-flex">
+                    <div class="col-6">
+                        <span>Nhóm máy: </span>
+                        <span>{{measuringInstrumentDetailDto?.instrumentGroup?.instrumentGroupName}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="col-6">
+                        <span>Ký hiệu: </span>
+                        <span>{{measuringInstrumentDetailDto?.instrumentSymbol}}</span>
+                    </div>
+                    <div class="col-6">
+                        <span>Số hiệu: </span>
+                        <span>{{measuringInstrumentDetailDto?.instrumentSerialNumber}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="col-6">
+                        <span>Cấp quản lý: </span>
+                        <span>{{measuringInstrumentDetailDto?.managementLevel}}</span>
+                    </div>
+                    <div class="col-6">
+                        <span>Đơn vị quản lý: </span>
+                        <span>{{measuringInstrumentDetailDto?.managementUnit?.managementUnitName}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="col-6">
+                        <span>Ngày biên chế: </span>
+                        <span>{{measuringInstrumentDetailDto?.inServiceDate | date: 'dd/MM/yyyy'}}</span>
+                    </div>
+                    <div class="col-6">
+                        <span>Chu kỳ kiểm định: </span>
+                        <span>{{measuringInstrumentDetailDto?.accreditationCycle}} tháng</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="col-6">
+                        <span>Nước sản xuất: </span>
+                        <span>{{measuringInstrumentDetailDto?.manufactureCountry}}</span>
+                    </div>
+                    <div class="col-6">
+                        <span>Năm sản xuất: </span>
+                        <span>{{measuringInstrumentDetailDto?.manufactureYear}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="col-6">
+                        <span>Đảm bảo vũ khí: </span>
+                        <span>{{measuringInstrumentDetailDto?.weaponGuarantee}}</span>
+                    </div>
+                    <div class="col-6">
+                        <span>Mức chất lượng: </span>
+                        <span>{{measuringInstrumentDetailDto?.qualityLevel}}</span>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </div>
     </div>
-    <div id="instrument-info-container"
-         class="col-8 d-flex flex-column overflow-auto pe-3" style="max-width: calc(100% - 350px)">
-      <ul class="list-group">
-        <li class="list-group-item d-flex">
-          <div class="col-6">
-            <span>Nhóm máy: </span>
-            <span>{{measuringInstrumentDetailDto?.instrumentGroup?.instrumentGroupName}}</span>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="col-6">
-            <span>Ký hiệu: </span>
-            <span>{{measuringInstrumentDetailDto?.instrumentSymbol}}</span>
-          </div>
-          <div class="col-6">
-            <span>Số hiệu: </span>
-            <span>{{measuringInstrumentDetailDto?.instrumentSerialNumber}}</span>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="col-6">
-            <span>Cấp quản lý: </span>
-            <span>{{measuringInstrumentDetailDto?.managementLevel}}</span>
-          </div>
-          <div class="col-6">
-            <span>Đơn vị quản lý: </span>
-            <span>{{measuringInstrumentDetailDto?.managementUnit?.managementUnitName}}</span>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="col-6">
-            <span>Ngày biên chế: </span>
-            <span>{{measuringInstrumentDetailDto?.inServiceDate | date: 'dd/MM/yyyy'}}</span>
-          </div>
-          <div class="col-6">
-            <span>Chu kỳ kiểm định: </span>
-            <span>{{measuringInstrumentDetailDto?.accreditationCycle}} tháng</span>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="col-6">
-            <span>Nước sản xuất: </span>
-            <span>{{measuringInstrumentDetailDto?.manufactureCountry}}</span>
-          </div>
-          <div class="col-6">
-            <span>Năm sản xuất: </span>
-            <span>{{measuringInstrumentDetailDto?.manufactureYear}}</span>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="col-6">
-            <span>Đảm bảo vũ khí: </span>
-            <span>{{measuringInstrumentDetailDto?.weaponGuarantee}}</span>
-          </div>
-          <div class="col-6">
-            <span>Mức chất lượng: </span>
-            <span>{{measuringInstrumentDetailDto?.qualityLevel}}</span>
-          </div>
-        </li>
-      </ul>
+    <div id="instrument-detail-description-container">
+        <p class="mb-3">
+            <span class="px-3 py-2 d-inline-block rounded bg-body-secondary user-select-none">Ghi chú</span>
+        </p>
+        <p class="pe-4"
+           style="text-indent: 40px; text-align: justify">{{measuringInstrumentDetailDto?.detailedDescription}}</p>
     </div>
-  </div>
-  <div id="instrument-detail-description-container">
-    <p class="mb-3">
-      <span class="px-3 py-2 d-inline-block rounded bg-body-secondary user-select-none">Ghi chú</span>
-    </p>
-    <p class="pe-4"
-       style="text-indent: 40px; text-align: justify">{{measuringInstrumentDetailDto?.detailedDescription}}</p>
-  </div>
 </div>
 <div class="pe-4 mt-5" id="divider-information-container">
-  <hr class="border border-dark-subtle border-2 opacity-50">
-  <p class="text-center text-uppercase h2 user-select-none">Thông tin khác</p>
-  <hr class="border border-dark-subtle border-2 opacity-50">
+    <hr class="border border-dark-subtle border-2 opacity-50">
+    <p class="text-center text-uppercase h2 user-select-none">Thông tin khác</p>
+    <hr class="border border-dark-subtle border-2 opacity-50">
 </div>
 <div class="mt-5 pe-3 position-relative pt-5">
-  <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Đặc điểm kỹ thuật</p>
-  <button class="btn btn-outline-primary position-absolute"
-          style="top: 0; right: 24px"
-          data-bs-toggle="modal" data-bs-target="#technical-characteristic-create">Thêm mới
-  </button>
-  <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100 position-relative"
-       style="max-height: 500px;">
-    <table
-      class="table table-hover text-center text-break" style="min-width: 1200px;">
-      <caption class="d-none">Đặc điểm kỹ thuật</caption>
-      <div *ngIf="technicalCharacteristics.length === 0"
-           class="mt-2">
-        <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
-      </div>
-      <thead *ngIf="technicalCharacteristics.length > 0">
-      <tr class="text-center row col-12 flex-nowrap">
-        <th scope="col" class="col-2">Loại phương tiện đo</th>
-        <th scope="col" class="col-2">Đại lượng đo</th>
-        <th scope="col" class="col-1">Từ</th>
-        <th scope="col" class="col-1">Đơn vị</th>
-        <th scope="col" class="col-1">Đến</th>
-        <th scope="col" class="col-1">Đơn vị</th>
-        <th scope="col" class="col-1">Phương sai</th>
-        <th scope="col" class="col-1">Đơn vị</th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-solid fa-trash fs-5"></i>
-        </th>
-      </tr>
-      </thead>
-      <tbody *ngIf="technicalCharacteristics.length > 0">
-      <tr class="row col-12" *ngFor="let item of technicalCharacteristics;">
-        <td
-          class="col-2 d-flex align-items-start justify-content-center">{{item.instrumentType.instrumentTypeName}}</td>
-        <td
-          class="col-2 d-flex align-items-start justify-content-center">{{item.technicalType.technicalTypeName}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringRangeStart}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringUnitStart.measuringUnitName}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringRangeEnd}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringUnitEnd.measuringUnitName}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringError}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringErrorUnit.measuringUnitName}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center ">
-          <button class="btn btn-danger"
-                  data-bs-toggle="modal" data-bs-target="#technical-characteristic-update"
-                  (click)="setTechnicalCharacteristicIdUpdate(item.id)">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-        </td>
-        <td class="col-1 d-flex align-items-start justify-content-center ">
-          <button class="btn btn-danger"
-                  (click)="showDeleteModal(item.id, 'technicalCharacteristic')">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
+    <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Đặc điểm kỹ thuật</p>
+    <button class="btn btn-outline-primary position-absolute"
+            style="top: 0; right: 24px"
+            data-bs-toggle="modal" data-bs-target="#technical-characteristic-create">Thêm mới
+    </button>
+    <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100 position-relative"
+         style="max-height: 500px;">
+        <table
+                class="table table-hover text-center text-break" style="min-width: 1200px;">
+            <caption class="d-none">Đặc điểm kỹ thuật</caption>
+            <div *ngIf="technicalCharacteristics.length === 0"
+                 class="mt-2">
+                <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
+            </div>
+            <thead *ngIf="technicalCharacteristics.length > 0">
+            <tr class="text-center row col-12 flex-nowrap">
+                <th scope="col" class="col-2">Loại phương tiện đo</th>
+                <th scope="col" class="col-2">Đại lượng đo</th>
+                <th scope="col" class="col-1">Từ</th>
+                <th scope="col" class="col-1">Đơn vị</th>
+                <th scope="col" class="col-1">Đến</th>
+                <th scope="col" class="col-1">Đơn vị</th>
+                <th scope="col" class="col-1">Phương sai</th>
+                <th scope="col" class="col-1">Đơn vị</th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-solid fa-trash fs-5"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="technicalCharacteristics.length > 0">
+            <tr class="row col-12" *ngFor="let item of technicalCharacteristics;">
+                <td
+                        class="col-2 d-flex align-items-start justify-content-center">{{item.instrumentType.instrumentTypeName}}</td>
+                <td
+                        class="col-2 d-flex align-items-start justify-content-center">{{item.technicalType.technicalTypeName}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringRangeStart}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringUnitStart.measuringUnitName}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringRangeEnd}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringUnitEnd.measuringUnitName}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringError}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.measuringErrorUnit.measuringUnitName}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center ">
+                    <button class="btn btn-danger"
+                            data-bs-toggle="modal" data-bs-target="#technical-characteristic-update"
+                            (click)="setTechnicalCharacteristicIdUpdate(item.id)">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                </td>
+                <td class="col-1 d-flex align-items-start justify-content-center ">
+                    <button class="btn btn-danger"
+                            (click)="showDeleteModal(item.id, 'technicalCharacteristic')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div class="mt-5 pe-3 position-relative pt-5">
-  <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Phụ kiện đi kèm</p>
-  <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
-          data-bs-toggle="modal" data-bs-target="#attached-document-create">Thêm mới</button>
-  <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
-       style="max-height: 500px;">
-    <table
-      class="table table-hover text-center text-break" style="min-width: 1200px;">
-      <caption class="d-none">Tài liệu đi kèm</caption>
-      <div *ngIf="attachedDocuments.length === 0"
-           class="mt-2">
-        <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
-      </div>
-      <thead *ngIf="attachedDocuments.length > 0">
-      <tr class="text-center row col-12 flex-nowrap">
-        <th scope="col" class="col-4">Tên tài liệu</th>
-        <th scope="col" class="col-2">Ký hiệu</th>
-        <th scope="col" class="col-1">Số lượng</th>
-        <th scope="col" class="col-3">Ghi chú</th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-solid fa-trash fs-5"></i>
-        </th>
-      </tr>
-      </thead>
-      <tbody *ngIf="attachedDocuments.length > 0">
-      <tr class="row col-12" *ngFor="let item of attachedDocuments;">
-        <td class="col-4 d-flex align-items-start justify-content-center">{{item.documentName}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-center">{{item.documentSymbol}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.quantity}}</td>
-        <td class="col-3 d-flex align-items-start justify-content-center">{{item.documentNote}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center ">
-          <button class="btn btn-danger"
-                  data-bs-toggle="modal" data-bs-target="#attached-document-update"
-                  (click)="setAttachedDocumentIdUpdate(item.id)">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-        </td>
-        <td class="col-1 d-flex justify-content-center align-items-start">
-          <button class="btn btn-danger"
-                  (click)="showDeleteModal(item.id, 'attachedDocument')">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
+    <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Phụ kiện đi kèm</p>
+    <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
+            data-bs-toggle="modal" data-bs-target="#attached-document-create">Thêm mới
+    </button>
+    <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
+         style="max-height: 500px;">
+        <table
+                class="table table-hover text-center text-break" style="min-width: 1200px;">
+            <caption class="d-none">Tài liệu đi kèm</caption>
+            <div *ngIf="attachedDocuments.length === 0"
+                 class="mt-2">
+                <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
+            </div>
+            <thead *ngIf="attachedDocuments.length > 0">
+            <tr class="text-center row col-12 flex-nowrap">
+                <th scope="col" class="col-4">Tên tài liệu</th>
+                <th scope="col" class="col-2">Ký hiệu</th>
+                <th scope="col" class="col-1">Số lượng</th>
+                <th scope="col" class="col-3">Ghi chú</th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-solid fa-trash fs-5"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="attachedDocuments.length > 0">
+            <tr class="row col-12" *ngFor="let item of attachedDocuments;">
+                <td class="col-4 d-flex align-items-start justify-content-center">{{item.documentName}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-center">{{item.documentSymbol}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.quantity}}</td>
+                <td class="col-3 d-flex align-items-start justify-content-center">{{item.documentNote}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center ">
+                    <button class="btn btn-danger"
+                            data-bs-toggle="modal" data-bs-target="#attached-document-update"
+                            (click)="setAttachedDocumentIdUpdate(item.id)">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                </td>
+                <td class="col-1 d-flex justify-content-center align-items-start">
+                    <button class="btn btn-danger"
+                            (click)="showDeleteModal(item.id, 'attachedDocument')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div class="mt-5 pe-3 position-relative pt-5">
-  <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Theo dõi giao nhận</p>
-  <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
-          data-bs-toggle="modal" data-bs-target="#instrument-forward-create">Thêm mới</button>
-  <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
-       style="max-height: 500px;">
-    <table
-      class="table table-hover text-center text-break" style="min-width: 1200px;">
-      <caption class="d-none">Theo dõi giao nhận</caption>
-      <div *ngIf="instrumentForwards.length === 0"
-           class="mt-2">
-        <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
-      </div>
-      <thead *ngIf="instrumentForwards.length > 0">
-      <tr class="text-center row col-12 flex-nowrap">
-        <th scope="col" class="col-1">Ngày giao nhận</th>
-        <th scope="col" class="col-1">Đơn vị nhận</th>
-        <th scope="col" class="col-1">Người giao</th>
-        <th scope="col" class="col-1">Người nhận</th>
-        <th scope="col" class="col-1">Cơ quan phát lệnh</th>
-        <th scope="col" class="col-1">Số lệnh</th>
-        <th scope="col" class="col-2">Tình trạng</th>
-        <th scope="col" class="col-2">Ghi chú</th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-solid fa-trash fs-5"></i>
-        </th>
-      </tr>
-      </thead>
-      <tbody *ngIf="instrumentForwards.length > 0">
-      <tr class="row col-12" *ngFor="let item of instrumentForwards;">
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.forwardDate | date: 'dd/MM/yyyy'}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.receiveUnit}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.sender}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.receiver}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.issuingAuthority}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.commandNumber}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-center">{{item.instrumentForwardStatus}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-center">{{item.forwardNote}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center ">
-          <button class="btn btn-danger"
-                  data-bs-toggle="modal" data-bs-target="#instrument-forward-update"
-                  (click)="setInstrumentForwardIdUpdate(item.id)">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-        </td>
-        <td class="col-1 d-flex justify-content-center align-items-start">
-          <button class="btn btn-danger"
-                  (click)="showDeleteModal(item.id, 'instrumentForward')">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
+    <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Theo dõi biến động tài liệu</p>
+    <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
+            data-bs-toggle="modal" data-bs-target="#document-volatility-create">Thêm mới
+    </button>
+    <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
+         style="max-height: 500px;">
+        <table
+                class="table table-hover text-center text-break" style="min-width: 1200px;">
+            <caption class="d-none">Theo dõi biến động tài liệu</caption>
+            <div *ngIf="documentVolatiles.length === 0"
+                 class="mt-2">
+                <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
+            </div>
+            <thead *ngIf="documentVolatiles.length > 0">
+            <tr class="text-center row col-12 flex-nowrap">
+                <th scope="col" class="col-1">Ngày ghi nhận</th>
+                <th scope="col" class="col-3">Tài liệu thay đổi</th>
+                <th scope="col" class="col-5">Lý do thay đổi</th>
+                <th scope="col" class="col-1">Số lượng</th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-solid fa-trash fs-5"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="documentVolatiles.length > 0">
+            <tr class="row col-12" *ngFor="let item of documentVolatiles;">
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.volatilityDate | date: 'dd/MM/yyyy'}}</td>
+                <td class="col-3 d-flex align-items-start justify-content-center">{{item.attachedDocument.documentName}}</td>
+                <td class="col-5 d-flex align-items-start justify-content-center">{{item.volatilityPurpose}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.quantity}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center ">
+                    <button class="btn btn-danger"
+                            data-bs-toggle="modal" data-bs-target="#document-volatility-update"
+                            (click)="setDocumentVolatilityIdUpdate(item.id)">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                </td>
+                <td class="col-1 d-flex justify-content-center align-items-start">
+                    <button class="btn btn-danger"
+                            (click)="showDeleteModal(item.id, 'documentVolatility')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div class="mt-5 pe-3 position-relative pt-5">
-  <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Lịch sử kiểm định</p>
-  <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
-          data-bs-toggle="modal" data-bs-target="#instrument-accreditation-create">Thêm mới</button>
-  <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
-       style="max-height: 500px;">
-    <table
-      class="table table-hover text-center text-break" style="min-width: 1200px;">
-      <caption class="d-none">Lịch sử kiểm định</caption>
-      <div *ngIf="instrumentAccreditations.length === 0"
-           class="mt-2">
-        <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
-      </div>
-      <thead *ngIf="instrumentAccreditations.length > 0">
-      <tr class="text-center row col-12 flex-nowrap">
-        <th scope="col" class="col-1">Ngày kiểm định</th>
-        <th scope="col" class="col-2">Nơi kiểm định</th>
-        <th scope="col" class="col-2">Người kiểm định</th>
-        <th scope="col" class="col-1">Kết quả</th>
-        <th scope="col" class="col-1">Số xác nhận</th>
-        <th scope="col" class="col-1">Ngày hết hiệu lực</th>
-        <th scope="col" class="col-2">Ghi chú</th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-solid fa-trash fs-5"></i>
-        </th>
-      </tr>
-      </thead>
-      <tbody *ngIf="instrumentAccreditations.length > 0">
-      <tr class="row col-12" *ngFor="let item of instrumentAccreditations;">
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.accreditationDate | date: 'dd/MM/yyyy'}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-center">{{item.accreditationPlace}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-center">{{item.accreditor}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-start text-start">{{item.accreditationResult}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.accreditationConfirmNumber}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.validAccreditationEndDate  | date: 'dd/MM/yyyy'}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.accreditationNote}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center ">
-          <button class="btn btn-danger"
-                  data-bs-toggle="modal" data-bs-target="#instrument-accreditation-update"
-                  (click)="setInstrumentAccreditationIdUpdate(item.id)">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-        </td>
-        <td class="col-1 d-flex justify-content-center align-items-start">
-          <button class="btn btn-danger"
-                  (click)="showDeleteModal(item.id, 'instrumentAccreditation')">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
+    <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Theo dõi giao nhận</p>
+    <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
+            data-bs-toggle="modal" data-bs-target="#instrument-forward-create">Thêm mới
+    </button>
+    <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
+         style="max-height: 500px;">
+        <table
+                class="table table-hover text-center text-break" style="min-width: 1200px;">
+            <caption class="d-none">Theo dõi giao nhận</caption>
+            <div *ngIf="instrumentForwards.length === 0"
+                 class="mt-2">
+                <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
+            </div>
+            <thead *ngIf="instrumentForwards.length > 0">
+            <tr class="text-center row col-12 flex-nowrap">
+                <th scope="col" class="col-1">Ngày giao nhận</th>
+                <th scope="col" class="col-1">Đơn vị nhận</th>
+                <th scope="col" class="col-1">Người giao</th>
+                <th scope="col" class="col-1">Người nhận</th>
+                <th scope="col" class="col-1">Cơ quan phát lệnh</th>
+                <th scope="col" class="col-1">Số lệnh</th>
+                <th scope="col" class="col-2">Tình trạng</th>
+                <th scope="col" class="col-2">Ghi chú</th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-solid fa-trash fs-5"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="instrumentForwards.length > 0">
+            <tr class="row col-12" *ngFor="let item of instrumentForwards;">
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.forwardDate | date: 'dd/MM/yyyy'}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.receiveUnit}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.sender}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.receiver}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.issuingAuthority}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.commandNumber}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-center">{{item.instrumentForwardStatus}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-center">{{item.forwardNote}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center ">
+                    <button class="btn btn-danger"
+                            data-bs-toggle="modal" data-bs-target="#instrument-forward-update"
+                            (click)="setInstrumentForwardIdUpdate(item.id)">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                </td>
+                <td class="col-1 d-flex justify-content-center align-items-start">
+                    <button class="btn btn-danger"
+                            (click)="showDeleteModal(item.id, 'instrumentForward')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div class="mt-5 pe-3 position-relative pt-5">
-  <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Lịch sử sửa chữa</p>
-  <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
-          data-bs-toggle="modal" data-bs-target="#instrument-repair-create">Thêm mới</button>
-  <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
-       style="max-height: 500px;">
-    <table
-      class="table table-hover text-center text-break" style="min-width: 1200px;">
-      <caption class="d-none">Lịch sử sửa chữa</caption>
-      <div *ngIf="instrumentRepairs.length === 0"
-           class="mt-2">
-        <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
-      </div>
-      <thead *ngIf="instrumentRepairs.length > 0">
-      <tr class="text-center row col-12 flex-nowrap">
-        <th scope="col" class="col-1">Ngày sửa</th>
-        <th scope="col" class="col-2">Nguyên nhân</th>
-        <th scope="col" class="col-2">Tình trạng</th>
-        <th scope="col" class="col-2">Kết quả</th>
-        <th scope="col" class="col-1">Nơi sửa</th>
-        <th scope="col" class="col-1">Người sửa</th>
-        <th scope="col" class="col-1">Ghi chú</th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-solid fa-trash fs-5"></i>
-        </th>
-      </tr>
-      </thead>
-      <tbody *ngIf="instrumentRepairs.length > 0">
-      <tr class="row col-12" *ngFor="let item of instrumentRepairs;">
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.repairDate  | date: 'dd/MM/yyyy'}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.repairReason}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.instrumentCondition}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.repairResult}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.repairPlace}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.repairer}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-start text-start">{{item.repairNote}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center ">
-          <button class="btn btn-danger"
-                  data-bs-toggle="modal" data-bs-target="#instrument-repair-update"
-                  (click)="setInstrumentRepairIdUpdate(item.id)">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-        </td>
-        <td class="col-1 d-flex justify-content-center align-items-start">
-          <button class="btn btn-danger"
-                  (click)="showDeleteModal(item.id, 'instrumentRepair')">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
+    <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Lịch sử kiểm định</p>
+    <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
+            data-bs-toggle="modal" data-bs-target="#instrument-accreditation-create">Thêm mới
+    </button>
+    <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
+         style="max-height: 500px;">
+        <table
+                class="table table-hover text-center text-break" style="min-width: 1200px;">
+            <caption class="d-none">Lịch sử kiểm định</caption>
+            <div *ngIf="instrumentAccreditations.length === 0"
+                 class="mt-2">
+                <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
+            </div>
+            <thead *ngIf="instrumentAccreditations.length > 0">
+            <tr class="text-center row col-12 flex-nowrap">
+                <th scope="col" class="col-1">Ngày kiểm định</th>
+                <th scope="col" class="col-2">Nơi kiểm định</th>
+                <th scope="col" class="col-2">Người kiểm định</th>
+                <th scope="col" class="col-1">Kết quả</th>
+                <th scope="col" class="col-1">Số xác nhận</th>
+                <th scope="col" class="col-1">Ngày hết hiệu lực</th>
+                <th scope="col" class="col-2">Ghi chú</th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-solid fa-trash fs-5"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="instrumentAccreditations.length > 0">
+            <tr class="row col-12" *ngFor="let item of instrumentAccreditations;">
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.accreditationDate | date: 'dd/MM/yyyy'}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-center">{{item.accreditationPlace}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-center">{{item.accreditor}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-start text-start">{{item.accreditationResult}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.accreditationConfirmNumber}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.validAccreditationEndDate  | date: 'dd/MM/yyyy'}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.accreditationNote}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center ">
+                    <button class="btn btn-danger"
+                            data-bs-toggle="modal" data-bs-target="#instrument-accreditation-update"
+                            (click)="setInstrumentAccreditationIdUpdate(item.id)">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                </td>
+                <td class="col-1 d-flex justify-content-center align-items-start">
+                    <button class="btn btn-danger"
+                            (click)="showDeleteModal(item.id, 'instrumentAccreditation')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div class="mt-5 pe-3 position-relative pt-5">
-  <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Lịch sử sử dụng</p>
-  <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
-          data-bs-toggle="modal" data-bs-target="#instrument-usage-create">Thêm mới</button>
-  <div class="border border-1 px-4 pb-2 d-inline-block position-relative overflow-auto w-100"
-       style="max-height: 500px;">
-    <table
-      class="table table-hover text-center text-break" style="min-width: 1200px;">
-      <caption class="d-none">Lịch sử sử dụng</caption>
-      <div *ngIf="instrumentUsages.length === 0"
-           class="mt-2">
-        <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
-      </div>
-      <thead *ngIf="instrumentUsages.length > 0">
-      <tr class="text-center row col-12 flex-nowrap">
-        <th scope="col" class="col-1">Ngày theo dõi</th>
-        <th scope="col" class="col-4">Tình trạng</th>
-        <th scope="col" class="col-1">Thời gian dùng</th>
-        <th scope="col" class="col-2">Người dùng</th>
-        <th scope="col" class="col-2">Ghi chú</th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </th>
-        <th scope="col" class="col-1 text-danger">
-          <i class="fa-solid fa-trash fs-5"></i>
-        </th>
-      </tr>
-      </thead>
-      <tbody *ngIf="instrumentUsages.length > 0">
-      <tr class="row col-12" *ngFor="let item of instrumentUsages;">
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.monitorDate  | date: 'dd/MM/yyyy'}}</td>
-        <td class="col-4 d-flex align-items-start justify-content-start text-start">{{item.instrumentStatus}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center">{{item.workingDuration}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-center">{{item.instrumentUser}}</td>
-        <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.usageNote}}</td>
-        <td class="col-1 d-flex align-items-start justify-content-center ">
-          <button class="btn btn-danger"
-                  data-bs-toggle="modal" data-bs-target="#instrument-usage-update"
-                  (click)="setInstrumentUsageIdUpdate(item.id)">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-        </td>
-        <td class="col-1 d-flex justify-content-center align-items-start">
-          <button class="btn btn-danger"
-                  (click)="showDeleteModal(item.id, 'instrumentUsage')">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
+    <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Lịch sử sửa chữa</p>
+    <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
+            data-bs-toggle="modal" data-bs-target="#instrument-repair-create">Thêm mới
+    </button>
+    <div class="border border-1 px-4 pb-2 d-inline-block overflow-auto w-100"
+         style="max-height: 500px;">
+        <table
+                class="table table-hover text-center text-break" style="min-width: 1200px;">
+            <caption class="d-none">Lịch sử sửa chữa</caption>
+            <div *ngIf="instrumentRepairs.length === 0"
+                 class="mt-2">
+                <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
+            </div>
+            <thead *ngIf="instrumentRepairs.length > 0">
+            <tr class="text-center row col-12 flex-nowrap">
+                <th scope="col" class="col-1">Ngày sửa</th>
+                <th scope="col" class="col-2">Nguyên nhân</th>
+                <th scope="col" class="col-2">Tình trạng</th>
+                <th scope="col" class="col-2">Kết quả</th>
+                <th scope="col" class="col-1">Nơi sửa</th>
+                <th scope="col" class="col-1">Người sửa</th>
+                <th scope="col" class="col-1">Ghi chú</th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-solid fa-trash fs-5"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="instrumentRepairs.length > 0">
+            <tr class="row col-12" *ngFor="let item of instrumentRepairs;">
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.repairDate  | date: 'dd/MM/yyyy'}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.repairReason}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.instrumentCondition}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.repairResult}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.repairPlace}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.repairer}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-start text-start">{{item.repairNote}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center ">
+                    <button class="btn btn-danger"
+                            data-bs-toggle="modal" data-bs-target="#instrument-repair-update"
+                            (click)="setInstrumentRepairIdUpdate(item.id)">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                </td>
+                <td class="col-1 d-flex justify-content-center align-items-start">
+                    <button class="btn btn-danger"
+                            (click)="showDeleteModal(item.id, 'instrumentRepair')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="mt-5 pe-3 position-relative pt-5">
+    <p class="position-absolute" style="font-size: 24px; top: 0; left: 0">Lịch sử sử dụng</p>
+    <button class="btn btn-outline-primary position-absolute" style="top: 0; right: 24px"
+            data-bs-toggle="modal" data-bs-target="#instrument-usage-create">Thêm mới
+    </button>
+    <div class="border border-1 px-4 pb-2 d-inline-block position-relative overflow-auto w-100"
+         style="max-height: 500px;">
+        <table
+                class="table table-hover text-center text-break" style="min-width: 1200px;">
+            <caption class="d-none">Lịch sử sử dụng</caption>
+            <div *ngIf="instrumentUsages.length === 0"
+                 class="mt-2">
+                <p class="fs-4">{{this.constantsService.INFO_NOT_FOUND}}</p>
+            </div>
+            <thead *ngIf="instrumentUsages.length > 0">
+            <tr class="text-center row col-12 flex-nowrap">
+                <th scope="col" class="col-1">Ngày theo dõi</th>
+                <th scope="col" class="col-4">Tình trạng</th>
+                <th scope="col" class="col-1">Thời gian dùng</th>
+                <th scope="col" class="col-2">Người dùng</th>
+                <th scope="col" class="col-2">Ghi chú</th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </th>
+                <th scope="col" class="col-1 text-danger">
+                    <i class="fa-solid fa-trash fs-5"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="instrumentUsages.length > 0">
+            <tr class="row col-12" *ngFor="let item of instrumentUsages;">
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.monitorDate  | date: 'dd/MM/yyyy'}}</td>
+                <td class="col-4 d-flex align-items-start justify-content-start text-start">{{item.instrumentStatus}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center">{{item.workingDuration}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-center">{{item.instrumentUser}}</td>
+                <td class="col-2 d-flex align-items-start justify-content-start text-start">{{item.usageNote}}</td>
+                <td class="col-1 d-flex align-items-start justify-content-center ">
+                    <button class="btn btn-danger"
+                            data-bs-toggle="modal" data-bs-target="#instrument-usage-update"
+                            (click)="setInstrumentUsageIdUpdate(item.id)">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                </td>
+                <td class="col-1 d-flex justify-content-center align-items-start">
+                    <button class="btn btn-danger"
+                            (click)="showDeleteModal(item.id, 'instrumentUsage')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <app-technical-characteristic-create
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  (emitResult)="checkResult('technical-characteristic', $event)"></app-technical-characteristic-create>
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        (emitResult)="checkResult('technical-characteristic', $event)"></app-technical-characteristic-create>
 <app-technical-characteristic-update
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  [technicalCharacteristicId]="technicalCharacteristicIdUpdate"
-  (emitResult)="checkResult('technical-characteristic', $event)"></app-technical-characteristic-update>
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        [technicalCharacteristicId]="technicalCharacteristicIdUpdate"
+        (emitResult)="checkResult('technical-characteristic', $event)"></app-technical-characteristic-update>
 <app-attached-document-create
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  (emitResult)="checkResult('attached-document', $event)"></app-attached-document-create>
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        (emitResult)="checkResult('attached-document', $event)"></app-attached-document-create>
 <app-attached-document-update
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  [attachedDocumentId]="attachedDocumentIdUpdate"
-  (emitResult)="checkResult('attached-document', $event)"
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        [attachedDocumentId]="attachedDocumentIdUpdate"
+        (emitResult)="checkResult('attached-document', $event)"
 ></app-attached-document-update>
 <app-instrument-forward-create
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  (emitResult)="checkResult('instrument-forward', $event)"></app-instrument-forward-create>
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        (emitResult)="checkResult('instrument-forward', $event)"></app-instrument-forward-create>
 <app-instrument-forward-update
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  [instrumentForwardId]="instrumentForwardIdUpdate"
-  (emitResult)="checkResult('instrument-forward', $event)"
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        [instrumentForwardId]="instrumentForwardIdUpdate"
+        (emitResult)="checkResult('instrument-forward', $event)"
 ></app-instrument-forward-update>
 <app-instrument-accreditation-create
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  (emitResult)="checkResult('instrument-accreditation', $event)"
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        (emitResult)="checkResult('instrument-accreditation', $event)"
 ></app-instrument-accreditation-create>
 <app-instrument-accreditation-update
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  [instrumentAccreditationId]="instrumentAccreditationIdUpdate"
-  (emitResult)="checkResult('instrument-accreditation', $event)"
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        [instrumentAccreditationId]="instrumentAccreditationIdUpdate"
+        (emitResult)="checkResult('instrument-accreditation', $event)"
 ></app-instrument-accreditation-update>
 <app-instrument-repair-create
-[measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-(emitResult)="checkResult('instrument-repair', $event)"
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        (emitResult)="checkResult('instrument-repair', $event)"
 ></app-instrument-repair-create>
 <app-instrument-repair-update
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  [instrumentRepairId]="instrumentRepairIdUpdate"
-  (emitResult)="checkResult('instrument-repair', $event)"
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        [instrumentRepairId]="instrumentRepairIdUpdate"
+        (emitResult)="checkResult('instrument-repair', $event)"
 >
 </app-instrument-repair-update>
 <app-instrument-usage-create
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  (emitResult)="checkResult('instrument-usage', $event)"
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        (emitResult)="checkResult('instrument-usage', $event)"
 ></app-instrument-usage-create>
 <app-instrument-usage-update
-  [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
-  [instrumentUsageId]="instrumentUsageIdUpdate"
-  (emitResult)="checkResult('instrument-usage', $event)">
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        [instrumentUsageId]="instrumentUsageIdUpdate"
+        (emitResult)="checkResult('instrument-usage', $event)">
 </app-instrument-usage-update>
+
+<app-document-volatility-create
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        (emitResult)="checkResult('document-volatility', $event)"
+></app-document-volatility-create>
+<app-document-volatility-update
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
+        [documentVolatilityId]="documentVolatilityIdUpdate"
+        (emitResult)="checkResult('document-volatility', $event)"
+></app-document-volatility-update>
