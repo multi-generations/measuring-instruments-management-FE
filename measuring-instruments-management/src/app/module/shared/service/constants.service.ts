@@ -15,7 +15,7 @@ export class ConstantsService {
   private _INSTRUMENTS_NOT_FOUND = 'Không tin thấy thiết bị!';
   private _INFO_NOT_FOUND = 'Không tin thông tin!';
   private _YEAR_LIST: number[] = [];
-  private _QUANTITY_LEVEL_LIST = [1, 2, 3, 4];
+  private _QUANTITY_LEVEL_LIST = [1, 2, 3, 4, 5];
   private _COUNTRY_LIST = ["Andorra","Các Tiểu vương quốc Ả Rập Thống nhất","Afghanistan","Antigua và Barbuda",
     "Anguilla","Albania","Armenia","Đảo Antilles của Hà Lan","Angola","Antarctica","Argentina","Samoa thuộc Hoa Kỳ",
     "Áo","Úc","Aruba","Azerbaijan","Bosnia và Herzegovina","Barbados","Bangladesh","Bỉ","Burkina Faso","Bulgaria",

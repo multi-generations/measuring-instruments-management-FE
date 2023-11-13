@@ -64,40 +64,11 @@
               >
             </div>
 
-            <div class="mb-3 col-6 ps-1">
-              <label for="valid-accreditation-end-date" class="form-label"
-                >Thời hạn hết hiệu lực
-                <sup class="text-danger fw-bold">*</sup></label
-              >
-              <input
-                id="valid-accreditation-end-date"
-                type="date"
-                class="form-control"
-                placeholder="Nhập thời hạn hết hiệu lực"
-                formControlName="validAccreditationEndDate"
-                [ngClass]="{
-                  'is-invalid':
-                    mainForm.controls['validAccreditationEndDate'].touched &&
-                    mainForm.controls['validAccreditationEndDate'].invalid,
-                  'is-valid':
-                    mainForm.controls['validAccreditationEndDate'].touched &&
-                    mainForm.controls['validAccreditationEndDate'].valid
-                }"
-              />
-              <sub
-                class="text-danger"
-                *ngIf="
-                  mainForm.controls['validAccreditationEndDate'].hasError(
-                    'required'
-                  ) && mainForm.controls['validAccreditationEndDate'].touched
-                "
-                >{{ constantsService.FIELD_REQUIRED }}</sub
-              >
-            </div>
+            
           </div>
 
           <div class="row">
-            <div class="mb-3 col-12 pe-1">
+            <div class="mb-3 col-6 pe-1">
               <label for="accreditation-place" class="form-label"
                 >Nơi kiểm định <sup class="text-danger fw-bold">*</sup></label
               >
@@ -122,6 +93,34 @@
                   mainForm.controls['accreditationPlace'].hasError(
                     'required'
                   ) && mainForm.controls['accreditationPlace'].touched
+                "
+                >{{ constantsService.FIELD_REQUIRED }}</sub
+              >
+            </div>
+            <div class="mb-3 col-6 ps-1">
+              <label for="accreditor" class="form-label"
+                >Người kiểm định <sup class="text-danger fw-bold">*</sup></label
+              >
+              <input
+                id="accreditor"
+                type="text"
+                class="form-control"
+                placeholder="Nhập người kiểm định"
+                formControlName="accreditor"
+                [ngClass]="{
+                  'is-invalid':
+                    mainForm.controls['accreditor'].touched &&
+                    mainForm.controls['accreditor'].invalid,
+                  'is-valid':
+                    mainForm.controls['accreditor'].touched &&
+                    mainForm.controls['accreditor'].valid
+                }"
+              />
+              <sub
+                class="text-danger"
+                *ngIf="
+                  mainForm.controls['accreditor'].hasError('required') &&
+                  mainForm.controls['accreditor'].touched
                 "
                 >{{ constantsService.FIELD_REQUIRED }}</sub
               >
@@ -161,7 +160,7 @@
           </div>
 
           <div class="row">
-            <div class="mb-3 col-12 pe-1">
+            <div class="mb-3 col-6 pe-1">
               <label for="accreditation-confirm-number" class="form-label"
                 >Số giấy chứng nhận kiểm định
                 <sup class="text-danger fw-bold">*</sup></label
@@ -191,36 +190,40 @@
                 >{{ constantsService.FIELD_REQUIRED }}</sub
               >
             </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-12 pe-1">
-              <label for="accreditor" class="form-label"
-                >Người kiểm định <sup class="text-danger fw-bold">*</sup></label
+
+            <div class="mb-3 col-6 ps-1">
+              <label for="valid-accreditation-end-date" class="form-label"
+                >Thời hạn hết hiệu lực
+                <sup class="text-danger fw-bold">*</sup></label
               >
               <input
-                id="accreditor"
-                type="text"
+                id="valid-accreditation-end-date"
+                type="date"
                 class="form-control"
-                placeholder="Nhập người kiểm định"
-                formControlName="accreditor"
+                placeholder="Nhập thời hạn hết hiệu lực"
+                formControlName="validAccreditationEndDate"
                 [ngClass]="{
                   'is-invalid':
-                    mainForm.controls['accreditor'].touched &&
-                    mainForm.controls['accreditor'].invalid,
+                    mainForm.controls['validAccreditationEndDate'].touched &&
+                    mainForm.controls['validAccreditationEndDate'].invalid,
                   'is-valid':
-                    mainForm.controls['accreditor'].touched &&
-                    mainForm.controls['accreditor'].valid
+                    mainForm.controls['validAccreditationEndDate'].touched &&
+                    mainForm.controls['validAccreditationEndDate'].valid
                 }"
               />
               <sub
                 class="text-danger"
                 *ngIf="
-                  mainForm.controls['accreditor'].hasError('required') &&
-                  mainForm.controls['accreditor'].touched
+                  mainForm.controls['validAccreditationEndDate'].hasError(
+                    'required'
+                  ) && mainForm.controls['validAccreditationEndDate'].touched
                 "
                 >{{ constantsService.FIELD_REQUIRED }}</sub
               >
             </div>
+          </div>
+          <div class="row">
+            
           </div>
           <div class="row">
             <div class="mb-3 col-12 pe-1">
