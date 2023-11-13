@@ -26,18 +26,12 @@ export class DocumentVolatilityUpdateComponent implements OnChanges {
     mainForm: FormGroup = this.createForm();
     resultChange: boolean = false;
 
-    attachedDocuments: AttachedDocumentDetailDto[] = [];
-
     constructor(private documentVolatilityService: DocumentVolatilityService,
                 private instrumentService: InstrumentService,
                 private _constantsService: ConstantsService) {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['measuringInstrumentId']) {
-            this.initAttachedDocuments();
-        }
-
         if (changes['documentVolatilityId']) {
             this.updateForm();
         }
@@ -56,7 +50,7 @@ export class DocumentVolatilityUpdateComponent implements OnChanges {
         if (this.documentVolatilityId != 0) {
             this.documentVolatilityService.findDtoById(this.documentVolatilityId).subscribe(next => {
                 this.mainForm.get('volatilityDate')?.setValue(this.formatDate(next.volatilityDate));
-                this.mainForm.get('attachedDocument')?.setValue(next.attachedDocument.id);
+                this.mainForm.get('attachedDocument')?.setValue(next.attachedDocument);
                 this.mainForm.get('volatilityPurpose')?.setValue(next.volatilityPurpose);
                 this.mainForm.get('quantity')?.setValue(next.quantity);
             })
@@ -73,9 +67,7 @@ export class DocumentVolatilityUpdateComponent implements OnChanges {
             return {
                 id: this.documentVolatilityId,
                 volatilityDate: this.mainForm.get('volatilityDate')?.value,
-                attachedDocument: {
-                    id: +this.mainForm.get('attachedDocument')?.value
-                },
+                attachedDocument: this.mainForm.get('attachedDocument')?.value,
                 volatilityPurpose: this.mainForm.get('volatilityPurpose')?.value,
                 quantity: +this.mainForm.get('quantity')?.value,
                 measuringInstrument: {
@@ -127,12 +119,6 @@ export class DocumentVolatilityUpdateComponent implements OnChanges {
 
     closeModalBtnClick() {
         document.getElementById('document-volatility-update-modal-close-btn')?.click();
-    }
-
-    initAttachedDocuments() {
-        this.instrumentService.findAllAttachedDocuments(this.measuringInstrumentId).subscribe(next => {
-            this.attachedDocuments = next;
-        })
     }
 
     formatDate(curDate: Date): string | null {

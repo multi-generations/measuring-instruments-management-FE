@@ -13,7 +13,7 @@ import {InstrumentService} from "../../service/instrument.service";
   templateUrl: './document-volatility-create.component.html',
   styleUrls: ['./document-volatility-create.component.css']
 })
-export class DocumentVolatilityCreateComponent implements OnChanges{
+export class DocumentVolatilityCreateComponent {
   @Input()
   measuringInstrumentId: number = 0;
 
@@ -23,17 +23,10 @@ export class DocumentVolatilityCreateComponent implements OnChanges{
   mainForm: FormGroup = this.createForm();
   resultChange: boolean = false;
 
-  attachedDocuments: AttachedDocumentDetailDto[] = [];
 
   constructor(private documentVolatilityService: DocumentVolatilityService,
               private instrumentService: InstrumentService,
               private _constantsService: ConstantsService) {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['measuringInstrumentId']) {
-      this.initAttachedDocuments();
-    }
   }
 
   createForm() {
@@ -49,9 +42,7 @@ export class DocumentVolatilityCreateComponent implements OnChanges{
     if (this.measuringInstrumentId != 0 && this.mainForm.valid) {
       return {
         volatilityDate: this.mainForm.get('volatilityDate')?.value,
-        attachedDocument: {
-          id: +this.mainForm.get('attachedDocument')?.value
-        },
+        attachedDocument: this.mainForm.get('attachedDocument')?.value,
         volatilityPurpose: this.mainForm.get('volatilityPurpose')?.value,
         quantity: +this.mainForm.get('quantity')?.value,
         measuringInstrument: {
@@ -103,12 +94,6 @@ export class DocumentVolatilityCreateComponent implements OnChanges{
 
   closeModalBtnClick() {
     document.getElementById('document-volatility-create-modal-close-btn')?.click();
-  }
-
-  initAttachedDocuments() {
-    this.instrumentService.findAllAttachedDocuments(this.measuringInstrumentId).subscribe(next => {
-      this.attachedDocuments = next;
-    })
   }
 
   // Getter

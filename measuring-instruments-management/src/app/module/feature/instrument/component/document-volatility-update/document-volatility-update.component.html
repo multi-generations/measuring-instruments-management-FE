@@ -29,20 +29,16 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="attached-document" class="form-label">Chọn tài liệu
+                        <label for="attached-document" class="form-label">Tên tài liệu, dụng cụ, phụ tùng
                             <sup class="text-danger fw-bold">*</sup></label>
-                        <select id="attached-document"
-                                class="form-select"
-                                aria-label="Default select attached-document"
-                                formControlName="attachedDocument"
-                                [ngClass]="{
-                    'is-invalid': (mainForm.controls['attachedDocument'].touched) && (mainForm.controls['attachedDocument'].invalid),
-                    'is-valid': (mainForm.controls['attachedDocument'].touched) && (mainForm.controls['attachedDocument'].valid)}">
-                            <option selected value="">-- Chọn tài liệu --</option>
-                            <ng-container *ngFor="let v of attachedDocuments;">
-                                <option [value]="v.id">{{v.documentName}} - {{v.documentSymbol}}</option>
-                            </ng-container>
-                        </select>
+                        <input id="attached-document"
+                            type="text"
+                            class="form-control"
+                            placeholder="Nhập tên tài liệu, dụng cụ, phụ tùng"
+                            formControlName="attachedDocument"
+                            [ngClass]="{
+                 'is-invalid': (mainForm.controls['attachedDocument'].touched) && (mainForm.controls['attachedDocument'].invalid),
+                 'is-valid': (mainForm.controls['attachedDocument'].touched) && (mainForm.controls['attachedDocument'].valid)}">
                         <sub  class="text-danger"
                               *ngIf="mainForm.controls['attachedDocument'].hasError('required') &&
             mainForm.controls['attachedDocument'].touched">{{constantsService.FIELD_REQUIRED}}</sub>
