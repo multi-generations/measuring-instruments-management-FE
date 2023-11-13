@@ -1,6 +1,6 @@
 <div
   class="modal fade"
-  id="instrument-usage-create"
+  id="instrument-usage-update"
   data-bs-backdrop="static"
   data-bs-keyboard="false"
   tabindex="-1"
@@ -16,7 +16,7 @@
         <button
           type="button"
           class="btn-close"
-          id="instrument-usage-create-modal-close-btn"
+          id="instrument-usage-update-modal-close-btn"
           data-bs-dismiss="modal"
           aria-label="Close"
           (click)="closeModal()"
@@ -171,12 +171,13 @@
           </div>
         </div>
         <div class="modal-footer">
+          <button type="button" (click)="resetForm()" class="btn btn-danger">Hủy bỏ</button>
           <button
             type="submit"
             class="btn btn-primary"
             [disabled]="mainForm.invalid"
           >
-            Thêm mới
+            Cập nhật
           </button>
         </div>
       </form>

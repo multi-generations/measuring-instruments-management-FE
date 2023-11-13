@@ -19,6 +19,9 @@ import { InstrumentRepairCreateComponent } from './component/instrument-repair-c
 import { InstrumentAccreditationCreateComponent } from './component/instrument-accreditation-create/instrument-accreditation-create.component';
 import { InstrumentForwardCreateComponent } from './component/instrument-forward-create/instrument-forward-create.component';
 import { InstrumentForwardUpdateComponent } from './component/instrument-forward-update/instrument-forward-update.component';
+import { InstrumentAccreditationUpdateComponent } from './component/instrument-accreditation-update/instrument-accreditation-update.component';
+import { InstrumentRepairUpdateComponent } from './component/instrument-repair-update/instrument-repair-update.component';
+import { InstrumentUsageUpdateComponent } from './component/instrument-usage-update/instrument-usage-update.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,9 @@ import { InstrumentForwardUpdateComponent } from './component/instrument-forward
     InstrumentAccreditationCreateComponent,
     InstrumentForwardCreateComponent,
     InstrumentForwardUpdateComponent,
+    InstrumentAccreditationUpdateComponent,
+    InstrumentRepairUpdateComponent,
+    InstrumentUsageUpdateComponent,
   ],
   imports: [
     CommonModule,

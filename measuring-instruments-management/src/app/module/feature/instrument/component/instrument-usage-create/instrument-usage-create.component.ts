@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConstantsService } from 'src/app/module/shared/service/constants.service';
 import Swal from 'sweetalert2';
 import { InstrumentUsageForm } from '../../model/form/InstrumentUsageForm';
+import { InstrumentUsageService } from '../../service/instrument-usage-service';
 
 @Component({
   selector: 'app-instrument-usage-create',
@@ -21,7 +22,10 @@ export class InstrumentUsageCreateComponent {
 
   resultChange: boolean = false;
 
-  constructor(private _constantsService: ConstantsService) {}
+  constructor(
+    private instrumentUsageService: InstrumentUsageService,
+    private _constantsService: ConstantsService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -55,43 +59,41 @@ export class InstrumentUsageCreateComponent {
   submit() {
     let instrumentUsageForm = this.initInstrumentUsageForm();
     console.log(instrumentUsageForm);
-    // Swal.fire({
-    //   title: 'Đang thêm mới...',
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //     if (instrumentUsageForm != null) {
-    //       this.technicalCharacteristicService
-    //         .create(technicalCharacteristicForm)
-    //         .subscribe(
-    //           (next) => {
-    //             Swal.fire({
-    //               position: 'center',
-    //               title: 'Thành công!',
-    //               text: 'Đặc điểm đã được thêm!',
-    //               icon: 'success',
-    //               timer: 200,
-    //               showConfirmButton: false,
-    //             });
-    //             this.resultChange = true;
-    //             this.closeModalClick();
-    //           },
-    //           (error: HttpErrorResponse) => {
-    //             Swal.fire({
-    //               position: 'center',
-    //               title: 'Lỗi!',
-    //               html:
-    //                 '<p>Thêm mới không thành công! </p><p>(' +
-    //                 error.message +
-    //                 ')</p>',
-    //               icon: 'error',
-    //             });
-    //             this.resultChange = false;
-    //           }
-    //         );
-    //     }
-    //   },
-    // });
+    Swal.fire({
+      title: 'Đang thêm mới...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+        if (instrumentUsageForm != null) {
+          this.instrumentUsageService.create(instrumentUsageForm).subscribe(
+            (next) => {
+              Swal.fire({
+                position: 'center',
+                title: 'Thành công!',
+                text: 'Đã thêm mới Theo dõi sử dụng thành công!',
+                icon: 'success',
+                timer: 200,
+                showConfirmButton: false,
+              });
+              this.resultChange = true;
+              this.closeModalClick();
+            },
+            (error: HttpErrorResponse) => {
+              Swal.fire({
+                position: 'center',
+                title: 'Lỗi!',
+                html:
+                  '<p>Thêm mới không thành công! </p><p>(' +
+                  error.message +
+                  ')</p>',
+                icon: 'error',
+              });
+              this.resultChange = false;
+            }
+          );
+        }
+      },
+    });
   }
 
   closeModal() {
