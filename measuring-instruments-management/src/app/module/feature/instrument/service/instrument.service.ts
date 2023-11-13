@@ -11,6 +11,7 @@ import {InstrumentRepairDetailDto} from "../model/dto/detail/InstrumentRepairDet
 import {InstrumentUsageDetailDto} from "../model/dto/detail/InstrumentUsageDetailDto";
 import {MeasuringInstrumentForm} from "../model/form/MeasuringInstrumentForm";
 import {InstrumentForwardDetailDto} from "../model/dto/detail/InstrumentForwardDetailDto";
+import {DocumentVolatilityDetailDto} from "../model/dto/detail/DocumentVolatilityDetailDto";
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,12 @@ export class InstrumentService {
     const jwt = this._authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
     return this._http.get<AttachedDocumentDetailDto[]>(`${this._API_URL}/${id}/attached-documents`, {headers});
+  }
+
+  public findAllDocumentVolatility(id: number): Observable<DocumentVolatilityDetailDto[]> {
+    const jwt = this._authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
+    return this._http.get<DocumentVolatilityDetailDto[]>(`${this._API_URL}/${id}/document-volatiles`, {headers});
   }
 
   public findAllForwards(id: number): Observable<InstrumentForwardDetailDto[]> {

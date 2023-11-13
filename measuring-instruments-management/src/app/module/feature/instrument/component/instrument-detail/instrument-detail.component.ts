@@ -19,6 +19,8 @@ import {InstrumentForwardService} from "../../service/instrument-forward.service
 import { InstrumentAccreditationService } from '../../service/instrument-accreditation.service';
 import { InstrumentRepairService } from '../../service/instrument-repair.service';
 import { InstrumentUsageService } from '../../service/instrument-usage-service';
+import {DocumentVolatilityDetailDto} from "../../model/dto/detail/DocumentVolatilityDetailDto";
+import {DocumentVolatilityService} from "../../service/document-volatility.service";
 
 @Component({
   selector: 'app-instrument-detail',
@@ -37,6 +39,7 @@ export class InstrumentDetailComponent implements OnInit{
   instrumentRepairs: InstrumentRepairDetailDto[] = [];
   instrumentUsages: InstrumentUsageDetailDto[] = [];
   instrumentForwards: InstrumentForwardDetailDto[] = [];
+  documentVolatiles: DocumentVolatilityDetailDto[] = [];
   instrumentImageActiveSrc = '';
   technicalCharacteristicIdUpdate = 0;
   attachedDocumentIdUpdate = 0;
@@ -44,6 +47,7 @@ export class InstrumentDetailComponent implements OnInit{
   instrumentAccreditationIdUpdate = 0;
   instrumentRepairIdUpdate = 0;
   instrumentUsageIdUpdate = 0;
+  documentVolatilityIdUpdate = 0;
 
   constructor(private _instrumentService: InstrumentService,
               private _activatedRoute: ActivatedRoute,
@@ -53,7 +57,8 @@ export class InstrumentDetailComponent implements OnInit{
               private instrumentForwardService: InstrumentForwardService,
               private instrumentAccreditationService: InstrumentAccreditationService,
               private instrumentRepairService: InstrumentRepairService,
-              private instrumentUsageService: InstrumentUsageService) {
+              private instrumentUsageService: InstrumentUsageService,
+              private documentVolatilityService: DocumentVolatilityService) {
     this._activatedRoute.params.subscribe(value => {
       const id = value['id'];
       if (id) {
@@ -66,6 +71,7 @@ export class InstrumentDetailComponent implements OnInit{
         this.findAllAccreditations(id);
         this.findAllRepairs(id);
         this.findAllUsages(id);
+        this.findAllDocumentVolatiles(id);
       }
     })
   }
@@ -137,6 +143,22 @@ export class InstrumentDetailComponent implements OnInit{
     }
 
     this._instrumentService.findAllAttachedDocuments(id).subscribe(observer);
+  }
+
+  public findAllDocumentVolatiles(id: number) {
+    const observer: Observer<DocumentVolatilityDetailDto[]> = {
+      next: (data: DocumentVolatilityDetailDto[]) => {
+        this.documentVolatiles = data;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err.status);
+        console.log(err.message);
+      },
+      complete: () => {
+      }
+    }
+
+    this._instrumentService.findAllDocumentVolatility(id).subscribe(observer);
   }
 
   public findAllInstrumentForwards(id: number) {
@@ -264,6 +286,10 @@ export class InstrumentDetailComponent implements OnInit{
     this.instrumentUsageIdUpdate = id;
   }
 
+  setDocumentVolatilityIdUpdate(id: number) {
+    this.documentVolatilityIdUpdate = id;
+  }
+
   // Delete
 
   public showDeleteModal(id: number, deleteType: string) {
@@ -287,6 +313,9 @@ export class InstrumentDetailComponent implements OnInit{
         break;
       case 'instrumentUsage':
         modalBody = this.setModalBodyInstrumentUsage(id);
+        break;
+      case 'documentVolatility':
+        modalBody = this.setModalBodyDocumentVolatility(id);
         break;
     }
 
@@ -327,6 +356,9 @@ export class InstrumentDetailComponent implements OnInit{
                 break;
               case 'instrumentUsage':
                 this.deleteInstrumentUsageById(id);
+                break;
+              case 'documentVolatility':
+                this.deleteDocumentVolatilityById(id);
                 break;
             }
           }
@@ -647,6 +679,53 @@ export class InstrumentDetailComponent implements OnInit{
     });
   }
 
+  public setModalBodyDocumentVolatility(id: number) {
+    let modalBody =
+        '<div class="overflow-auto" style="max-height: 30vh; min-width: 500px">' +
+        '<table class="table text-center">' +
+        '<thead>' +
+        '<tr class="col-12">' +
+        '<th class="col-1">Ngày ghi nhận</th>' +
+        '<th class="col-4">Tài liệu thay đổi</th>' +
+        '<th class="col-6">Lý do thay đổi</th>' +
+        '<th class="col-1">Số lượng</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>';
+
+    const deleteDocumentVolatility = this.documentVolatiles.find(value => value.id === id);
+
+    modalBody += '<tr class="col-12">' +
+        `<td class="col-1">${deleteDocumentVolatility?.volatilityDate}</td>` +
+        `<td class="col-4">${deleteDocumentVolatility?.attachedDocument}</td>` +
+        `<td class="col-6">${deleteDocumentVolatility?.volatilityPurpose}</td>` +
+        `<td class="col-1">${deleteDocumentVolatility?.quantity}</td>` +
+        '</tr></body></table></div>'
+
+    return modalBody;
+  }
+
+  public deleteDocumentVolatilityById(id: number) {
+    this.documentVolatilityService.deleteById(id).subscribe(next => {
+      Swal.fire({
+        position: 'center',
+        title: 'Thành công!',
+        text: 'Xóa thành công!',
+        icon: 'success',
+        timer: 200,
+        showConfirmButton: false
+      });
+      this.findAllDocumentVolatiles(this.curId);
+    }, (error: HttpErrorResponse) => {
+      Swal.fire({
+        position: 'center',
+        title: 'Lỗi!',
+        html: '<p>Xóa không thành công! </p><p>(' + error.message + ')</p>',
+        icon: 'error'
+      })
+    });
+  }
+
   checkResult(typeChange: string, resultChange: boolean) {
     if (resultChange) {
       switch (typeChange) {
@@ -667,6 +746,9 @@ export class InstrumentDetailComponent implements OnInit{
           break;
         case 'instrument-accreditation':
           this.findAllAccreditations(this.curId);
+          break;
+        case 'document-volatility':
+          this.findAllDocumentVolatiles(this.curId);
           break;
       }
     }

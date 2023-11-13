@@ -22,6 +22,8 @@ import { InstrumentForwardUpdateComponent } from './component/instrument-forward
 import { InstrumentAccreditationUpdateComponent } from './component/instrument-accreditation-update/instrument-accreditation-update.component';
 import { InstrumentRepairUpdateComponent } from './component/instrument-repair-update/instrument-repair-update.component';
 import { InstrumentUsageUpdateComponent } from './component/instrument-usage-update/instrument-usage-update.component';
+import { DocumentVolatilityCreateComponent } from './component/document-volatility-create/document-volatility-create.component';
+import { DocumentVolatilityUpdateComponent } from './component/document-volatility-update/document-volatility-update.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { InstrumentUsageUpdateComponent } from './component/instrument-usage-upd
     InstrumentAccreditationUpdateComponent,
     InstrumentRepairUpdateComponent,
     InstrumentUsageUpdateComponent,
+    DocumentVolatilityCreateComponent,
+    DocumentVolatilityUpdateComponent,
   ],
   imports: [
     CommonModule,
@@ -50,7 +54,7 @@ import { InstrumentUsageUpdateComponent } from './component/instrument-usage-upd
     FormsModule,
     SharedModule,
     ReactiveFormsModule,
-    NgOptimizedImage,
+    NgOptimizedImage
   ],
 })
 export class InstrumentModule {}
