@@ -5,7 +5,7 @@
        class="mt-2 fs-4">{{this.constantsService.INSTRUMENTS_NOT_FOUND}}</div>
   <table *ngIf="measuringInstrumentListDtos.length > 0"
          class="table table-hover text-center text-break" style="min-width: 1200px">
-    <caption class="caption-top mb-4" style="font-size: 24px;">Danh sách thiết bị đo lường</caption>
+    <!-- <caption class="caption-top mb-4" style="font-size: 24px;">Danh sách thiết bị đo lường</caption> -->
     <thead>
     <tr class="text-center row col-12 flex-nowrap">
       <th scope="col" class="col-1 d-flex justify-content-center">
@@ -16,13 +16,14 @@
                  (ngModelChange)="enableAllItems()">
         </div>
       </th>
-      <th scope="col" class="col-2">Tên</th>
-      <th scope="col" class="col-1">Số hiệu</th>
-      <th scope="col" class="col-1">Ký hiệu</th>
-      <th scope="col" class="col-1">Nhóm</th>
+      <th scope="col" class="col-1">STT</th>
+      <th scope="col" class="col-3">Tên</th>
+      <th scope="col" class="col-2">Ký hiệu</th>
+      <th scope="col" class="col-2">Số hiệu</th>
+      <!-- <th scope="col" class="col-1">Nhóm</th>
       <th scope="col" class="col-1">Biên chế</th>
       <th scope="col" class="col-1">Đơn vị</th>
-      <th scope="col" class="col-1">Tình trạng</th>
+      <th scope="col" class="col-1">Tình trạng</th> -->
       <th scope="col" class="col-2">Ghi chú</th>
       <th scope="col" class="col-1 text-danger">
         <i class="fa-solid fa-trash fs-5"></i>
@@ -30,7 +31,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="row col-12" *ngFor="let ins of measuringInstrumentListDtos;">
+    <tr class="row col-12" *ngFor="let ins of measuringInstrumentListDtos; let i = index">
       <th scope="row" class="col-1 d-flex justify-content-center">
         <div class="form-check">
           <input class="form-check-input"
@@ -39,14 +40,15 @@
                  (ngModelChange)="enableItem(ins.id)">
         </div>
       </th>
-      <td class="col-2 d-flex align-items-center justify-content-start">
+      <td class="col-1 d-flex align-items-center justify-content-center">{{size*(currentPage-1) + i + 1}}</td>
+      <td class="col-3 d-flex align-items-center justify-content-start">
         <a [routerLink]="[ins.id]" class="link-info">{{ins.instrumentName}}</a></td>
-      <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentSerialNumber}}</td>
-      <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentSymbol}}</td>
-      <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentGroup?.instrumentGroupName}}</td>
+        <td class="col-2 d-flex align-items-center justify-content-center">{{ins.instrumentSymbol}}</td>
+      <td class="col-2 d-flex align-items-center justify-content-center">{{ins.instrumentSerialNumber}}</td>
+      <!-- <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentGroup?.instrumentGroupName}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.inServiceDate | date: "dd/MM/yyyy"}}</td>
       <td class="col-1 d-flex align-items-center justify-content-center">{{ins.managementUnit?.managementUnitName}}</td>
-      <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentStatus?.instrumentStatusName}}</td>
+      <td class="col-1 d-flex align-items-center justify-content-center">{{ins.instrumentStatus?.instrumentStatusName}}</td> -->
       <td class="col-2 d-flex align-items-center justify-content-center">{{ins.detailedDescription}}</td>
       <td class="col-1 d-flex justify-content-center align-items-center">
         <button class="btn btn-danger"
@@ -66,9 +68,9 @@
           (click)="showDeleteModal(undefined)">
     Xóa tất cả
   </button>
-  <button type="button" class="btn btn-outline-primary">
+  <!-- <button type="button" class="btn btn-outline-primary">
     <i class="fa-solid fa-qrcode"></i> Quét QR
-  </button>
+  </button> -->
 </div>
 
 <div class="overflow-x-auto me-3">

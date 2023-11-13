@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm mới đặc điểm kỹ thuật</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm mới Đặc điểm kỹ thuật</h1>
         <button type="button"
                 class="btn-close"
                 id="technical-characteristic-create-modal-close-btn"
@@ -15,7 +15,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="mb-3 col-6 pe-1">
-              <label for="instrument-type" class="form-label">Loại phương tiện
+              <label for="instrument-type" class="form-label">Loại phương tiện đo
                 <sup class="text-danger fw-bold">*</sup></label>
               <select id="instrument-type"
                       class="form-select"
@@ -24,7 +24,7 @@
                       [ngClass]="{
                       'is-invalid': (mainForm.controls['instrumentType'].touched) && (mainForm.controls['instrumentType'].invalid),
                       'is-valid': (mainForm.controls['instrumentType'].touched) && (mainForm.controls['instrumentType'].valid)}">
-                <option selected value="">-- Chọn loại phương tiện --</option>
+                <option selected value="">-- Chọn loại phương tiện đo --</option>
                 <ng-container *ngFor="let v of instrumentTypeList;">
                   <option [value]="v.id">{{v.instrumentTypeName}}</option>
                 </ng-container>
@@ -35,7 +35,7 @@
             </div>
 
             <div class="mb-3 col-6 ps-1">
-              <label for="technical-type" class="form-label">Loại kỹ thuật
+              <label for="technical-type" class="form-label">Tên đại lượng
                 <sup class="text-danger fw-bold">*</sup></label>
               <select id="technical-type"
                       class="form-select"
@@ -45,7 +45,7 @@
                       [ngClass]="{
                       'is-invalid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].invalid),
                       'is-valid': (mainForm.controls['technicalType'].touched) && (mainForm.controls['technicalType'].valid)}">
-                <option selected value="">-- Chọn loại kỹ thuật --</option>
+                <option selected value="">-- Chọn tên đại lượng --</option>
                 <ng-container *ngFor="let v of technicalTypeList;">
                   <option [value]="v.id">{{v.technicalTypeName}}</option>
                 </ng-container>
@@ -58,7 +58,7 @@
 
           <div class="row">
             <div class="mb-3 col-6 pe-1 ">
-              <label for="measuring-range-start" class="form-label">Điểm đo đầu
+              <label for="measuring-range-start" class="form-label">Từ
                 <sup class="text-danger fw-bold">*</sup></label>
               <input id="measuring-range-start"
                      type="text"
@@ -96,7 +96,7 @@
 
           <div class="row">
             <div class="mb-3 col-6 pe-1 ">
-              <label for="measuring-range-end" class="form-label">Điểm đo cuối
+              <label for="measuring-range-end" class="form-label">Đến
                 <sup class="text-danger fw-bold">*</sup></label>
               <input id="measuring-range-end"
                      type="text"
