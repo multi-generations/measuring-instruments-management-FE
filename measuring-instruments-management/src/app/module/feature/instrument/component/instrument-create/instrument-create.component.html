@@ -1,5 +1,5 @@
 <h3 class="text-center mb-5 mt-3"
-    style="min-width: 782px; font-size: 32px;">Thêm mới phương tiện</h3>
+    style="min-width: 782px; font-size: 32px;">Thêm mới phương tiện đo</h3>
 
 <form *ngIf="mainForm"
       class="w-75 m-auto"
@@ -8,7 +8,7 @@
       (ngSubmit)="submit()">
     <div class="row">
         <div class="mb-3 col-6 px-2 ">
-            <label for="instrument-group" class="form-label">Nhóm phương tiện
+            <label for="instrument-group" class="form-label">Nhóm phương tiện đo
                 <sup class="text-danger fw-bold">*</sup></label>
             <select id="instrument-group"
                     class="form-select"
@@ -17,7 +17,7 @@
                     [ngClass]="{
                     'is-invalid': (mainForm.controls['instrumentGroup'].touched) && (mainForm.controls['instrumentGroup'].invalid),
                     'is-valid': (mainForm.controls['instrumentGroup'].touched) && (mainForm.controls['instrumentGroup'].valid)}">
-                <option selected value="">-- Chọn nhóm phương tiện --</option>
+                <option selected value="">-- Chọn nhóm phương tiện đo --</option>
                 <ng-container *ngFor="let v of instrumentGroupList;">
                     <option [value]="v.id">{{v.instrumentGroupName}}</option>
                 </ng-container>
@@ -28,12 +28,12 @@
         </div>
 
         <div class="mb-3 col-6 px-2 ">
-            <label for="instrument-name" class="form-label">Tên phương tiện
+            <label for="instrument-name" class="form-label">Tên phương tiện đo
                 <sup class="text-danger fw-bold">*</sup></label>
             <input id="instrument-name"
                    type="text"
                    class="form-control"
-                   placeholder="Nhập tên phương tiện"
+                   placeholder="Nhập tên phương tiện đo"
                    formControlName="instrumentName"
                    [ngClass]="{
                     'is-invalid': (mainForm.controls['instrumentName'].touched) && (mainForm.controls['instrumentName'].invalid),
@@ -179,12 +179,12 @@
         </div>
 
         <div class="mb-3 col-6 px-2 ">
-            <label for="weapon-guarantee" class="form-label">Độ đảm bảo vũ khí
+            <label for="weapon-guarantee" class="form-label">Bảo đảm cho VK-TBKT
                 <sup class="text-danger fw-bold">*</sup></label>
             <input id="weapon-guarantee"
                    type="text"
                    class="form-control"
-                   placeholder="Nhập độ đảm bảo vũ khí"
+                   placeholder="Nhập bảo đảm cho VK-TBKT"
                    formControlName="weaponGuarantee"
                    [ngClass]="{
                     'is-invalid': (mainForm.controls['weaponGuarantee'].touched) && (mainForm.controls['weaponGuarantee'].invalid),
@@ -215,7 +215,7 @@
         </div>
 
         <div class="mb-3 col-6 px-2 ">
-            <label for="accreditation-center" class="form-label">Trung tâm kiểm định
+            <label for="accreditation-center" class="form-label">Nơi kiểm định
                 <sup class="text-danger fw-bold">*</sup></label>
             <select id="accreditation-center"
                     class="form-select"
@@ -224,7 +224,7 @@
                     [ngClass]="{
                     'is-invalid': (mainForm.controls['accreditationCenter'].touched) && (mainForm.controls['accreditationCenter'].invalid),
                     'is-valid': (mainForm.controls['accreditationCenter'].touched) && (mainForm.controls['accreditationCenter'].valid)}">
-                <option selected value="">-- Chọn TT kiểm định --</option>
+                <option selected value="">-- Chọn nơi kiểm định --</option>
                 <ng-container *ngFor="let v of accreditationCenterList;">
                     <option [value]="v.id">{{v.accreditationCenterName}}</option>
                 </ng-container>

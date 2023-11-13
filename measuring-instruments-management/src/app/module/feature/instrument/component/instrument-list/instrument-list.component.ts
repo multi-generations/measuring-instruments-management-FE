@@ -21,7 +21,7 @@ export class InstrumentListComponent implements OnInit {
   deleteModalBody = '';
   totalPages = 0;
   currentPage = 1;
-  size = 5;
+  size = 10;
   measuringInstrumentSearchForm: MeasuringInstrumentSearchForm | undefined;
 
   constructor(private _instrumentService: InstrumentService,
