@@ -62,21 +62,22 @@ export class InstrumentUpdateComponent implements OnInit {
       this.curId = +params['id'];
 
       this.instrumentService.findDtoById(this.curId).subscribe(next => {
+        console.log(next);
         this.mainForm = new FormGroup({
-          instrumentGroup: new FormControl(next.instrumentGroup.id, [Validators.required]),
+          instrumentGroup: new FormControl(next.instrumentGroup?.id, []),
           instrumentName: new FormControl(next.instrumentName, [Validators.required]),
           instrumentSymbol: new FormControl(next.instrumentSymbol, [Validators.required]),
           instrumentSerialNumber: new FormControl(next.instrumentSerialNumber, [Validators.required]),
-          managementLevel: new FormControl(next.managementLevel, [Validators.required]),
-          manufactureCountry: new FormControl(next.manufactureCountry, [Validators.required]),
-          manufactureYear: new FormControl(next.manufactureYear ? next.manufactureYear : '', [Validators.required]),
-          inServiceDate: new FormControl(this.formatDate(next.inServiceDate), [Validators.required, this.isMoreThanToday]),
-          managementUnit: new FormControl(next.managementUnit.id, [Validators.required]),
-          weaponGuarantee: new FormControl(next.weaponGuarantee, [Validators.required]),
+          managementLevel: new FormControl(next.managementLevel, []),
+          manufactureCountry: new FormControl(next.manufactureCountry, []),
+          manufactureYear: new FormControl(next.manufactureYear ? next.manufactureYear : '', []),
+          inServiceDate: new FormControl(this.formatDate(next.inServiceDate), [this.isMoreThanToday]),
+          managementUnit: new FormControl(next.managementUnit?.id, [Validators.required]),
+          weaponGuarantee: new FormControl(next.weaponGuarantee, []),
           accreditationCycle: new FormControl(next.accreditationCycle, [Validators.required, Validators.max(120)]),
-          accreditationCenter: new FormControl(next.accreditationCenter.id, [Validators.required]),
-          qualityLevel: new FormControl(next.qualityLevel, [Validators.required]),
-          instrumentStatus: new FormControl(next.instrumentStatus.id, [Validators.required]),
+          accreditationCenter: new FormControl(next.accreditationCenter?.id, []),
+          qualityLevel: new FormControl(next.qualityLevel, []),
+          instrumentStatus: new FormControl(next.instrumentStatus?.id, []),
           detailedDescription: new FormControl(next.detailedDescription, [])
         })
       })

@@ -56,20 +56,20 @@ export class InstrumentCreateComponent implements OnInit {
 
   createForm() {
     this.mainForm = new FormGroup({
-      instrumentGroup: new FormControl('', [Validators.required]),
+      instrumentGroup: new FormControl('', []),
       instrumentName: new FormControl('', [Validators.required]),
       instrumentSymbol: new FormControl('', [Validators.required]),
       instrumentSerialNumber: new FormControl('', [Validators.required]),
-      managementLevel: new FormControl('', [Validators.required]),
-      manufactureCountry: new FormControl('', [Validators.required]),
-      manufactureYear: new FormControl('', [Validators.required]),
-      inServiceDate: new FormControl('', [Validators.required, this.isMoreThanToday]),
+      managementLevel: new FormControl('', []),
+      manufactureCountry: new FormControl('', []),
+      manufactureYear: new FormControl('', []),
+      inServiceDate: new FormControl('', [ this.isMoreThanToday]),
       managementUnit: new FormControl('', [Validators.required]),
-      weaponGuarantee: new FormControl('', [Validators.required]),
-      accreditationCycle: new FormControl('', [Validators.required, Validators.max(120)]),
-      accreditationCenter: new FormControl('', [Validators.required]),
-      qualityLevel: new FormControl('', [Validators.required]),
-      instrumentStatus: new FormControl('', [Validators.required]),
+      weaponGuarantee: new FormControl('', []),
+      accreditationCycle: new FormControl('12', [Validators.required, Validators.max(120)]),
+      accreditationCenter: new FormControl('', []),
+      qualityLevel: new FormControl('', []),
+      instrumentStatus: new FormControl('', []),
       detailedDescription: new FormControl('', [])
     })
   }

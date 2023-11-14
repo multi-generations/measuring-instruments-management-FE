@@ -33,7 +33,7 @@ export class DocumentVolatilityCreateComponent {
     return new FormGroup({
       volatilityDate: new FormControl('', [Validators.required]),
       attachedDocument: new FormControl('', [Validators.required]),
-      volatilityPurpose: new FormControl('', [Validators.required]),
+      volatilityPurpose: new FormControl('', []),
       quantity: new FormControl('')
     })
   }
