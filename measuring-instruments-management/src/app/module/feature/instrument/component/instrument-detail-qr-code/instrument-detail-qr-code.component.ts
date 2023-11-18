@@ -7,6 +7,7 @@ import { TechnicalCharacteristicDetailDto } from '../../model/dto/detail/Technic
 import { AttachedDocumentDetailDto } from '../../model/dto/detail/AttachedDocumentDetailDto';
 import { Observer } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-instrument-detail-qr-code',
@@ -27,10 +28,16 @@ export class InstrumentDetailQrCodeComponent {
   resultChange: boolean = false;
 
   constructor(private _instrumentService: InstrumentService,
+              private _activatedRoute: ActivatedRoute,
               private _constantsService: ConstantsService) {
-    if (this.measuringInstrumentId !== 0) {
-      this.findDtoById(this.measuringInstrumentId);
-    }
+    this._activatedRoute.params.subscribe(value => {
+      const id = value['id'];
+      if (id) {
+        this.findDtoById(id);
+        this.findAllTechnicalCharacteristics(id);
+        this.findAllAttachedDocuments(id);
+      }
+  })
   }
 
   public findDtoById(id: number) {
@@ -49,54 +56,41 @@ export class InstrumentDetailQrCodeComponent {
     this._instrumentService.findDtoById(id).subscribe(observer);
 }
 
+public findAllTechnicalCharacteristics(id: number) {
+  const observer: Observer<TechnicalCharacteristicDetailDto[]> = {
+      next: (data: TechnicalCharacteristicDetailDto[]) => {
+          this.technicalCharacteristics = data;
+      },
+      error: (err: HttpErrorResponse) => {
+          console.log(err.status);
+          console.log(err.message);
+      },
+      complete: () => {
+      }
+  }
 
-  // initAttachedDocumentForm(): AttachedDocumentForm | null {
-  //   if (this.measuringInstrumentId != 0 && this.mainForm.valid) {
-  //     return {
-  //       documentName: this.mainForm.get('documentName')?.value,
-  //       documentSymbol: this.mainForm.get('documentSymbol')?.value,
-  //       quantity: +this.mainForm.get('quantity')?.value,
-  //       documentNote: this.mainForm.get('documentNote')?.value,
-  //       measuringInstrument: {
-  //         id: this.measuringInstrumentId
-  //       }
-  //     };
-  //   }
+  this._instrumentService.findAllTechnicalCharacteristics(id).subscribe(observer);
+}
 
-  //   return null;
-  // }
+  public findAllAttachedDocuments(id: number) {
+    const observer: Observer<AttachedDocumentDetailDto[]> = {
+        next: (data: AttachedDocumentDetailDto[]) => {
+            this.attachedDocuments = data;
+        },
+        error: (err: HttpErrorResponse) => {
+            console.log(err.status);
+            console.log(err.message);
+        },
+        complete: () => {
+        }
+    }
+
+    this._instrumentService.findAllAttachedDocuments(id).subscribe(observer);
+  }
+
 
   submit() {
-    // let attachedDocumentForm = this.initAttachedDocumentForm();
-    // Swal.fire({
-    //   title: 'Đang thêm mới...',
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //     if (attachedDocumentForm != null) {
-    //       this.attachedDocumentService.create(attachedDocumentForm).subscribe(next => {
-    //         Swal.fire({
-    //           position: 'center',
-    //           title: 'Thành công!',
-    //           text: 'Tài liệu đã được thêm!',
-    //           icon: 'success',
-    //           timer: 200,
-    //           showConfirmButton: false
-    //         });
-    //         this.resultChange = true;
-    //         this.closeModalBtnClick();
-    //       }, (error: HttpErrorResponse) => {
-    //         Swal.fire({
-    //           position: 'center',
-    //           title: 'Lỗi!',
-    //           html: '<p>Thêm mới không thành công! </p><p>(' + error.message + ')</p>',
-    //           icon: 'error'
-    //         });
-    //         this.resultChange = false;
-    //       })
-    //     }
-    //   }
-    // });
+    
   }
 
   closeModal() {

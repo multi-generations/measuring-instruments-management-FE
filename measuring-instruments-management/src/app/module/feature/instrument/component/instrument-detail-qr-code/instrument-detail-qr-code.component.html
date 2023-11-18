@@ -1,6 +1,6 @@
 <div class="modal fade" id="instrument-detail-qr-code" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+  <div class="modal-dialog modal-dialog-scrollable modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin cơ bản nạp vào QR code</h1>
@@ -15,7 +15,27 @@
         <div class="modal-body">
           <h5>1. Tính năng kỹ thuật</h5>
           <p>Tên phương tiện đo: {{measuringInstrumentDetailDto?.instrumentName}}</p>
-          
+          <p>Ký hiệu: {{measuringInstrumentDetailDto?.instrumentSymbol}}</p>
+          <p>Số hiệu: {{measuringInstrumentDetailDto?.instrumentSerialNumber}}</p>
+          <p>Nước sản xuất: {{measuringInstrumentDetailDto?.manufactureCountry}}</p>
+          <p>Năm sản xuất: {{measuringInstrumentDetailDto?.manufactureYear}}</p>
+          <p>Ngày tháng năm sử dụng: {{measuringInstrumentDetailDto?.inServiceDate | date: 'dd/MM/YYYY'}}</p>
+          <p>Đơn vị quản lý: {{measuringInstrumentDetailDto?.managementUnit?.managementUnitName}}</p>
+          <p>Bảo đảm cho vũ khí trang bị: {{measuringInstrumentDetailDto?.weaponGuarantee}}</p>
+          <p>Chu kỳ kiểm định: {{measuringInstrumentDetailDto?.accreditationCycle}} tháng</p>
+          <p>Nơi kiểm định: {{measuringInstrumentDetailDto?.accreditationCenter?.accreditationCenterName}}</p>
+          <p>Các đặc tính kỹ thuật: </p>
+          <ol>
+            <li *ngFor="let item of technicalCharacteristics;">
+              {{item.instrumentType.instrumentTypeName}} - {{item.technicalType.technicalTypeName}}:
+              Từ {{item.measuringRangeStart}} {{item.measuringUnitStart.measuringUnitName}} 
+              đến {{item.measuringRangeEnd}}{{item.measuringUnitEnd.measuringUnitName}}; 
+              sai số: ± {{item.measuringError}} {{item.measuringErrorUnit.measuringUnitName}}</li>
+          </ol>
+          <h5>2. Tài liệu, dụng cụ, phụ tùng kèm theo</h5>
+          <ol>
+            <li *ngFor="let item of attachedDocuments;">{{item.documentName}}: {{item.quantity}}</li>
+          </ol>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="closeModalBtnClick()">Quay lại</button>
