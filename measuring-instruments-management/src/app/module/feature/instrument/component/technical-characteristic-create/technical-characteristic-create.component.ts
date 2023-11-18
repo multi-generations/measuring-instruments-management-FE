@@ -28,6 +28,7 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
   instrumentTypeList: InstrumentType[] = [];
   technicalTypeList: TechnicalType[] = [];
   measuringUnitList: MeasuringUnit[] = [];
+  measuringErrorUnitList: MeasuringUnit[] = [];
   resultChange: boolean = false;
 
   constructor(private instrumentTypeService: InstrumentTypeService,
@@ -79,6 +80,16 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
     }
   }
 
+  initMeasuringErrorUnitList() {
+    const technicalTypeId = this.mainForm.get('technicalType')?.value;
+
+    if (technicalTypeId != '') {
+      this.measuringUnitService.findErrorUnitByTechnicalType(+technicalTypeId).subscribe(next => {
+        this.measuringErrorUnitList = next;
+      })
+    }
+  }
+
   initTechnicalCharacteristicForm(): TechnicalCharacteristicForm | null {
     if (this.mainForm.valid) {
       return {
@@ -89,7 +100,7 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
         measuringRangeEnd: +this.mainForm.get('measuringRangeEnd')?.value,
         measuringUnitEnd: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringUnitEnd')?.value),
         measuringError: +this.mainForm.get('measuringError')?.value,
-        measuringErrorUnit: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringErrorUnit')?.value),
+        measuringErrorUnit: this.measuringErrorUnitList.find(obj => obj.id === +this.mainForm.get('measuringErrorUnit')?.value),
         measuringInstrument: {id: this.measuringInstrumentId}
       };
     }
@@ -99,6 +110,7 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
 
   submit() {
     let technicalCharacteristicForm = this.initTechnicalCharacteristicForm();
+    console.log( technicalCharacteristicForm );
     Swal.fire({
       title: 'Đang thêm mới...',
       allowOutsideClick: false,
@@ -144,6 +156,7 @@ export class TechnicalCharacteristicCreateComponent implements OnInit{
     this.mainForm.get('measuringUnitEnd')?.setValue('');
     this.mainForm.get('measuringErrorUnit')?.setValue('');
     this.initMeasuringUnitList();
+    this.initMeasuringErrorUnitList();
   }
 
   // Getter

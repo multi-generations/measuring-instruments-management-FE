@@ -161,7 +161,7 @@
                       'is-invalid': (mainForm.controls['measuringErrorUnit'].touched) && (mainForm.controls['measuringErrorUnit'].invalid),
                       'is-valid': (mainForm.controls['measuringErrorUnit'].touched) && (mainForm.controls['measuringErrorUnit'].valid)}">
                 <option selected value="">-- Chọn đơn vị --</option>
-                <ng-container *ngFor="let v of measuringUnitList;">
+                <ng-container *ngFor="let v of measuringErrorUnitList;">
                   <option [value]="v.id">{{v.measuringUnitName}}</option>
                 </ng-container>
               </select>

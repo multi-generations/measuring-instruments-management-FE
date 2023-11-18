@@ -24,4 +24,10 @@ export class MeasuringUnitService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
     return this._http.get<MeasuringUnit[]>(this._API_URL + `/technical-type/${technicalTypeId}`, {headers});
   }
+
+  public findErrorUnitByTechnicalType(technicalTypeId: number): Observable<MeasuringUnit[]> {
+    const jwt = this._authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
+    return this._http.get<MeasuringUnit[]>(this._API_URL + `/technical-type/error-units/${technicalTypeId}`, {headers});
+  }
 }

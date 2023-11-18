@@ -30,6 +30,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit, OnChanges
   instrumentTypeList: InstrumentType[] = [];
   technicalTypeList: TechnicalType[] = [];
   measuringUnitList: MeasuringUnit[] = [];
+  measuringErrorUnitList: MeasuringUnit[] = [];
   resultChange: boolean = false;
 
   constructor(private instrumentTypeService: InstrumentTypeService,
@@ -43,6 +44,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit, OnChanges
     this.initInstrumentTypeList();
     this.initTechnicalTypeList();
     this.initMeasuringUnitList();
+    this.initMeasuringErrorUnitList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,7 +79,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit, OnChanges
         this.mainForm.get('measuringErrorUnit')?.setValue(next.measuringErrorUnit?.id);
 
         this.updateMeasuringUnitList();
-
+        this.updateMeasuringErrorUnitList();
       })
     }
   }
@@ -105,12 +107,29 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit, OnChanges
     })
   }
 
+  initMeasuringErrorUnitList() {
+    this.measuringUnitService.findAll().subscribe(next => {
+      this.measuringErrorUnitList = next;
+    })
+  }
+
   updateMeasuringUnitList() {
     const technicalTypeId = this.mainForm.get('technicalType')?.value;
+    console.log(technicalTypeId);
 
     if (technicalTypeId) {
       this.measuringUnitService.findByTechnicalType(+technicalTypeId).subscribe(next => {
         this.measuringUnitList = next;
+      })
+    }
+  }
+
+  updateMeasuringErrorUnitList() {
+    const technicalTypeId = this.mainForm.get('technicalType')?.value;
+
+    if (technicalTypeId) {
+      this.measuringUnitService.findErrorUnitByTechnicalType(+technicalTypeId).subscribe(next => {
+        this.measuringErrorUnitList = next;
       })
     }
   }
@@ -126,7 +145,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit, OnChanges
         measuringRangeEnd: +this.mainForm.get('measuringRangeEnd')?.value,
         measuringUnitEnd: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringUnitEnd')?.value),
         measuringError: +this.mainForm.get('measuringError')?.value,
-        measuringErrorUnit: this.measuringUnitList.find(obj => obj.id === +this.mainForm.get('measuringErrorUnit')?.value),
+        measuringErrorUnit: this.measuringErrorUnitList.find(obj => obj.id === +this.mainForm.get('measuringErrorUnit')?.value),
         measuringInstrument: {id: this.measuringInstrumentId}
       };
     }
@@ -181,6 +200,7 @@ export class TechnicalCharacteristicUpdateComponent implements OnInit, OnChanges
     this.mainForm.get('measuringUnitEnd')?.setValue('');
     this.mainForm.get('measuringErrorUnit')?.setValue('');
     this.updateMeasuringUnitList();
+    this.updateMeasuringErrorUnitList();
   }
 
   // Getter
