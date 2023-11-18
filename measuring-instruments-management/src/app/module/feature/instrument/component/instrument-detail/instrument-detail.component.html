@@ -7,7 +7,9 @@
               [class.bg-warning]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Sửa chữa'"
               [class.bg-primary]="measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName === 'Kiểm định'">
         {{measuringInstrumentDetailDto?.instrumentStatus?.instrumentStatusName}}</span>
-        <button class="btn btn-outline-primary float-end me-4">Tạo dữ liệu nạp chip NFC
+        <button class="btn btn-outline-primary float-end me-4"
+        data-bs-toggle="modal" data-bs-target="#instrument-detail-nfc-chip"
+        >Tạo dữ liệu nạp chip NFC
         </button>
         <button class="btn btn-outline-primary float-end me-4" 
         data-bs-toggle="modal" data-bs-target="#instrument-detail-qr-code"
@@ -139,10 +141,10 @@
             </ul>
             <div id="instrument-detail-description-container">
                 <p class="mb-3 mt-3">
-                    <span class="px-3 py-2 d-inline-block rounded user-select-none"><strong>Ghi chú: </strong></span>
+                    <span class="px-3 py-2 d-inline-block rounded user-select-none">
+                        <strong>Ghi chú: </strong></span>
+                        {{measuringInstrumentDetailDto?.detailedDescription}}
                 </p>
-                <p class="pe-4"
-                   style="text-indent: 40px; text-align: justify">{{measuringInstrumentDetailDto?.detailedDescription}}</p>
             </div>
         </div>
     </div>
@@ -616,3 +618,6 @@
 <app-instrument-detail-qr-code
         [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"
 ></app-instrument-detail-qr-code>
+<app-instrument-detail-nfc-chip
+        [measuringInstrumentId]="measuringInstrumentDetailDto?measuringInstrumentDetailDto.id:0"    
+></app-instrument-detail-nfc-chip>

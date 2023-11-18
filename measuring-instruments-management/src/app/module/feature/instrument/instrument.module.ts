@@ -25,6 +25,7 @@ import { InstrumentUsageUpdateComponent } from './component/instrument-usage-upd
 import { DocumentVolatilityCreateComponent } from './component/document-volatility-create/document-volatility-create.component';
 import { DocumentVolatilityUpdateComponent } from './component/document-volatility-update/document-volatility-update.component';
 import { InstrumentDetailQrCodeComponent } from './component/instrument-detail-qr-code/instrument-detail-qr-code.component';
+import { InstrumentDetailNfcChipComponent } from './component/instrument-detail-nfc-chip/instrument-detail-nfc-chip.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { InstrumentDetailQrCodeComponent } from './component/instrument-detail-q
     DocumentVolatilityCreateComponent,
     DocumentVolatilityUpdateComponent,
     InstrumentDetailQrCodeComponent,
+    InstrumentDetailNfcChipComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,90 @@
+<div
+  class="modal fade"
+  id="instrument-detail-nfc-chip"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          Thông tin cơ bản nạp vào QR code
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          id="instrument-detail-nfc-chip-modal-close-btn"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <form (ngSubmit)="submit()">
+        <div class="modal-body">
+          <h5>1. Thông tin thiết bị đo</h5>
+          <p>
+            Tên phương tiện đo:
+            {{ measuringInstrumentDetailDto?.instrumentName }}
+          </p>
+          <p>Ký hiệu: {{ measuringInstrumentDetailDto?.instrumentSymbol }}</p>
+          <p>
+            Số hiệu: {{ measuringInstrumentDetailDto?.instrumentSerialNumber }}
+          </p>
+
+          <h5>3. Theo dõi biến động tài liệu, phụ tùng và kiểm kê hàng năm</h5>
+          <p>
+            -
+            {{
+              lastDocumentVolatileRecord?.volatilityDate | date : "dd/MM/yyyy"
+            }}: {{ lastDocumentVolatileRecord?.attachedDocument }}
+          </p>
+          <h5>4. Theo dõi giao nhận</h5>
+          <p>
+            - {{ lastForwardRecord?.forwardDate | date : "dd/MM/yyyy" }}: giao
+            về {{ lastForwardRecord?.receiveUnit }}
+          </p>
+          <h5>5. Theo dõi sửa chữa</h5>
+          <p>
+            - {{ lastRepairRecord?.repairDate | date : "dd/MM/yyyy" }}:
+            {{ lastRepairRecord?.repairPlace }} sửa chữa (đồng chí
+            {{ lastRepairRecord?.repairer }})
+          </p>
+          <h5>6. Theo dõi kiểm định</h5>
+          <p>
+            -
+            {{
+              lastAccreditationRecord?.accreditationDate | date : "dd/MM/yyyy"
+            }}: {{ lastAccreditationRecord?.accreditationPlace }},
+            {{ lastAccreditationRecord?.accreditationResult }},
+            {{ lastAccreditationRecord?.accreditationConfirmNumber }}, thời gian
+            hết hiệu lực:
+            {{
+              lastAccreditationRecord?.validAccreditationEndDate
+                | date : "dd/MM/yyyy"
+            }}
+          </p>
+          <h5>7. Theo dõi sử dụng</h5>
+          <p>
+            - {{ lastUsageRecord?.monitorDate | date : "dd/MM/yyyy" }}:
+            {{ lastUsageRecord?.instrumentUser }} sử dụng trong
+            {{ lastUsageRecord?.workingDuration }} giờ
+          </p>
+          <hr />
+          <span style="font-style: italic">Lần cập nhật cuối: </span>{{lastUpdatedAt | date: "dd/MM/yyyy - HH:mm:ss" }}
+        </div>
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            (click)="closeModalBtnClick()"
+          >
+            Quay lại
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
