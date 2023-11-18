@@ -35,7 +35,7 @@ export class InstrumentRepairCreateComponent {
     this.mainForm = new FormGroup({
       repairDate: new FormControl('', [Validators.required]),
       instrumentCondition: new FormControl('', [Validators.required]),
-      repairReason: new FormControl('', [Validators.required]),
+      repairReason: new FormControl('', []),
       repairResult: new FormControl('', [Validators.required]),
       repairPlace: new FormControl('', [Validators.required]),
       repairer: new FormControl('', [Validators.required]),

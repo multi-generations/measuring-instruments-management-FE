@@ -26,7 +26,7 @@ export class InstrumentCreateComponent implements OnInit {
   managementUnitList: ManagementUnit[] = [];
   accreditationCenterList: AccreditationCenter[] = [];
   instrumentStatusList: InstrumentStatus[] = [];
-  managementLevelList: string[] = ['Bo quoc phong', 'Khong'];
+  managementLevelList: string[] = ['Bộ quốc phòng', 'Không'];
   yearList: number[] = [];
   countryList: string[] = [];
   quantityLevelList: number[] = [];

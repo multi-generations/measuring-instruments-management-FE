@@ -1,0 +1,26 @@
+<div class="modal fade" id="instrument-detail-qr-code" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin cơ bản nạp vào QR code</h1>
+        <button type="button"
+                class="btn-close"
+                id="instrument-detail-qr-code-modal-close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                (click)="closeModal()"></button>
+      </div>
+      <form (ngSubmit)="submit()">
+        <div class="modal-body">
+          <h5>1. Tính năng kỹ thuật</h5>
+          <p>Tên phương tiện đo: {{measuringInstrumentDetailDto?.instrumentName}}</p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="closeModalBtnClick()">Quay lại</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

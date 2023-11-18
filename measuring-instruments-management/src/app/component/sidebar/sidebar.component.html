@@ -1,21 +1,37 @@
 <div class="w-200px vh-100 position-fixed start-0 top-50px pt-4 rounded-top overflow-hidden bg-body-tertiary shadow">
   <div class="list-group list-group-flush">
-    <button type="button"
+    <!-- <button type="button"
             id="instrument-management-sidebar"
             class="list-group-item list-group-item-action list-group-item-light active" aria-current="true"
             [class.active]="activeButtonId.includes('instrument-management-sidebar')"
             routerLink="instruments"
+            (click)="sidebarClick($event)">Danh sách thiết bị</button> -->
+        <button type="button"
+            id="instrument-management-sidebar"
+            class="list-group-item list-group-item-action list-group-item-light active" aria-current="true"
+            [class.active]="activeButtonId == ('instrument-management-sidebar')"
+            routerLink="instruments"
             (click)="sidebarClick($event)">Danh sách thiết bị</button>
-    <button type="button"
+    <!-- <button type="button"
             id="instrument-management-sidebar-create"
             class="list-group-item list-group-item-action list-group-item-light ps-5 btn-child" aria-current="true"
             routerLink="/instruments/create"
             [class.active-child]="activeButtonId == 'instrument-management-sidebar-create'"
-            (click)="sidebarClick($event)"><i class="fa-solid fa-plus small"></i> Thêm mới</button>
-    <button type="button"
+            (click)="sidebarClick($event)"><i class="fa-solid fa-plus small"></i> Thêm mới</button> -->
+        <button type="button"
+            id="instrument-management-sidebar-create"
+            class="list-group-item list-group-item-action list-group-item-light" aria-current="true"
+            routerLink="/instruments/create"
+            [class.active]="activeButtonId == 'instrument-management-sidebar-create'"
+            (click)="sidebarClick($event)">Thêm mới thiết bị</button>
+    <!-- <button type="button"
             id="instrument-management-sidebar-create"
             class="list-group-item list-group-item-action list-group-item-light ps-5 btn-child" aria-current="true">
-            <i class="fa-solid fa-plus small"></i> Quét mã QR</button>
+            <i class="fa-solid fa-plus small"></i> Quét mã QR</button> -->
+            <button type="button"
+            id="instrument-management-sidebar-create"
+            class="list-group-item list-group-item-action list-group-item-light" aria-current="true">
+            Quét mã QR</button>
 <!--    <button type="button"-->
 <!--            id="accreditation-management-sidebar"-->
 <!--            class="list-group-item list-group-item-action list-group-item-light"-->

@@ -24,6 +24,7 @@ import { InstrumentRepairUpdateComponent } from './component/instrument-repair-u
 import { InstrumentUsageUpdateComponent } from './component/instrument-usage-update/instrument-usage-update.component';
 import { DocumentVolatilityCreateComponent } from './component/document-volatility-create/document-volatility-create.component';
 import { DocumentVolatilityUpdateComponent } from './component/document-volatility-update/document-volatility-update.component';
+import { InstrumentDetailQrCodeComponent } from './component/instrument-detail-qr-code/instrument-detail-qr-code.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { DocumentVolatilityUpdateComponent } from './component/document-volatili
     InstrumentUsageUpdateComponent,
     DocumentVolatilityCreateComponent,
     DocumentVolatilityUpdateComponent,
+    InstrumentDetailQrCodeComponent,
   ],
   imports: [
     CommonModule,

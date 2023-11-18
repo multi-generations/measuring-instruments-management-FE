@@ -185,6 +185,7 @@ export class InstrumentUpdateComponent implements OnInit {
 
   cancelUpdate() {
     this.ngOnInit();
+    this.router.navigateByUrl(`/instruments/${this.curId}`);
     window.scrollTo(0, 0);
   }
 

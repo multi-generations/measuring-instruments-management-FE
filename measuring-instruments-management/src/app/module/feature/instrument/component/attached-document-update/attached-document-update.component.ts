@@ -36,8 +36,8 @@ export class AttachedDocumentUpdateComponent implements OnChanges{
   createForm() {
     return new FormGroup({
       documentName: new FormControl('', [Validators.required]),
-      documentSymbol: new FormControl('', [Validators.required]),
-      quantity: new FormControl('', [Validators.required]),
+      documentSymbol: new FormControl('', []),
+      quantity: new FormControl('', []),
       documentNote: new FormControl('')
     })
   }
